@@ -14,7 +14,7 @@
 	Header("Expires: " . date("r"));
 	
 	require_once 'login.php';
-	$link = mysqli_connect($host, $user, $password, $db);
+	$link=mysqli_connect($host, $user, $password, $db);
 	
 	/* проверка подключения */
 	if (mysqli_connect_errno()) {
@@ -28,23 +28,31 @@
 	
 	/* забираем данные из формы */
 	$idset=$_REQUEST['id'];
-	$company_name=trim($_REQUEST['company_name']);
-	$job_title=trim($_REQUEST['job_title']);
-	$job_title_r=trim($_REQUEST['job_title_r']);
-	$director=trim($_REQUEST['director']);
-	$director_io=trim($_REQUEST['director_io']);
-	$director_r=trim($_REQUEST['director_r']);
-	$bank_account_1=trim($_REQUEST['bank_account-1']);
-	$bank_account_2=trim($_REQUEST['bank_account-2']);
+	$company_name=$_REQUEST['company_name'];
+	$job_title=$_REQUEST['job_title'];
+	$job_title_r=$_REQUEST['job_title_r'];
+	$director=$_REQUEST['director'];
+	$director_io=$_REQUEST['director_io'];
+	$director_r=$_REQUEST['director_r'];
+	$bank_account_1=$_REQUEST['bank_account-1'];
+	$bank_account_2=$_REQUEST['bank_account-2'];
 	
 	/* подготавливаем запрос к БД */
 	$update_sql = "UPDATE `admin_arenda`.`gl_settings` SET `company_name` = '$company_name', `job_title` = '$job_title', `job_title_r` = '$job_title_r', `director` = '$director', `director_io` = '$director_io', `director_r` = '$director_r', `bank_account-1` = '$bank_account_1', `bank_account-2` = '$bank_account_2' WHERE `gl_settings`.`id` = '$idset';";
+
 	
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
 	echo '<p>Запись успешно обновлена!</p>';
+
+	/* очищаем переменную запроса */
+	mysqli_free_result($update_sql);
 	
-	echo '<p><a href="setting.php">Назад</a><br /><br /><a href="index.php">Home</a> :: <a href="setting.php">Глобальные настройки</a></p>';
+	/* закрываем подключение */
+	mysqli_close($link);
+	
+	echo '<p><a href="setting.php">Назад</a><br /><br />';
+	echo '<a href="index.php">Home</a> :: <a href="setting.php">Глобальные настройки</a></p>';
 ?>
 </body>
 </html>

@@ -3,7 +3,7 @@
     <head>
 	    <meta charset="utf-8">
 	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>База данных АРЕНДА</title>
+	    <title>Редактирование глобальных настроек</title>
     </head>
 <body>
 <?php
@@ -23,7 +23,7 @@
 	}
 	
 	if (!$link->set_charset("utf8")) {
-	    printf("Ошибка при загрузке набора символов utf8: %s\n", $link->error);
+	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
 	
 	$query = "SELECT * FROM `gl_settings` WHERE id=1";
@@ -34,6 +34,7 @@
 
 	/* вывод в форму */	
 	echo '<form action="update-setting.php" method="post" name="u-setting">';
+	echo '<legend>Редактирование глобальных настроек</legend>';
 	echo '<input type="hidden" name="id" value="'.$row['id'].'">';
 	echo '<p>Название компании:<br /><input type="text" name="company_name" size="30" value="'.$row['company_name'].'"></p>';
 	echo '<p>Должность директора:<br /><input type="text" name="job_title" size="30" value="'.$row['job_title'].'"></p>';
@@ -43,14 +44,17 @@
 	echo '<p>ФИО директора (родительный)<br /><input type="text" name="director_r" size="30" value="'.$row['director_r'].'"></p>';	
 	echo '<p>Реквизиты №1<br /><textarea rows="5" cols="35" name="bank_account-1">'.$row['bank_account-1'].'</textarea></p>';
 	echo '<p>Реквизиты №2<br /><textarea rows="5" cols="35" name="bank_account-2">'.$row['bank_account-2'].'</textarea></p>';
-	echo '<br />';
-	echo '<input id="submit" type="submit" value="Редактировать запись"></form>';
+	echo '<br /><input id="submit" type="submit" value="Редактировать настройки"></form>';
 	
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
 	
 	/* закрываем подключение */
 	mysqli_close($link);
+	
+	echo '<br /><p><a href="/">Назад</a><br /><br />';
+	echo '<a href="index.php">Home</a>';	
+	
 ?>
 </body>
 </html>
