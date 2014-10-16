@@ -14,10 +14,10 @@
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
-	
+
 	require_once 'login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
-	
+
 	/* проверка подключения */
 	if (mysqli_connect_errno()) {
 	    echo 'Не удалось подключиться: '. mysqli_connect_error();
@@ -31,26 +31,21 @@
 
 	/* забираем данные из формы */
 	$idset=$_REQUEST['id'];
-	
+
 	/* подготавливаем запрос к БД */
 	$query = "SELECT `contract`.`id`, `contract`.`nomer`, `contract`.`date`, `contract`.`company_id`, `company`.`name`, `contract`.`prim`
 	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
 	WHERE  `contract`.`id`='$idset'";
 	$result = mysqli_query($link, $query);
-	
+
 	$query2 = "SELECT `company`.`id` , `company`.`name`
 	FROM `company`";
 	$result2 = mysqli_query($link, $query2);
 
-
 	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-	$row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
-	mysqli_data_seek($result2, 0); //сдвигаем указатель на начало
  
-	/* вывод в форму */	
-	
-	
+	/* вывод в форму */
 	echo '<form class="form-horizontal" role="form" action="update-dogovor.php" method="post" name="dogovor">
 	<legend>Редактирование договора</legend>
 	

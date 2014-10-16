@@ -14,7 +14,7 @@
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
-	
+
 	require_once 'login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
 	
@@ -28,10 +28,10 @@
 	if (!$link->set_charset("utf8")) {
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
-	
+
 	$query = "SELECT * FROM `gl_settings` WHERE id=1";
 	$result = mysqli_query($link, $query);
-	
+
 	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
