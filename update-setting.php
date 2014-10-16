@@ -6,6 +6,7 @@
 	    <title>Редактирование глобальных настроек</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<meta http-equiv="Refresh" content="2; url=setting.php">
 	</head>
 <body>
 <?php 
@@ -23,7 +24,8 @@
 	    printf("Не удалось подключиться: %s\n", mysqli_connect_error());
 	    exit();
 	}
-	
+
+	/* установка кодировки utf8 */
 	if (!$link->set_charset("utf8")) {
 	    printf("Ошибка при загрузке набора символов utf8: %s\n", $link->error);
 	}

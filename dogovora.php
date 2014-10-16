@@ -34,6 +34,7 @@
 	ORDER BY  `contract`.`id` ASC";
 	
 	$result = mysqli_query($link, $query);
+//	mysqli_data_seek($result, 0); //сдвигаем указатель на начало
 	
 	echo '<table class="table table-hover">
 	<caption>Список договоров</caption>

@@ -24,7 +24,7 @@
 	    exit();
 	}
 
-	/* установка кодировки utf8 */	
+	/* установка кодировки utf8 */
 	if (!$link->set_charset("utf8")) {
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
@@ -36,21 +36,65 @@
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 	/* вывод в форму */	
-	echo '<form action="update-setting.php" method="post" name="u-setting">';
-	echo '<legend>Редактирование глобальных настроек</legend>';
-	echo '<input type="hidden" name="id" value="'.$row['id'].'">';
-	echo '<p>Название компании:<br /><input type="text" name="company_name" size="30" value="'.$row['company_name'].'"></p>';
-	echo '<p>Должность директора:<br /><input type="text" name="job_title" size="30" value="'.$row['job_title'].'"></p>';
-	echo '<p>Должность директора (родительный):<br /><input type="text" name="job_title_r" size="30" value="'.$row['job_title_r'].'"></p>';
-	echo '<p>ФИО директора<br /><input type="text" name="director" size="30" value="'.$row['director'].'"></p>';
-	echo '<p>ФИО директора (инициалы)<br /><input type="text" name="director_io" size="30" value="'.$row['director_io'].'"></p>';
-	echo '<p>ФИО директора (родительный)<br /><input type="text" name="director_r" size="30" value="'.$row['director_r'].'"></p>';	
-	echo '<p>Реквизиты №1<br /><textarea rows="5" cols="35" name="bank_account-1">'.$row['bank_account-1'].'</textarea></p>';
-	echo '<p>Реквизиты №2<br /><textarea rows="5" cols="35" name="bank_account-2">'.$row['bank_account-2'].'</textarea></p>';
-	echo '<br /><input id="submit" type="submit" value="Редактировать настройки"></form>';
-	
-	echo '<br /><p><a href="/">Назад</a><br /><br />';
-	echo '<a href="index.php">Home</a>';	
+echo '<form class="form-horizontal" role="form" action="update-setting.php" method="post" name="setting">
+	<legend>Редактирование глобальных настроек</legend>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Название компании</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="company_name" value="'.$row['company_name'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Должность директора</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="job_title" value="'.$row['job_title'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Должность директора (родительный)</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="job_title_r" value="'.$row['job_title_r'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">ФИО директора</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="director" value="'.$row['director'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">ФИО директора (инициалы)</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="director_io" value="'.$row['director_io'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">ФИО директора (родительный)</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="director_r" value="'.$row['director_r'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Реквизиты №1</label>
+		<div class="col-sm-8">
+			<textarea class="form-control" rows="8" name="bank_account-1">'.$row['bank_account-1'].'</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Реквизиты №2</label>
+		<div class="col-sm-8">
+			<textarea class="form-control" rows="8" name="bank_account-2">'.$row['bank_account-2'].'</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-9">
+			<input type="hidden" name="id" value="'.$row['id'].'">
+			<button type="submit" class="btn btn-default">Редактировать настройки</button>
+		</div>
+	</div>
+</form>';
+
+	echo '<br /><p><a href="index.php">Home</a></p>';	
 	
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);

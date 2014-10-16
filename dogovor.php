@@ -33,36 +33,65 @@
 	$idset=$_REQUEST['id'];
 	
 	/* подготавливаем запрос к БД */
-//	$query = "SELECT * FROM `contract` WHERE `id` = '$idset'";
-	$query = "SELECT `contract`.`id`, `contract`.`nomer`, `contract`.`date`, `company`.`name`, `contract`.`prim`
+	$query = "SELECT `contract`.`id`, `contract`.`nomer`, `contract`.`date`, `contract`.`company_id`, `company`.`name`, `contract`.`prim`
 	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
 	WHERE  `contract`.`id`='$idset'";
 	$result = mysqli_query($link, $query);
 	
+	$query2 = "SELECT `company`.`id` , `company`.`name`
+	FROM `company`";
+	$result2 = mysqli_query($link, $query2);
+
+
 	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
+	$row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
+	mysqli_data_seek($result2, 0); //сдвигаем указатель на начало
+ 
 	/* вывод в форму */	
-	echo '<form action="update-dogovor.php" method="post" name="u-setting">';
-	echo '<legend>Редактирование договора</legend>';
-	echo '<table class="table table-hover">
-	<tbody>
-		<tr> 
-			<td>Номер договора</td><td><input type="text" name="nomer" size="35" value="'.$row['nomer'].'"></td>
-		</tr>
-		<tr>
-			<td>Дата договора</td><td><input type="date" min="2000-01-01" name="date" value="'.$row['date'].'"></td>
-		</tr>
-		<tr>
-			<td>Имя компании</td><td><input type="text" name="name" size="35" value="'.$row['name'].'"></td>
-		</tr>
-		<tr>			
-			<td>Примечания</td><td><textarea rows="5" cols="35" name="prim">'.$row['prim'].'</textarea></td>
-		</tr>
-	</tbody>';
-	echo '</table>';
-	echo '<input type="hidden" name="id" value="'.$row['id'].'">';
-	echo '<p align="right"><input class="btn btn-primary" id="submit" type="submit" value="Редактировать договор"></p></form>';
+	
+	
+	echo '<form class="form-horizontal" role="form" action="update-dogovor.php" method="post" name="dogovor">
+	<legend>Редактирование договора</legend>
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Номер договора</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="nomer" value="'.$row['nomer'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Дата договора</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="date" min="2000-01-01" name="date" value="'.$row['date'].'">
+		</div>
+	</div>	
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Название компании</label>
+		<div class="col-sm-8">
+			<select class="form-control" name="company_id">';
+			while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+		echo '<option value="'.$row2['id'].'"';
+		if ($row2['id']==$row['company_id']) echo ' selected ';
+		echo ' >' . $row2['name'] . '</option>';
+	}
+	echo '
+			</select>
+		</div>
+	</div>	
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Примечания</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="prim" value="'.$row['prim'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-9">
+			<input type="hidden" name="id" value="'.$row['id'].'">
+			<button type="submit" class="btn btn-default">Редактировать договор</button>
+		</div>
+	</div>
+</form>';
 	
 	
 	echo '<br /><br /><p><a href="dogovora.php">Назад</a><br /><br />';
@@ -70,6 +99,7 @@
 	
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
+	mysqli_free_result($result2);
 	
 	/* закрываем подключение */
 	mysqli_close($link);
