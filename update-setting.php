@@ -3,8 +3,10 @@
     <head>
 	    <meta charset="utf-8">
 	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>База данных АРЕНДА</title>
-    </head>
+	    <title>Редактирование глобальных настроек</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	</head>
 <body>
 <?php 
 	/* выключаем кэширование */
@@ -44,15 +46,17 @@
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
 	echo '<p>Запись успешно обновлена!</p>';
-
-	/* очищаем переменную запроса */
-	mysqli_free_result($update_sql);
-	
-	/* закрываем подключение */
-	mysqli_close($link);
 	
 	echo '<p><a href="setting.php">Назад</a><br /><br />';
 	echo '<a href="index.php">Home</a> :: <a href="setting.php">Глобальные настройки</a></p>';
+	
+	/* очищаем результаты выборки */
+	mysqli_free_result($result);
+	
+	/* закрываем подключение */
+	mysqli_close($link);
 ?>
+ 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>

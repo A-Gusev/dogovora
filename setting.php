@@ -4,7 +4,9 @@
 	    <meta charset="utf-8">
 	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 	    <title>Редактирование глобальных настроек</title>
-    </head>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	</head>
 <body>
 <?php
 	/* выключаем кэширование */
@@ -21,7 +23,8 @@
 	    echo 'Не удалось подключиться: '. mysqli_connect_error();
 	    exit();
 	}
-	
+
+	/* установка кодировки utf8 */	
 	if (!$link->set_charset("utf8")) {
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
@@ -46,15 +49,16 @@
 	echo '<p>Реквизиты №2<br /><textarea rows="5" cols="35" name="bank_account-2">'.$row['bank_account-2'].'</textarea></p>';
 	echo '<br /><input id="submit" type="submit" value="Редактировать настройки"></form>';
 	
+	echo '<br /><p><a href="/">Назад</a><br /><br />';
+	echo '<a href="index.php">Home</a>';	
+	
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
 	
 	/* закрываем подключение */
 	mysqli_close($link);
-	
-	echo '<br /><p><a href="/">Назад</a><br /><br />';
-	echo '<a href="index.php">Home</a>';	
-	
 ?>
+ 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>

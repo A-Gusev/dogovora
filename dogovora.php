@@ -1,78 +1,80 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
-<HTML>
-    <HEAD>
-    <meta charset="utf-8">
-    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-    <TITLE>База данных ДОГОВОРA</TITLE>
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    </HEAD>
-<BODY>
-
-<?php 
-Header("Cache-Control: no-store, no-cache, must-revalidate");
-Header("Pragma: no-cache");
-Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
-Header("Expires: " . date("r"));
-
-require_once 'login.php';
-$link = mysqli_connect($host, $user, $password, $db);
-
-/* проверка подключения */
-if (mysqli_connect_errno()) {
-    printf("Не удалось подключиться: %s\n", mysqli_connect_error());
-    exit();
-}
-
-if (!$link->set_charset("utf8")) {
-    printf("Ошибка при загрузке набора символов utf8: %s\n", $link->error);
-}
-//else {
-//    printf("Текущий набор символов: %s\n", $link->character_set_name());
-//}
-
-$query = "SELECT `contract`.`id`, `contract`.`nomer`, `contract`.`date`, `company`.`name`, `contract`.`prim` FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id` ORDER BY  `contract`.`id` ASC";
-$result = mysqli_query($link, $query);
-
-/*
-print_r($result);
-print_r($row);
-echo '<br />';
-*/
-
-/* ассоциативный массив */
-while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-	// echo $row['nomer'].$row['date'].$row['name'].$row['prim'];
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+		<title>Список договоров</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	</head>
+<body>
+<?php
+	/* выключаем кэширование */
+	Header("Cache-Control: no-store, no-cache, must-revalidate");
+	Header("Pragma: no-cache");
+	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
+	Header("Expires: " . date("r"));
 	
-printf($row['nomer'].' '.$row['date'].' '.$row['name'].' '.$row['prim'].' '."<form class='form-inline' role='form' action='dogovor.php' method='get' name='forma'>
-		<input type='hidden' name='id' value='%s'><button type='submits' class='btn btn-default'>Редактировать</button>
-	</form>",$row['id']);
+	require_once 'login.php';
+	$link = mysqli_connect($host, $user, $password, $db);
+	
+	/* проверка подключения */
+	if (mysqli_connect_errno()) {
+	    echo 'Не удалось подключиться: '. mysqli_connect_error();
+	    exit();
+	}
 
+	/* установка кодировки utf8 */	
+	if (!$link->set_charset("utf8")) {
+	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
+	}
 
-}
+	$query = "SELECT `contract`.`id`, `contract`.`nomer`, `contract`.`date`, `company`.`name`, `contract`.`prim`
+	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
+	ORDER BY  `contract`.`id` ASC";
+	
+	$result = mysqli_query($link, $query);
+	
+	echo '<table class="table table-hover">
+	<caption>Список договоров</caption>
+	<thead>
+		<tr>
+			<th>nomer и date</th>
+			<th>name</th>
+			<th>prim</th>
+			<th>редактировать</th>
+		</tr>
+	</thead>
+	<tbody>';
 
+	/* ассоциативный массив */
+	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+		
+	echo '
+		<tr> 
+			<td>Договор №'.$row['nomer'].' от '.$row['date'].'</td>
+			<td>'.$row['name'].'</td>
+			<td>'.$row['prim'].'</td>
+			<td>
+				<form class="form-inline" role="form" action="dogovor.php" method="get" name="dogovor">
+					<input type="hidden" name="id" value="'.$row['id'].'"><button type="submits" class="btn btn-default">Редактировать</button>
+			</form>
+			</td>
+		</tr>';
 
+	}
 
-/*
-<form method="GET" action="add.php">
-  <label>
-    <input type="text" name="page" id="textfield">
-  </label>
-  <label>
-    <input type="submit" name="button" id="button" value="Отправить">
-  </label>
-</form>
+	echo '
+	</tbody>
+</table>';
 
-*/
-
-
-
-/* очищаем результаты выборки */
-mysqli_free_result($result);
-
-/* закрываем подключение */
-mysqli_close($link);
+	/* очищаем результаты выборки */
+	mysqli_free_result($result);
+	
+	/* закрываем подключение */
+	mysqli_close($link);
 ?>
  
-
-</BODY>
-</HTML>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>
