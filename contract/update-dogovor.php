@@ -15,8 +15,8 @@
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
-	
-	require_once 'login.php';
+
+	require_once '../login.php';
 	$link=mysqli_connect($host, $user, $password, $db);
 	
 	/* проверка подключения */
@@ -31,20 +31,21 @@
 	}
 
 	/* забираем данные из формы */
+	$idset=$_REQUEST['id'];
 	$nomer=$_REQUEST['nomer'];
 	$date=$_REQUEST['date'];
 	$company_id=$_REQUEST['company_id'];
 	$prim=$_REQUEST['prim'];
 		
 	/* подготавливаем запрос к БД */
-	$update_sql = "INSERT INTO `admin_arenda`.`contract` (`id`, `nomer`, `date`, `company_id`, `prim`)
-	VALUES (NULL, '$nomer', '$date', '$company_id', '$prim')";
+	$update_sql = "UPDATE `admin_arenda`.`contract` SET `nomer` = '$nomer', `date` = '$date', `company_id` = '$company_id', `prim` = '$prim' WHERE `contract`.`id` = '$idset'";	
+	
 	
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
 	echo '<p>Запись успешно обновлена!</p>';
 	
-	echo '<br /><br /><p><a href="index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать ещё один новый договор</a></p>';
+	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';	
 	
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);

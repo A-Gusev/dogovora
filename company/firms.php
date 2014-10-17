@@ -15,7 +15,7 @@
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
 
-	require_once 'login.php';
+	require_once '../login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
 
 	/* проверка подключения */
@@ -68,7 +68,7 @@
 </table>';
 
 
-	echo '<br /><br /><p><a href="index.php">Home</a> :: <a href="new-firm.php">Создать нового контрагента</a></p>';
+	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-dogovor.php">Создать нового контрагента</a></p>';
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);

@@ -3,7 +3,7 @@
     <head>
 	    <meta charset="utf-8">
 	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Редактирование данных контрагента</title>
+	    <title>Редактирование договора</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 	</head>
@@ -15,7 +15,7 @@
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
 
-	require_once 'login.php';
+	require_once '../login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
 
 	/* проверка подключения */
@@ -33,33 +33,51 @@
 	$idset=$_REQUEST['id'];
 
 	/* подготавливаем запрос к БД */
-	$query = "SELECT * FROM `company`
-	WHERE  `company`.`id`='$idset'";
+	$query = "SELECT `contract`.`id`, `contract`.`nomer`, `contract`.`date`, `contract`.`company_id`, `company`.`name`, `contract`.`prim`
+	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
+	WHERE  `contract`.`id`='$idset'";
 	$result = mysqli_query($link, $query);
+
+	$query2 = "SELECT `company`.`id` , `company`.`name`
+	FROM `company`";
+	$result2 = mysqli_query($link, $query2);
 
 	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
+ 
 	/* вывод в форму */
-	echo '<form class="form-horizontal" role="form" action="update-firm.php" method="post">
-	<legend>Редактирование данных контрагента</legend>
-
+	echo '<form class="form-horizontal" role="form" action="update-dogovor.php" method="post" name="dogovor">
+	<legend>Редактирование договора</legend>
+	
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Название компании</label>
+		<label class="col-sm-3 control-label">Номер договора</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="name" value="'.$row['name'].'">
+			<input class="form-control" type="text" name="nomer" value="'.$row['nomer'].'">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">ФИО директора</label>
+		<label class="col-sm-3 control-label">Дата договора</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="director" value="'.$row['director'].'">
+			<input class="form-control" type="date" min="2000-01-01" name="date" value="'.$row['date'].'">
 		</div>
 	</div>	
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Реквизиты</label>
+		<label class="col-sm-3 control-label">Название компании</label>
 		<div class="col-sm-8">
-			<textarea class="form-control" rows="8" name="requisites">'.$row['requisites'].'</textarea>
+			<select class="form-control" name="company_id">';
+			while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+		echo '<option value="'.$row2['id'].'"';
+		if ($row2['id']==$row['company_id']) echo ' selected ';
+		echo ' >' . $row2['name'] . '</option>';
+	}
+	echo '
+			</select>
+		</div>
+	</div>	
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Примечания</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="prim" value="'.$row['prim'].'">
 		</div>
 	</div>
 	<div class="form-group">
@@ -69,8 +87,8 @@
 		</div>
 	</div>
 </form>';
-
-	echo '<br /><br /><p><a href="index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-dogovor.php">Создать нового контрагента</a></p>';
+	
+	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';	
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
@@ -79,7 +97,7 @@
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
-
+ 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>

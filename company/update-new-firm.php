@@ -3,7 +3,7 @@
     <head>
 	    <meta charset="utf-8">
 	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Редактирование договоров</title>
+	    <title>Создание нового контрагента</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 		<meta http-equiv="Refresh" content="2; url=firms.php">
@@ -15,10 +15,10 @@
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
-	
-	require_once 'login.php';
+
+	require_once '../login.php';
 	$link=mysqli_connect($host, $user, $password, $db);
-	
+
 	/* проверка подключения */
 	if (mysqli_connect_errno()) {
 	    printf("Не удалось подключиться: %s\n", mysqli_connect_error());
@@ -43,7 +43,7 @@
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
 	echo '<p>Запись успешно обновлена!</p>';
 	
-	echo '<br /><br /><p><a href="index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать ещё один новый договор</a></p>';
+	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-dogovor.php">Создать нового контрагента</a></p>';
 	
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);

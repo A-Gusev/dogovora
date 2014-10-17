@@ -15,7 +15,6 @@
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
 
-
 	/* форма */
 	echo '<form class="form-horizontal" role="form" action="update-new-firm.php" method="post">
 	<legend>Создание нового контрагента</legend>
@@ -45,7 +44,7 @@
 	</div>
 </form>';
 	
-	echo '<br /><br /><p><a href="index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="firms.php">Список контрагентов</a>';
+	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-dogovor.php">Создать нового контрагента</a></p>';
 	
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);

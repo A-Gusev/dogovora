@@ -15,7 +15,7 @@
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
 
-	require_once 'login.php';
+	require_once '../login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
 	
 	/* проверка подключения */
@@ -94,7 +94,7 @@ echo '<form class="form-horizontal" role="form" action="update-setting.php" meth
 	</div>
 </form>';
 
-	echo '<br /><p><a href="index.php">Home</a></p>';	
+	echo '<br /><p><a href="../index.php">Home</a></p>';	
 	
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
