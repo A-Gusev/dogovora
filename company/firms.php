@@ -42,6 +42,7 @@
 			<th>реквизиты</th>
 			<th>количество договоров</th>
 			<th>редактировать</th>
+			<th>удалить</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -62,12 +63,18 @@
 			<td>'.$row['requisites'].'</td>
 			<td>'.$kol2['0'].'</td>
 			<td>
-				<form class="form-inline" role="form" action="firm.php" method="get" name="firm">
+				<form class="form-inline" role="form" action="firm.php" method="get">
 					<input type="hidden" name="id" value="'.$row['id'].'"><button type="submits" class="btn btn-default">Редактировать</button>
 			</form>
 			</td>
+			<td>';
+				if ($kol2['0']==0) { echo '
+				<form class="form-inline" role="form" action="delete-firm.php" method="get">
+					<input type="hidden" name="id" value="'.$row['id'].'"><button type="submits" class="btn btn-danger">Удалить</button>
+			</form>';
+			}
+			echo '</td>
 		</tr>';
-
 	}
 
 	echo '
@@ -78,6 +85,7 @@
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
+	mysqli_free_result($kol);
 
 	/* закрываем подключение */
 	mysqli_close($link);
