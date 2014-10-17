@@ -4,8 +4,8 @@
 		<meta charset="utf-8">
 		<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 		<title>Список договоров</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
 <body>
 <?php
@@ -43,6 +43,7 @@
 			<th>название компании</th>
 			<th>примечание</th>
 			<th>редактировать</th>
+			<th>удалить</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -56,8 +57,13 @@
 			<td>'.$row['name'].'</td>
 			<td>'.$row['prim'].'</td>
 			<td>
-				<form class="form-inline" role="form" action="dogovor.php" method="get" name="dogovor">
+				<form class="form-inline" role="form" action="dogovor.php" method="get">
 					<input type="hidden" name="id" value="'.$row['id'].'"><button type="submits" class="btn btn-default">Редактировать</button>
+			</form>
+			</td>
+			<td>
+				<form class="form-inline" role="form" action="delete-dogovor.php" method="get">
+					<input type="hidden" name="id" value="'.$row['id'].'"><button type="submits" class="btn btn-danger">Удалить</button>
 			</form>
 			</td>
 		</tr>';
@@ -77,6 +83,6 @@
 	mysqli_close($link);
 ?>
 
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

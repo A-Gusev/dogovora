@@ -3,7 +3,7 @@
     <head>
 	    <meta charset="utf-8">
 	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Редактирование данных контрагента</title>
+	    <title>Удаление договора</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
@@ -18,7 +18,7 @@
 	require_once '../login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
 
-	require_once '../login.php';
+	/* проверка подключения */
 	if (mysqli_connect_errno()) {
 	    echo 'Не удалось подключиться: '. mysqli_connect_error();
 	    exit();
@@ -33,44 +33,44 @@
 	$idset=$_REQUEST['id'];
 
 	/* подготавливаем запрос к БД */
-	$query = "SELECT * FROM `company`
-	WHERE  `company`.`id`='$idset'";
+	$query = "SELECT `contract`.`id`, `contract`.`nomer`, `contract`.`date`, `contract`.`company_id`, `company`.`name`, `contract`.`prim`
+	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
+	WHERE  `contract`.`id`='$idset'";
 	$result = mysqli_query($link, $query);
 
 	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
+ 
 	/* вывод в форму */
-	echo '<form class="form-horizontal" role="form" action="update-firm.php" method="post">
-	<legend>Редактирование данных контрагента</legend>
-
+	echo '<form class="form-horizontal" role="form" action="yes-delete-dogovor.php" method="get">
+	<legend>Удаление договора</legend>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Название компании</label>
-		<div class="col-sm-8">
-			<input class="form-control" type="text" name="name" value="'.$row['name'].'">
-		</div>
+		<div class="col-sm-3 control-label">Номер договора</div>
+		<div class="col-sm-8">'.$row['nomer'].'</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">ФИО директора</label>
-		<div class="col-sm-8">
-			<input class="form-control" type="text" name="director" value="'.$row['director'].'">
-		</div>
+		<div class="col-sm-3 control-label">Дата договора</div>
+		<div class="col-sm-8">'.$row['date'].'</div>
 	</div>	
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Реквизиты</label>
-		<div class="col-sm-8">
-			<textarea class="form-control" rows="8" name="requisites">'.$row['requisites'].'</textarea>
-		</div>
+		<div class="col-sm-3 control-label">Название компании</div>
+		<div class="col-sm-8">'.$row['name'].'</div>
+	</div>	
+	<div class="form-group">
+		<div class="col-sm-3 control-label">Примечания</div>
+		<div class="col-sm-8">'.$row['prim'].'</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-offset-9">
+		<div class="col-sm-3 control-label"><strong>Удалить догвоор?</strong><br />Это действие нельзя отменить</div>
+		<div class="col-sm-8">
+			<a href="dogovora.php"><button type="button" class="btn btn-success">НЕТ</button></a>
 			<input type="hidden" name="id" value="'.$row['id'].'">
-			<button type="submit" class="btn btn-default">Редактировать договор</button>
+			<button type="submit" class="btn btn-danger">да</button>
 		</div>
-	</div>
+	</div>	
 </form>';
-
-	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-firm.php">Создать нового контрагента</a></p>';
+	
+	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';	
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
@@ -79,7 +79,7 @@
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
-
-	<script src="../js/bootstrap.min.js"></script>
+ 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>

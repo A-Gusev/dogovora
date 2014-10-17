@@ -1,6 +1,28 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.10deb1
+-- http://www.phpmyadmin.net
+--
+-- Хост: localhost
+-- Время создания: Окт 17 2014 г., 14:24
+-- Версия сервера: 5.5.38-0ubuntu0.14.04.1
+-- Версия PHP: 5.5.9-1ubuntu4.3
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- База данных: `admin_arenda`
+--
+CREATE DATABASE IF NOT EXISTS `admin_arenda` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `admin_arenda`;
+
+-- --------------------------------------------------------
 
 --
 -- Структура таблицы `company`
@@ -12,16 +34,20 @@ CREATE TABLE IF NOT EXISTS `company` (
   `director` text NOT NULL,
   `requisites` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
+--
+-- Очистить таблицу перед добавлением данных `company`
+--
+
+TRUNCATE TABLE `company`;
 --
 -- Дамп данных таблицы `company`
 --
 
 INSERT INTO `company` (`id`, `name`, `director`, `requisites`) VALUES
-(1, 'рога и копыта', 'Куплетский', 'ИНН 897459827'),
-(2, 'Design4net', 'Гусев', 'INN 468975349769834'),
-(8, 'rege', 'sefgts', 'sdgfsad');
+(1, 'Design4net', 'Гусев', 'ИНН 468975349769834'),
+(2, 'Seo4net', 'Куплетский', 'Реквизиты');
 
 -- --------------------------------------------------------
 
@@ -31,21 +57,26 @@ INSERT INTO `company` (`id`, `name`, `director`, `requisites`) VALUES
 
 CREATE TABLE IF NOT EXISTS `contract` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nomer` int(12) NOT NULL,
+  `nomer` text NOT NULL,
   `date` date NOT NULL,
   `company_id` int(5) NOT NULL,
   `prim` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
+--
+-- Очистить таблицу перед добавлением данных `contract`
+--
+
+TRUNCATE TABLE `contract`;
 --
 -- Дамп данных таблицы `contract`
 --
 
 INSERT INTO `contract` (`id`, `nomer`, `date`, `company_id`, `prim`) VALUES
-(1, 42524, '2014-09-22', 1, 'овлиалц'),
-(2, 56, '2014-09-09', 2, 'вапукпв6'),
-(3, 6543, '2014-09-10', 1, 'ывкпруквпрукепьтукоптулкпк');
+(1, '1', '2014-09-22', 1, 'Примечание 1'),
+(2, '2', '2014-10-17', 2, 'Примечание 2'),
+(3, '3', '2014-10-17', 1, 'Примечание 3');
 
 -- --------------------------------------------------------
 
@@ -67,11 +98,16 @@ CREATE TABLE IF NOT EXISTS `gl_settings` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
+-- Очистить таблицу перед добавлением данных `gl_settings`
+--
+
+TRUNCATE TABLE `gl_settings`;
+--
 -- Дамп данных таблицы `gl_settings`
 --
 
 INSERT INTO `gl_settings` (`id`, `company_name`, `job_title`, `job_title_r`, `director`, `director_io`, `director_r`, `bank_account-1`, `bank_account-2`) VALUES
-(1, 'Рога и Копыта', 'Директор', 'Директору', 'Кучеров Иван Сергеевич', 'Кучеров И.С.', 'Кучерову Ивану Сергеевичу', 'ИНН 7715257832\r\nКПП 771501001\r\nр/сч  40703810287810000000\r\nв Московский филиал ОАО АКБ «Росбанк» г. Москва\r\nк/с 30101810000000000272\r\nБИК 044583272\r\nОКПО 55007845\r\nОКАТО 45280574000', 'Банк получателя: ОАО «Сбербанк России», г. Москва\r\nРасчетный счет 40703810438180133973 (рубли РФ)\r\nИНН 7724296034, КПП 770401001.\r\nБИК 044525225\r\nКорсчет 30101810400000000225\r\nОГРН 1067799030826 (свидетельство серия 77 № 008801539 от 28 ноября 2006)\r\nОКАТО 45286590000');
+(1, 'Рога и Копыта', 'Директор', 'Директору', 'Кучеров Иван Сергеевич', 'Кучеров И.С', 'Кучерову Ивану Сергеевичу', 'ИНН 7715257832\r\nКПП 771501001\r\nр/сч  40703810287810000000\r\nв Московский филиал ОАО АКБ «Росбанк» г. Москва\r\nк/с 30101810000000000272\r\nБИК 044583272\r\nОКПО 55007845\r\nОКАТО 45280574000', 'Банк получателя: ОАО «Сбербанк России», г. Москва\r\nРасчетный счет 40703810438180133973 (рубли РФ)\r\nИНН 7724296034, КПП 770401001.\r\nБИК 044525225\r\nКорсчет 30101810400000000225\r\nОГРН 1067799030826 (свидетельство серия 77 № 008801539 от 28 ноября 2006)\r\nОКАТО 45286590000');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

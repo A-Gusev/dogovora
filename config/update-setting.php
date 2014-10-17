@@ -4,8 +4,8 @@
 	    <meta charset="utf-8">
 	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 	    <title>Редактирование глобальных настроек</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 		<meta http-equiv="Refresh" content="2; url=setting.php">
 	</head>
 <body>
@@ -58,6 +58,6 @@
 	mysqli_close($link);
 ?>
  
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
