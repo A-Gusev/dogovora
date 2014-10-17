@@ -75,15 +75,15 @@
 </form>';
 
 	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';	
-	
+
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
 	mysqli_free_result($result2);
-	
+
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
- 
+
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

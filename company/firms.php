@@ -31,7 +31,6 @@
 
 	$query = "SELECT * FROM `company`
 	ORDER BY  `company`.`id` ASC";
-
 	$result = mysqli_query($link, $query);
 
 	echo '<table class="table table-hover">
@@ -41,6 +40,7 @@
 			<th>Название компании</th>
 			<th>ФИО директора</th>
 			<th>реквизиты</th>
+			<th>количество договоров</th>
 			<th>редактировать</th>
 		</tr>
 	</thead>
@@ -48,12 +48,19 @@
 
 	/* ассоциативный массив */
 	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-	
+
+	$sql_kol = "SELECT COUNT(`nomer`)
+	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
+	WHERE `company`.`id`=".$row['id'];
+	$kol = mysqli_query($link, $sql_kol);
+	$kol2 = mysqli_fetch_array($kol, MYSQLI_NUM);
+
 	echo '
 		<tr> 
 			<td>'.$row['name'].'</td>
 			<td>'.$row['director'].'</td>
 			<td>'.$row['requisites'].'</td>
+			<td>'.$kol2['0'].'</td>
 			<td>
 				<form class="form-inline" role="form" action="firm.php" method="get" name="firm">
 					<input type="hidden" name="id" value="'.$row['id'].'"><button type="submits" class="btn btn-default">Редактировать</button>

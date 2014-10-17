@@ -43,9 +43,9 @@
 		</div>
 	</div>
 </form>';
-	
+
 	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-firm.php">Создать нового контрагента</a></p>';
-	
+
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
 	mysqli_free_result($result2);
@@ -53,7 +53,7 @@
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
- 
+
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

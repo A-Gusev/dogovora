@@ -1,25 +1,9 @@
--- phpMyAdmin SQL Dump
--- version 4.0.10deb1
--- http://www.phpmyadmin.net
---
--- Хост: localhost
--- Время создания: Окт 17 2014 г., 14:24
--- Версия сервера: 5.5.38-0ubuntu0.14.04.1
--- Версия PHP: 5.5.9-1ubuntu4.3
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- База данных: `admin_arenda`
 --
-CREATE DATABASE IF NOT EXISTS `admin_arenda` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `admin_arenda`;
 
 -- --------------------------------------------------------
@@ -34,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `director` text NOT NULL,
   `requisites` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Очистить таблицу перед добавлением данных `company`
@@ -46,8 +30,8 @@ TRUNCATE TABLE `company`;
 --
 
 INSERT INTO `company` (`id`, `name`, `director`, `requisites`) VALUES
-(1, 'Design4net', 'Гусев', 'ИНН 468975349769834'),
-(2, 'Seo4net', 'Куплетский', 'Реквизиты');
+(1, 'Design4net', 'Гусев АС', 'ИНН 12345678'),
+(2, 'Seo4net', 'Куплетский СА', 'Реквизиты');
 
 -- --------------------------------------------------------
 
@@ -62,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `contract` (
   `company_id` int(5) NOT NULL,
   `prim` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Очистить таблицу перед добавлением данных `contract`
@@ -108,7 +92,3 @@ TRUNCATE TABLE `gl_settings`;
 
 INSERT INTO `gl_settings` (`id`, `company_name`, `job_title`, `job_title_r`, `director`, `director_io`, `director_r`, `bank_account-1`, `bank_account-2`) VALUES
 (1, 'Рога и Копыта', 'Директор', 'Директору', 'Кучеров Иван Сергеевич', 'Кучеров И.С', 'Кучерову Ивану Сергеевичу', 'ИНН 7715257832\r\nКПП 771501001\r\nр/сч  40703810287810000000\r\nв Московский филиал ОАО АКБ «Росбанк» г. Москва\r\nк/с 30101810000000000272\r\nБИК 044583272\r\nОКПО 55007845\r\nОКАТО 45280574000', 'Банк получателя: ОАО «Сбербанк России», г. Москва\r\nРасчетный счет 40703810438180133973 (рубли РФ)\r\nИНН 7724296034, КПП 770401001.\r\nБИК 044525225\r\nКорсчет 30101810400000000225\r\nОГРН 1067799030826 (свидетельство серия 77 № 008801539 от 28 ноября 2006)\r\nОКАТО 45286590000');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

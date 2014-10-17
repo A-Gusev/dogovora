@@ -13,7 +13,7 @@
 		<a href="contract/dogovora.php">Список договоров</a> :: 
 		<a href="company/firms.php">Список контрагентов</a>
 	</p>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
 

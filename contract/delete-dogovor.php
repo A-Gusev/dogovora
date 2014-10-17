@@ -69,7 +69,7 @@
 		</div>
 	</div>	
 </form>';
-	
+
 	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';	
 
 	/* очищаем результаты выборки */
@@ -79,7 +79,7 @@
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
- 
+
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>

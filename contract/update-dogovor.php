@@ -6,7 +6,6 @@
 	    <title>Редактирование договоров</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-		<meta http-equiv="Refresh" content="1; url=dogovora.php">
 	</head>
 <body>
 <?php 
@@ -39,15 +38,14 @@
 
 	/* подготавливаем запрос к БД */
 	$update_sql = "UPDATE `admin_arenda`.`contract` SET `nomer` = '$nomer', `date` = '$date', `company_id` = '$company_id', `prim` = '$prim' WHERE `contract`.`id` = '$idset'";	
-		
+
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
-	echo '<p>Запись успешно обновлена!</p>';
-	
-	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';	
-	
+
 	/* закрываем подключение */
 	mysqli_close($link);
+
+	header('Location:dogovora.php');
 ?>
 
 	<script src="../js/bootstrap.min.js"></script>

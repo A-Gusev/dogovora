@@ -6,7 +6,6 @@
 	    <title>Редактирование контрагента</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-		<meta http-equiv="Refresh" content="2; url=firms.php">
 	</head>
 <body>
 <?php 
@@ -39,20 +38,19 @@
 	/* подготавливаем запрос к БД */
 	$update_sql = "UPDATE `admin_arenda`.`company` SET `name` = '$name', `director` = '$director', `requisites` = '$requisites'
 	WHERE `company`.`id` = '$idset'";		
-	
+
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
-	echo '<p>Запись успешно обновлена!</p>';
-	
-	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-firm.php">Создать нового контрагента</a></p>';
-	
+
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
-	
+
 	/* закрываем подключение */
 	mysqli_close($link);
+
+	header('Location:firms.php');
 ?>
- 
+
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

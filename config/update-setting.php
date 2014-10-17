@@ -6,7 +6,6 @@
 	    <title>Редактирование глобальных настроек</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-		<meta http-equiv="Refresh" content="2; url=setting.php">
 	</head>
 <body>
 <?php 
@@ -18,7 +17,7 @@
 
 	require_once '../login.php';
 	$link=mysqli_connect($host, $user, $password, $db);
-	
+
 	/* проверка подключения */
 	if (mysqli_connect_errno()) {
 	    printf("Не удалось подключиться: %s\n", mysqli_connect_error());
@@ -56,8 +55,10 @@
 
 	/* закрываем подключение */
 	mysqli_close($link);
+
+	header('Location:setting.php');
 ?>
- 
+
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

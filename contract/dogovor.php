@@ -44,7 +44,7 @@
 
 	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
- 
+
 	/* вывод в форму */
 	echo '<form class="form-horizontal" role="form" action="update-dogovor.php" method="post" name="dogovor">
 	<legend>Редактирование договора</legend>
@@ -87,7 +87,7 @@
 		</div>
 	</div>
 </form>';
-	
+
 	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';	
 
 	/* очищаем результаты выборки */
@@ -97,7 +97,7 @@
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
- 
+
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -17,7 +17,7 @@
 
 	require_once '../login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
-	
+
 	/* проверка подключения */
 	if (mysqli_connect_errno()) {
 	    echo 'Не удалось подключиться: '. mysqli_connect_error();
@@ -32,7 +32,7 @@
 	$query = "SELECT `contract`.`id`, `contract`.`nomer`, `contract`.`date`, `company`.`name`, `contract`.`prim`
 	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
 	ORDER BY  `contract`.`id` ASC";
-	
+
 	$result = mysqli_query($link, $query);
 
 	echo '<table class="table table-hover">
