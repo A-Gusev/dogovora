@@ -49,8 +49,8 @@
 		<div class="col-sm-8">
 			<input class="form-control" type="date" min="2000-01-01" name="date" value="'.date("Y-m-d").'">
 		</div>
-	</div>	
-	<div class="form-group">
+	</div>
+<div class="form-group">
 		<label class="col-sm-3 control-label">Название компании</label>
 		<div class="col-sm-8">
 			<select class="form-control" name="company_id">';
@@ -60,11 +60,11 @@
 	echo '
 			</select>
 		</div>
-	</div>	
+	</div>			
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Примечания</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="prim" value="'.$row['prim'].'">
+			<input class="form-control" type="text" name="prim">
 		</div>
 	</div>
 	<div class="form-group">

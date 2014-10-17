@@ -34,14 +34,14 @@
 	ORDER BY  `contract`.`id` ASC";
 	
 	$result = mysqli_query($link, $query);
-	
+
 	echo '<table class="table table-hover">
 	<caption>Список договоров</caption>
 	<thead>
 		<tr>
-			<th>nomer и date</th>
-			<th>name</th>
-			<th>prim</th>
+			<th>Номер и дата договолра</th>
+			<th>название компании</th>
+			<th>примечание</th>
 			<th>редактировать</th>
 		</tr>
 	</thead>
@@ -49,7 +49,7 @@
 
 	/* ассоциативный массив */
 	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-		
+
 	echo '
 		<tr> 
 			<td>Договор №'.$row['nomer'].' от '.$row['date'].'</td>
@@ -68,17 +68,15 @@
 	</tbody>
 </table>';
 
-
-	
 	echo '<br /><br /><p><a href="index.php">Home</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
-	
+
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
- 
+
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>

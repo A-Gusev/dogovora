@@ -6,7 +6,7 @@
 	    <title>Редактирование договоров</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-		<meta http-equiv="Refresh" content="2; url=dogovora.php">
+		<meta http-equiv="Refresh" content="2; url=firms.php">
 	</head>
 <body>
 <?php 
@@ -31,14 +31,13 @@
 	}
 
 	/* забираем данные из формы */
-	$nomer=$_REQUEST['nomer'];
-	$date=$_REQUEST['date'];
-	$company_id=$_REQUEST['company_id'];
-	$prim=$_REQUEST['prim'];
-		
+	$name=$_REQUEST['name'];
+	$director=$_REQUEST['director'];
+	$requisites=$_REQUEST['requisites'];
+
 	/* подготавливаем запрос к БД */
-	$update_sql = "INSERT INTO `admin_arenda`.`contract` (`id`, `nomer`, `date`, `company_id`, `prim`)
-	VALUES (NULL, '$nomer', '$date', '$company_id', '$prim')";
+	$update_sql = "INSERT INTO `admin_arenda`.`company` (`id`, `name`, `director`, `requisites`)
+	VALUES (NULL, '$name', '$director', '$requisites')";
 	
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
