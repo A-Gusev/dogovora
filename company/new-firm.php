@@ -38,8 +38,9 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-offset-9">
-			<button type="submit" class="btn btn-default">Создать контрагента</button>
+		<div class="col-sm-offset-5">
+			<button type="submit" class="btn btn-default" name="button" value="save">Сохранить</button>
+			<button type="submit" class="btn btn-success" name="button" value="close">Сохранить и закрыть</button>
 		</div>
 	</div>
 </form>';

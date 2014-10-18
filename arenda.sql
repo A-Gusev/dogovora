@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `director` text NOT NULL,
   `requisites` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Очистить таблицу перед добавлением данных `company`
@@ -31,7 +31,8 @@ TRUNCATE TABLE `company`;
 
 INSERT INTO `company` (`id`, `name`, `director`, `requisites`) VALUES
 (1, 'Design4net', 'Гусев АС', 'ИНН 12345678'),
-(2, 'Seo4net', 'Куплетский СА', 'Реквизиты');
+(2, 'ООО удалить-инвест', 'Петров Иван Андреевич', 'ИНН 12345678'),
+(3, 'Seo4net', 'Куплетский СА', 'Реквизиты');
 
 -- --------------------------------------------------------
 
@@ -59,7 +60,7 @@ TRUNCATE TABLE `contract`;
 
 INSERT INTO `contract` (`id`, `nomer`, `date`, `company_id`, `prim`) VALUES
 (1, '1', '2014-09-22', 1, 'Примечание 1'),
-(2, '2', '2014-10-17', 2, 'Примечание 2'),
+(2, '2', '2014-10-17', 3, 'Примечание 2'),
 (3, '3', '2014-10-17', 1, 'Примечание 3');
 
 -- --------------------------------------------------------

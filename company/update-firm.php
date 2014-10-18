@@ -34,6 +34,7 @@
 	$name=$_REQUEST['name'];
 	$director=$_REQUEST['director'];
 	$requisites=$_REQUEST['requisites'];
+	$button=$_REQUEST['button'];
 
 	/* подготавливаем запрос к БД */
 	$update_sql = "UPDATE `admin_arenda`.`company` SET `name` = '$name', `director` = '$director', `requisites` = '$requisites'
@@ -48,9 +49,14 @@
 	/* закрываем подключение */
 	mysqli_close($link);
 
-	header('Location:firms.php');
-?>
+	if ($button == "save") {
+		header('Location:firm.php?id='.$idset);
+	}
+	else {
+		header('Location:firms.php');
+	}
 
+?>
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

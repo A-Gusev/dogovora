@@ -48,7 +48,7 @@
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 	/* вывод в форму */
-	echo '<form class="form-horizontal" role="form" action="update-firm.php" method="post">
+	echo '<form class="form-horizontal" role="form" action="update-firm.php" method="get">
 	<legend>Редактирование данных контрагента</legend>
 
 	<div class="form-group">
@@ -70,13 +70,20 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">количество договоров</label>
-		<div class="col-sm-8">'.$kol2['0'].'</div>
+		<label class="col-sm-3 control-label">количество договоров</label>';
+			if ($kol2['0']>0) {
+				echo '<div class="col-sm-8"><a href="dogovor-firm.php?id='.$row['id'].'">'.$kol2['0'].'</a></div>';
+			}
+			else {
+				echo '<div class="col-sm-8">'.$kol2['0'].'</div>';
+			}
+		echo '
 	</div>	
 	<div class="form-group">
-		<div class="col-sm-offset-9">
+		<div class="col-sm-offset-5">
 			<input type="hidden" name="id" value="'.$row['id'].'">
-			<button type="submit" class="btn btn-default">Редактировать договор</button>
+			<button type="submit" class="btn btn-default" name="button" value="save">Сохранить</button>
+			<button type="submit" class="btn btn-success" name="button" value="close">Сохранить и закрыть</button>
 		</div>
 	</div>
 </form>';

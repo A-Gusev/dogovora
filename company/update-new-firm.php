@@ -33,6 +33,7 @@
 	$name=$_REQUEST['name'];
 	$director=$_REQUEST['director'];
 	$requisites=$_REQUEST['requisites'];
+	$button=$_REQUEST['button'];
 
 	/* подготавливаем запрос к БД */
 	$update_sql = "INSERT INTO `admin_arenda`.`company` (`id`, `name`, `director`, `requisites`)
@@ -41,13 +42,19 @@
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
 
-	/* очищаем результаты выборки */
-	mysqli_free_result($result);
+	$max_sql = "SELECT MAX(`id`) AS `id` FROM `company`";
+	$max_mas = mysqli_query($link, $max_sql);
+	$id_max = mysqli_fetch_array($max_mas, MYSQLI_NUM);
 
 	/* закрываем подключение */
 	mysqli_close($link);
 
-	header('Location:firms.php');
+	if ($button == "save") {
+		header('Location:firm.php?id='.$id_max['0']);
+	}
+	else {
+		header('Location:firms.php');
+	}
 ?>
 
 	<script src="../js/bootstrap.min.js"></script>
