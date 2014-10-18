@@ -60,18 +60,25 @@
 		<tr> 
 			<td>'.$row['name'].'</td>
 			<td>'.$row['director'].'</td>
-			<td>'.$row['requisites'].'</td>
-			<td>'.$kol2['0'].'</td>
-			<td>
+			<td>'.$row['requisites'].'</td>';
+			if ($kol2['0']>0) {
+				echo '<td><a href="dogovor-firm.php?id='.$row['id'].'">'.$kol2['0'].'</a></td>';
+			}
+			else {
+				echo '<td>'.$kol2['0'].'</td>';
+			}
+			echo '<td>
 				<form class="form-inline" role="form" action="firm.php" method="get">
-					<input type="hidden" name="id" value="'.$row['id'].'"><button type="submits" class="btn btn-default">Редактировать</button>
-			</form>
+					<input type="hidden" name="id" value="'.$row['id'].'">
+					<button type="submits" class="btn btn-default">Редактировать</button>
+				</form>
 			</td>
 			<td>';
 				if ($kol2['0']==0) { echo '
 				<form class="form-inline" role="form" action="delete-firm.php" method="get">
-					<input type="hidden" name="id" value="'.$row['id'].'"><button type="submits" class="btn btn-danger">Удалить</button>
-			</form>';
+					<input type="hidden" name="id" value="'.$row['id'].'">
+					<button type="submits" class="btn btn-danger">Удалить</button>
+				</form>';
 			}
 			echo '</td>
 		</tr>';

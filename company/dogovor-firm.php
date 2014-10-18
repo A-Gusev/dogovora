@@ -3,7 +3,7 @@
     <head>
 	    <meta charset="utf-8">
 	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Удаление контрагента</title>
+	    <title>Список договоров контрагента</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
@@ -48,8 +48,8 @@
 	$kol2 = mysqli_fetch_array($kol, MYSQLI_NUM);
  
 	/* вывод в форму */
-	echo '<form class="form-horizontal" role="form" action="yes-delete-firm.php" method="get">
-	<legend>Удаление контрагента</legend>
+	echo '<div class="form-horizontal">
+	<legend>Список договоров контрагента</legend>
 	<div class="form-group">
 		<div class="col-sm-3 control-label">Название компании</div>
 		<div class="col-sm-8">'.$row['name'].'</div>
@@ -65,23 +65,82 @@
 	<div class="form-group">
 		<div class="col-sm-3 control-label">количество договоров</div>
 		<div class="col-sm-8">'.$kol2['0'].'</div>
-	</div>	
-	<div class="form-group">';
-	if ($kol2['0']==0) { echo '
-		<div class="col-sm-3 control-label"><strong>Удалить контрагента?</strong><br />Это действие нельзя отменить</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-3 control-label">редактировать данные контрагента</div>
 		<div class="col-sm-8">
-			<a href="firms.php"><button type="button" class="btn btn-success">НЕТ</button></a>
-			<input type="hidden" name="id" value="'.$row['id'].'">
-			<button type="submit" class="btn btn-danger">да</button>';
-	}
-	else {
-		echo '<div class="col-sm-5 control-label"><strong>Нельзя удалять контрагента, к которому привязаны договора</strong></div>';
-		}
-		
+			<form class="form-inline" role="form" action="firm.php" method="get">
+				<input type="hidden" name="id" value="'.$row['id'].'">
+				<button type="submits" class="btn btn-default">Редактировать</button>
+			</form>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-3 control-label"><strong>Удалить контрагента?</strong><br />Это действие нельзя отменить</div>
+		<div class="col-sm-8">';
+			if ($kol2['0']==0) { echo '
+				<form class="form-horizontal" role="form" action="yes-delete-firm.php" method="get">
+					<a href="firms.php"><button type="button" class="btn btn-success">НЕТ</button></a>
+					<input type="hidden" name="id" value="'.$row['id'].'">
+					<button type="submit" class="btn btn-danger">да</button>
+				</form>';
+			}
+			else {
+				echo 'Нельзя удалять контрагента, к которому привязаны договора';
+			}
 		echo '
 		</div>	
-	</div>	
-</form>';
+	</div>
+<div><br />';
+
+	if ($kol2['0']>0) { 
+	
+	$sql_dogovora = "SELECT * FROM  `contract` 
+	WHERE  `company_id` ='$idset'
+	ORDER BY  `contract`.`id` ASC ";
+
+	$result_dogovora = mysqli_query($link, $sql_dogovora);
+
+	echo '<table class="table table-hover">
+	<caption>Список договоров контрагента <strong>'.$row['name'].'</strong></caption>
+	<thead>
+		<tr>
+			<th>Номер и дата договора</th>
+			<th>примечание</th>
+			<th>редактировать</th>
+			<th>удалить</th>
+		</tr>
+	</thead>
+	<tbody>';
+
+	/* ассоциативный массив */
+	while ($row_dog = mysqli_fetch_array($result_dogovora, MYSQLI_ASSOC)) {
+
+	echo '
+		<tr> 
+			<td>Договор №'.$row_dog['nomer'].' от '.$row_dog['date'].'</td>
+			<td>'.$row_dog['prim'].'</td>
+			<td>
+				<form class="form-inline" role="form" action="../contract/dogovor.php" method="get">
+					<input type="hidden" name="id" value="'.$row_dog['id'].'"><button type="submits" class="btn btn-default">Редактировать</button>
+			</form>
+			</td>
+			<td>
+				<form class="form-inline" role="form" action="../contract/delete-dogovor.php" method="get">
+					<input type="hidden" name="id" value="'.$row_dog['id'].'"><button type="submits" class="btn btn-danger">Удалить</button>
+			</form>
+			</td>
+		</tr>';
+
+	}
+
+	echo '
+	</tbody>
+</table>';
+
+}
 
 	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-firm.php">Создать нового контрагента</a></p>';	
 

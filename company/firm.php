@@ -37,6 +37,13 @@
 	WHERE  `company`.`id`='$idset'";
 	$result = mysqli_query($link, $query);
 
+	/* Запрос на получение количества договоров */	
+	$sql_kol = "SELECT COUNT(`nomer`)
+	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
+	WHERE `company`.`id`='$idset'";
+	$kol = mysqli_query($link, $sql_kol);
+	$kol2 = mysqli_fetch_array($kol, MYSQLI_NUM);
+
 	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
@@ -62,6 +69,10 @@
 			<textarea class="form-control" rows="8" name="requisites">'.$row['requisites'].'</textarea>
 		</div>
 	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">количество договоров</label>
+		<div class="col-sm-8">'.$kol2['0'].'</div>
+	</div>	
 	<div class="form-group">
 		<div class="col-sm-offset-9">
 			<input type="hidden" name="id" value="'.$row['id'].'">
