@@ -1,21 +1,21 @@
+<?php
+	/* выключаем кэширование */
+	Header("Cache-Control: no-store, no-cache, must-revalidate");
+	Header("Pragma: no-cache");
+	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
+	Header("Expires: " . date("r"));
+?>
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 	<head>
 		<meta charset="utf-8">
-		<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+		<meta http-equiv="Cache-Control" content="no-cache">
 		<title>Список контрагентов</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
 <body>
 <?php
-	/* выключаем кэширование
- 	Header("Cache-Control: no-store, no-cache, must-revalidate");
-	Header("Pragma: no-cache");
-	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
-	Header("Expires: " . date("r")); */
-
-
 	require_once '../login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
 
@@ -98,7 +98,6 @@
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
-
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,20 +1,28 @@
-<!DOCTYPE html>
-<html>
-    <head>
-	    <meta charset="utf-8">
-	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Редактирование глобальных настроек</title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-	</head>
-<body>
+<?php
+	/* выключаем кэширование */	
+	Header("Cache-Control: no-store, no-cache, must-revalidate");
+	Header("Pragma: no-cache");
+	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
+	Header("Expires: " . date("r"));
+?>
 <?php
 	/* выключаем кэширование */
 	Header("Cache-Control: no-store, no-cache, must-revalidate");
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
-
+?>
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<title>Редактирование глобальных настроек</title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+	</head>
+<body>
+<?php
 	require_once '../login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
 	
@@ -95,14 +103,13 @@ echo '<form class="form-horizontal" role="form" action="update-setting.php" meth
 </form>';
 
 	echo '<br /><p><a href="../index.php">Home</a></p>';	
-	
+
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
-	
+
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
- 
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
