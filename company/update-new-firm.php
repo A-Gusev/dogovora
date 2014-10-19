@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-    <head>
-	    <meta charset="utf-8">
-	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Создание нового контрагента</title>
+	<head>
+		<meta charset="utf-8">
+		<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+		<meta http-equiv="Refresh" content="3; url=firms.php">
+		<title>Создание нового контрагента</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
@@ -30,14 +31,15 @@
 	}
 
 	/* забираем данные из формы */
+	$type=$_REQUEST['company_type'];
 	$name=$_REQUEST['name'];
 	$director=$_REQUEST['director'];
 	$requisites=$_REQUEST['requisites'];
 	$button=$_REQUEST['button'];
 
 	/* подготавливаем запрос к БД */
-	$update_sql = "INSERT INTO `admin_arenda`.`company` (`id`, `name`, `director`, `requisites`)
-	VALUES (NULL, '$name', '$director', '$requisites')";
+	$update_sql = "INSERT INTO `admin_arenda`.`company` (`id`, `id_type`, `name`, `director`, `requisites`)
+	VALUES (NULL, '$type', '$name', '$director', '$requisites')";
 
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());

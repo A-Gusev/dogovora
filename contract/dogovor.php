@@ -33,14 +33,18 @@
 	$idset=$_REQUEST['id'];
 
 	/* подготавливаем запрос к БД */
-	$query = "SELECT `contract`.`id`, `contract`.`nomer`, `contract`.`date`, `contract`.`company_id`, `company`.`name`, `contract`.`prim`
-	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
+	$query = "SELECT * FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
 	WHERE  `contract`.`id`='$idset'";
 	$result = mysqli_query($link, $query);
 
 	$query2 = "SELECT `company`.`id` , `company`.`name`
 	FROM `company`";
 	$result2 = mysqli_query($link, $query2);
+
+	/* Запрос на получение типа контракта */
+	$query_type = "SELECT `type_contract`.`id` , `type_contract`.`type`
+	FROM `type_contract`";
+	$result_type = mysqli_query($link, $query_type);
 
 	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -59,6 +63,19 @@
 		<label class="col-sm-3 control-label">Дата договора</label>
 		<div class="col-sm-8">
 			<input class="form-control" type="date" min="2000-01-01" name="date" value="'.$row['date'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Тип договора</label>
+		<div class="col-sm-8">
+			<select class="form-control" name="dogovor_type">';
+				while ($row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC)) {
+					echo '<option value="'.$row_type['id'].'"';
+					if ($row_type['id']==$row['id_type_dog']) echo ' selected ';
+					echo '>' . $row_type['type'] . '</option>';
+				}
+	echo '
+			</select>
 		</div>
 	</div>	
 	<div class="form-group">
@@ -82,7 +99,7 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-9">
-			<input type="hidden" name="id" value="'.$row['id'].'">
+			<input type="hidden" name="id" value="'.$idset.'">
 			<button type="submit" class="btn btn-default">Редактировать договор</button>
 		</div>
 	</div>

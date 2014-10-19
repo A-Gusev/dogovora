@@ -9,11 +9,12 @@
 	</head>
 <body>
 <?php
-	/* выключаем кэширование */
-	Header("Cache-Control: no-store, no-cache, must-revalidate");
+	/* выключаем кэширование
+ 	Header("Cache-Control: no-store, no-cache, must-revalidate");
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
-	Header("Expires: " . date("r"));
+	Header("Expires: " . date("r")); */
+
 
 	require_once '../login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
@@ -58,7 +59,7 @@
 
 	echo '
 		<tr> 
-			<td>'.$row['name'].'</td>
+			<td><a href="dogovor-firm.php?id='.$row['id'].'">'.$row['name'].'</a></td>
 			<td>'.$row['director'].'</td>
 			<td>'.$row['requisites'].'</td>';
 			if ($kol2['0']>0) {

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <head>
-	    <meta charset="utf-8">
-	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Создание нового договора</title>
+	<head>
+		<meta charset="utf-8">
+		<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+		<title>Создание нового договора</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-	</head>
+		</head>
 <body>
 <?php
 	/* выключаем кэширование */
@@ -34,6 +34,11 @@
 	FROM `company`";
 	$result = mysqli_query($link, $query);
 
+	/* Запрос на получение типа контракта */
+	$query_type = "SELECT `type_contract`.`id` , `type_contract`.`type`
+	FROM `type_contract`";
+	$result_type = mysqli_query($link, $query_type);
+
 	/* форма */
 	echo '<form class="form-horizontal" role="form" action="update-new-dogovor.php" method="post" name="dogovor">
 	<legend>Создание нового договора</legend>
@@ -51,12 +56,23 @@
 		</div>
 	</div>
 <div class="form-group">
+		<label class="col-sm-3 control-label">Тип договора</label>
+		<div class="col-sm-8">
+			<select class="form-control" name="dogovor_type">';
+				while ($row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC)) {
+					echo '<option value="'.$row_type['id'].'">'.$row_type['type'].'</option>';
+				}
+	echo '
+			</select>
+		</div>
+	</div>	
+	<div class="form-group">
 		<label class="col-sm-3 control-label">Название компании</label>
 		<div class="col-sm-8">
 			<select class="form-control" name="company_id">';
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-		echo '<option value="'.$row['id'].'" >'.$row['name'].'</option>';
-			}
+				while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+					echo '<option value="'.$row['id'].'" >'.$row['name'].'</option>';
+				}
 	echo '
 			</select>
 		</div>

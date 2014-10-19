@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head>
-	    <meta charset="utf-8">
-	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Редактирование контрагента</title>
+	<head>
+		<meta charset="utf-8">
+		<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+		<meta http-equiv="Refresh" content="1; url=firms.php">
+		<title>Редактирование контрагента</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
 <body>
 <?php 
-	/* выключаем кэширование */
+	/* выключаем кэширование 
 	Header("Cache-Control: no-store, no-cache, must-revalidate");
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
-	Header("Expires: " . date("r"));
+	Header("Expires: " . date("r"));*/
 
 	require_once '../login.php';
 	$link=mysqli_connect($host, $user, $password, $db);
@@ -31,20 +32,21 @@
 
 	/* забираем данные из формы */
 	$idset=$_REQUEST['id'];
+	$type=$_REQUEST['company_type'];
 	$name=$_REQUEST['name'];
 	$director=$_REQUEST['director'];
 	$requisites=$_REQUEST['requisites'];
 	$button=$_REQUEST['button'];
 
 	/* подготавливаем запрос к БД */
-	$update_sql = "UPDATE `admin_arenda`.`company` SET `name` = '$name', `director` = '$director', `requisites` = '$requisites'
+	$update_sql = "UPDATE `admin_arenda`.`company` SET `id_type` = '$type', `name` = '$name', `director` = '$director', `requisites` = '$requisites'
 	WHERE `company`.`id` = '$idset'";		
 
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
 
 	/* очищаем результаты выборки */
-	mysqli_free_result($result);
+//	mysqli_free_result($update_sql);
 
 	/* закрываем подключение */
 	mysqli_close($link);

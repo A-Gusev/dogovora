@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-	    <meta charset="utf-8">
-	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Редактирование глобальных настроек</title>
+		<meta charset="utf-8">
+		<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+		<meta http-equiv="Refresh" content="1; url=setting.php">
+		<title>Редактирование глобальных настроек</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>

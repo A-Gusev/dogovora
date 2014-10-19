@@ -15,10 +15,39 @@
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
 
+	require_once '../login.php';
+	$link = mysqli_connect($host, $user, $password, $db);
+
+	/* проверка подключения */
+	if (mysqli_connect_errno()) {
+	    echo 'Не удалось подключиться: '. mysqli_connect_error();
+	    exit();
+	}
+
+	/* установка кодировки utf8 */	
+	if (!$link->set_charset("utf8")) {
+	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
+	}
+
+	/* Запрос на получение типа контрагента */
+	$query_type = "SELECT `type_company`.`id` , `type_company`.`type`
+	FROM `type_company`";
+	$result_type = mysqli_query($link, $query_type);
+
 	/* форма */
 	echo '<form class="form-horizontal" role="form" action="update-new-firm.php" method="post">
 	<legend>Создание нового контрагента</legend>
-
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Тип контрагента</label>
+		<div class="col-sm-8">
+			<select class="form-control" name="company_type">';
+				while ($row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC)) {
+					echo '<option value="'.$row_type['id'].'">'.$row_type['type'].'</option>';
+				}
+	echo '
+			</select>
+		</div>
+	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Название компании</label>
 		<div class="col-sm-8">

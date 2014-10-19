@@ -9,16 +9,16 @@
 	</head>
 <body>
 <?php
-	/* выключаем кэширование */
+	/* выключаем кэширование 
 	Header("Cache-Control: no-store, no-cache, must-revalidate");
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
-	Header("Expires: " . date("r"));
+	Header("Expires: " . date("r"));*/
 
 	require_once '../login.php';
 	$link = mysqli_connect($host, $user, $password, $db);
 
-	require_once '../login.php';
+	/* проверка подключения */
 	if (mysqli_connect_errno()) {
 	    echo 'Не удалось подключиться: '. mysqli_connect_error();
 	    exit();
@@ -42,15 +42,32 @@
 	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
 	WHERE `company`.`id`='$idset'";
 	$kol = mysqli_query($link, $sql_kol);
-	$kol2 = mysqli_fetch_array($kol, MYSQLI_NUM);
 
-	/* Получение ассоциативного массива */
+	/* Получение массивов */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+	$kol2 = mysqli_fetch_array($kol, MYSQLI_NUM);	
+
+	/* Запрос на получение типа контрагента */
+	$query_type = "SELECT `type_company`.`id` , `type_company`.`type`
+	FROM `type_company`";
+	$result_type = mysqli_query($link, $query_type);
 
 	/* вывод в форму */
-	echo '<form class="form-horizontal" role="form" action="update-firm.php" method="get">
-	<legend>Редактирование данных контрагента</legend>
-
+	echo '<form class="form-horizontal" role="form" action="update-firm.php" method="post">
+	<legend>Редактирование данных контрагента</legend>	
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Тип контрагента</label>
+		<div class="col-sm-8">
+			<select class="form-control" name="company_type">';
+				while ($row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC)) {
+					echo '<option value="'.$row_type['id'].'"';
+					if ($row_type['id']==$row['id_type']) echo ' selected ';
+					echo ' >' . $row_type['type'] . '</option>';
+				}
+	echo '
+			</select>
+		</div>
+	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Название компании</label>
 		<div class="col-sm-8">
@@ -92,7 +109,8 @@
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
-	mysqli_free_result($result2);
+	mysqli_free_result($kol);
+	mysqli_free_result($result_type);
 
 	/* закрываем подключение */
 	mysqli_close($link);

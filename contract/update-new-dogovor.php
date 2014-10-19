@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-    <head>
-	    <meta charset="utf-8">
-	    <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	    <title>Редактирование договоров</title>
+	<head>
+		<meta charset="utf-8">
+		<meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+		<meta http-equiv="Refresh" content="1; url=dogovora.php">
+		<title>Редактирование договоров</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
@@ -32,12 +33,13 @@
 	/* забираем данные из формы */
 	$nomer=$_REQUEST['nomer'];
 	$date=$_REQUEST['date'];
+	$dogovor_type=$_REQUEST['dogovor_type'];
 	$company_id=$_REQUEST['company_id'];
 	$prim=$_REQUEST['prim'];
 
 	/* подготавливаем запрос к БД */
-	$update_sql = "INSERT INTO `admin_arenda`.`contract` (`id`, `nomer`, `date`, `company_id`, `prim`)
-	VALUES (NULL, '$nomer', '$date', '$company_id', '$prim')";
+	$update_sql = "INSERT INTO `admin_arenda`.`contract` (`id`, `nomer`, `date`, `id_type_dog`, `company_id`, `prim`)
+	VALUES (NULL, '$nomer', '$date', '$dogovor_type', '$company_id', '$prim')";
 
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
