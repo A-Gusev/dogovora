@@ -11,7 +11,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="Cache-Control" content="no-cache">
 		<meta http-equiv="Refresh" content="1; url=dogovora.php">
-		<title>Редактирование договоров</title>
+		<title>Удаление договора</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 	</head>
@@ -35,13 +35,11 @@
 	$idset = $_REQUEST['id'];
 
 	/* подготавливаем запрос к БД */
-	$delete_sql = "DELETE FROM `admin_arenda`.`contract` WHERE `contract`.`id` = '$idset'";
+	$delete_sql = "DELETE FROM `admin_arenda`.`contract` WHERE `contract`.`c_id` = '$idset'";
 
 	/* отправляем запрос к БД */
 	mysqli_query($link, $delete_sql) or die("Ошибка: " . mysql_error());
 	echo '<p>Запись успешно удалена!</p>';
-
-	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';	
 
 	/* закрываем подключение */
 	mysqli_close($link);

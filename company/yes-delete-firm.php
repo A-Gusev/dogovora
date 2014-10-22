@@ -10,6 +10,7 @@
     <head>
 	    <meta charset="utf-8">
 		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta http-equiv="Refresh" content="1; url=firms.php">
 		<title>Удаление договоров</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
@@ -34,11 +35,12 @@
 	$idset = $_REQUEST['id'];
 
 	/* подготавливаем запрос к БД */
-	$delete_sql = "DELETE FROM `admin_arenda`.`company` WHERE `company`.`id` = '$idset'";
+	$delete_sql = "DELETE FROM `admin_arenda`.`firms` WHERE `firms`.`f_id` = '$idset'";
 	
-	$sql_kol = "SELECT COUNT(`nomer`)
-	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
-	WHERE `company`.`id`='$idset'";
+	/* Запрос на получение количества договоров */	
+	$sql_kol = "SELECT COUNT(`c_nomer`)
+	FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id`
+	WHERE `firms`.`f_id`='$idset'";
 	$kol = mysqli_query($link, $sql_kol);
 	$kol2 = mysqli_fetch_array($kol, MYSQLI_NUM);
 

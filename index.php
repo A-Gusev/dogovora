@@ -15,11 +15,18 @@
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 	</head>
 <body>
-	<p>
+	<div class="text-center">
 		<a href="config/setting.php">Глобальные настройки</a> :: 
 		<a href="contract/dogovora.php">Список договоров</a> :: 
 		<a href="company/firms.php">Список контрагентов</a>
-	</p>
+	</div>
+<h1>Система учёта договоров аренды</h1>
+<br /><br /><br />
+	<div class="text-center">
+		<a href="config/setting.php">Глобальные настройки</a> :: 
+		<a href="contract/dogovora.php">Список договоров</a> :: 
+		<a href="company/firms.php">Список контрагентов</a>
+	</div>
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

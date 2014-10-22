@@ -13,6 +13,15 @@
 		<title>Список контрагентов</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="../css/table.css">
+		<script type="text/javascript" src="../js/jquery-latest.js"></script> 
+		<script type="text/javascript" src="../js/jquery.tablesorter.js"></script> 
+		<script type="text/javascript">
+			$(document).ready(function() { 
+			$("#myTable") 
+			.tablesorter({widthFixed: true, widgets: ['zebra']}); 
+			});
+		</script>
 	</head>
 <body>
 <?php
@@ -30,18 +39,31 @@
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
 
-	$query = "SELECT * FROM `company`
-	ORDER BY  `company`.`id` ASC";
+	/* Узнаем какое сегодня число */
+	$today = date("Y-m-d");
+	/* 3 месяца вперёд (93 дня) */
+	$m3 = date("Y-m-d" ,time()+60*60*24*31*3);
+
+	/* Запрос на получение данных из таблицы firms */
+	$query = "SELECT * FROM `firms`
+	ORDER BY  `firms`.`f_id` ASC";
 	$result = mysqli_query($link, $query);
 
-	echo '<table class="table table-hover">
+	echo '<table id="myTable" class="tablesorter table table-hover">
 	<caption>Список контрагентов</caption>
 	<thead>
 		<tr>
-			<th>Название компании</th>
-			<th>ФИО директора</th>
-			<th>реквизиты</th>
+			<th>id</th>
+			<th>тип</th>
+			<th>yазвание компании</th>
+			<th>ИНН</th>
+			<th>КПП</th>
+			<th>ОГРН</th>
+			<th>директор</th>
+			<th>телефон</th>
+			<th>e-mail</th>
 			<th>количество договоров</th>
+			<th>Договор на почту</th>
 			<th>редактировать</th>
 			<th>удалить</th>
 		</tr>
@@ -51,35 +73,61 @@
 	/* ассоциативный массив */
 	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 
-	$sql_kol = "SELECT COUNT(`nomer`)
-	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
-	WHERE `company`.`id`=".$row['id'];
+	/* Запрос на получение количества договоров */
+	$sql_kol = "SELECT COUNT(`c_nomer`)
+	FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id`
+	WHERE `firms`.`f_id`=".$row['f_id'];
 	$kol = mysqli_query($link, $sql_kol);
 	$kol2 = mysqli_fetch_array($kol, MYSQLI_NUM);
-
+	
+	/* Запрос на получение типа контрагента */
+	$query_type = "SELECT `type_firm`.`tf_id` , `type_firm`.`tf_type`
+	FROM `type_firm`
+	WHERE `type_firm`.`tf_id`=".$row['f_id'];
+	$result_type = mysqli_query($link, $query_type);
+	$row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC);
+	
+	
 	echo '
-		<tr> 
-			<td><a href="dogovor-firm.php?id='.$row['id'].'">'.$row['name'].'</a></td>
-			<td>'.$row['director'].'</td>
-			<td>'.$row['requisites'].'</td>';
+		<tr'; if ($row['f_problem']==1) {echo ' class="info"';}
+	echo '>
+			<td>'.$row['f_id'].'</td></td>
+			<td>'.$row_type['tf_type'].'</td>
+			<td><a href="dogovor-firm.php?id='.$row['f_id'].'">'.$row['f_name'].'</a></td>
+			<td>'.$row['f_inn'].'</td>
+			<td>'.$row['f_kpp'].'</td>
+			<td>'.$row['f_ogrn'].'</td>
+			<td>'.$row['f_director_io'].'</td>
+			<td>'.$row['f_tel'].'</td>
+			<td>'.$row['f_mail'].'</td>';
 			if ($kol2['0']>0) {
-				echo '<td><a href="dogovor-firm.php?id='.$row['id'].'">'.$kol2['0'].'</a></td>';
+				echo '<td><a href="dogovor-firm.php?id='.$row['f_id'].'">'.$kol2['0'].'</a></td>';
 			}
 			else {
 				echo '<td>'.$kol2['0'].'</td>';
 			}
-			echo '<td>
+			echo '
+			<td>';
+				if ($row['f_mail_s_e']<$today && $row['f_mail_s']==1) {echo '<span class="label label-danger">ПРОСРОЧЕН!</span>';}
+				elseif ($row['f_mail_s_e']<$m3 && $row['f_mail_s']==1) {echo '<span class="label label-warning">Заканчивается</span>';}
+				elseif ($row['f_mail_s']==1 && $row['f_mail_s_checked']==1) {echo '<span class="label label-success">Заключён и проверен</span>';}
+				elseif ($row['f_mail_s']==1 && $row['f_mail_s_checked']==0) {echo '<span class="label label-warning">Заключён, но не проверен</span>';}
+				else {echo '<span class="label label-default">Не заключен</span>';}
+			echo '
+			</td>
+			<td>
 				<form class="form-inline" role="form" action="firm.php" method="get">
-					<input type="hidden" name="id" value="'.$row['id'].'">
+					<input type="hidden" name="id" value="'.$row['f_id'].'">
 					<button type="submits" class="btn btn-default">Редактировать</button>
 				</form>
 			</td>
 			<td>';
-				if ($kol2['0']==0) { echo '
+				if ($kol2['0']==0 && $row['f_mail_s']==0) { echo '
 				<form class="form-inline" role="form" action="delete-firm.php" method="get">
-					<input type="hidden" name="id" value="'.$row['id'].'">
+					<input type="hidden" name="id" value="'.$row['f_id'].'">
 					<button type="submits" class="btn btn-danger">Удалить</button>
-				</form>';
+				</form>
+			';
 			}
 			echo '</td>
 		</tr>';
@@ -87,13 +135,18 @@
 
 	echo '
 	</tbody>
-</table>';
+</table>
+';
 
-	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-firm.php">Создать нового контрагента</a></p>';
+	echo '
+	<br /><span class="label label-info">* - синим фонов выделены строки с договорами, находящимися на "личном контроле" директора</span><br />
+	<br /><br /><div class="text-center"><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-firm.php">Создать нового контрагента</a></div>
+';
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
 	mysqli_free_result($kol);
+	mysqli_free_result($result_type);
 
 	/* закрываем подключение */
 	mysqli_close($link);

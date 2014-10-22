@@ -10,7 +10,7 @@
     <head>
 	    <meta charset="utf-8">
 		<meta http-equiv="Cache-Control" content="no-cache">
-		<title>Удаление договора</title>
+		<title>О договоре</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
@@ -58,7 +58,7 @@
 
 	echo '
 			<form class="form-horizontal" role="form" action="yes-delete-dogovor.php" method="get">
-				<legend>Удаление договора</legend>
+				<legend>Информация о договоре</legend>
 				<div class="form-group">
 					<div class="col-sm-3 text-right">ID</div>
 					<div class="col-sm-8">'.$row['c_id'].'</div>
@@ -114,6 +114,12 @@
 						<a href="dogovora.php"><button type="button" class="btn btn-success">НЕТ</button></a>
 						<input type="hidden" name="id" value="'.$row['c_id'].'">
 						<button type="submit" class="btn btn-danger">да</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 control-label">Редактировать договор?</div>
+					<div class="col-sm-8">
+						<a href="dogovor.php?id='.$row['c_id'].'"><button type="button" class="btn btn-default">Редактировать</button></a>
 					</div>
 				</div>
 			</form>';

@@ -34,16 +34,17 @@
 	$idset=$_REQUEST['id'];
 
 	/* подготавливаем запрос к БД */
-	$query = "SELECT * FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
-	WHERE  `contract`.`id`='$idset'";
+	$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id`
+	WHERE  `contract`.`c_id`='$idset'";
 	$result = mysqli_query($link, $query);
 
-	$query2 = "SELECT `company`.`id` , `company`.`name`
-	FROM `company`";
+	/* запрос на имя компании */
+	$query2 = "SELECT `firms`.`f_id` , `firms`.`f_name`
+	FROM `firms`";
 	$result2 = mysqli_query($link, $query2);
 
 	/* Запрос на получение типа контракта */
-	$query_type = "SELECT `type_contract`.`id` , `type_contract`.`type`
+	$query_type = "SELECT `type_contract`.`tc_id` , `type_contract`.`tc_type`
 	FROM `type_contract`";
 	$result_type = mysqli_query($link, $query_type);
 
@@ -51,62 +52,104 @@
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 	/* вывод в форму */
-	echo '<form class="form-horizontal" role="form" action="update-dogovor.php" method="post" name="dogovor">
-	<legend>Редактирование договора</legend>
-	
+	echo '<form class="form-horizontal" role="form" action="update-dogovor.php" method="post">
+	<legend>Редактирование данных договора №<strong>'.$row['c_nomer'].' от '.$row['c_date'].'</strong></legend>	
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Номер договора</label>
+		<label class="col-sm-3 control-label">ID</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="nomer" value="'.$row['nomer'].'">
+			<input readonly class="form-control" name="id" value="'.$row['c_id'].'">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Дата договора</label>
+		<label class="col-sm-3 control-label">Номер договора</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="date" min="2000-01-01" name="date" value="'.$row['date'].'">
+			<input required title="Введите номер договора" placeholder="Введите номер договора" class="form-control" name="nomer" value="'.$row['c_nomer'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Дата заключения договора</label>
+		<div class="col-sm-8">
+			<input required type="date" class="form-control" title="Введите дату заключения договора" name="date" max="2020-01-01" min="2000-01-01" value="'.$row['c_date'].'">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Тип договора</label>
 		<div class="col-sm-8">
-			<select class="form-control" name="dogovor_type">';
+			<select class="form-control" name="id_type_dog">';
 				while ($row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC)) {
-					echo '<option value="'.$row_type['id'].'"';
-					if ($row_type['id']==$row['id_type_dog']) echo ' selected ';
-					echo '>' . $row_type['type'] . '</option>';
+					echo '<option value="'.$row_type['tc_id'].'"';
+					if ($row_type['tc_id']==$row['c_id_type_dog']) echo ' selected ';
+					echo '>' . $row_type['tc_type'] . '</option>';
 				}
 	echo '
 			</select>
 		</div>
-	</div>	
+	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Название компании</label>
 		<div class="col-sm-8">
-			<select class="form-control" name="company_id">';
+			<select class="form-control" name="name">';
 			while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
-		echo '<option value="'.$row2['id'].'"';
-		if ($row2['id']==$row['company_id']) echo ' selected ';
-		echo ' >' . $row2['name'] . '</option>';
+		echo '<option value="'.$row2['f_id'].'"';
+		if ($row2['f_id']==$row['c_company_id']) echo ' selected ';
+		echo ' >' . $row2['f_name'] . '</option>';
 	}
 	echo '
 			</select>
 		</div>
-	</div>	
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Договор с...</label>
+		<div class="col-sm-8">
+			<input required type="date" class="form-control" title="Договор действителен с..." name="date-s" max="2020-01-01" min="2000-01-01" value="'.$row['c_date-s'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Договор по...</label>
+		<div class="col-sm-8">
+			<input required type="date" class="form-control" title="Договор действителен до..." name="date-po" max="2020-01-01" min="2000-01-01" value="'.$row['c_date-po'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Дата акта</label>
+		<div class="col-sm-8">
+			<input required type="date" class="form-control" title="Дата акта" name="date-akt" max="2020-01-01" min="2000-01-01" value="'.$row['c_date-akt'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Номер помещения</label>
+		<div class="col-sm-8">
+			<input class="form-control" title="Номер помещения" placeholder="Введите номер помещения" name="number" value="'.$row['c_number'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Площадь помещения в м<sup>2</sup></label>
+		<div class="col-sm-8">
+			<input class="form-control" title="Номер помещения" placeholder="Введите номер помещения" name="m2" value="'.$row['c_m2'].'">
+		</div>
+	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Примечания</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="prim" value="'.$row['prim'].'">
+			<textarea class="form-control" title="Примечания" placeholder="Укажите примечания" name="prim" rows="4">'.$row['c_prim'].'</textarea>
 		</div>
-	</div>
+	</div>	
 	<div class="form-group">
-		<div class="col-sm-offset-9">
-			<input type="hidden" name="id" value="'.$idset.'">
-			<button type="submit" class="btn btn-default">Редактировать договор</button>
+		<div class="col-sm-offset-5">
+			<input type="hidden" name="id" value="'.$row['c_id'].'">
+			<button type="submit" class="btn btn-default" name="button" value="save">Сохранить</button>
+			<button type="submit" class="btn btn-success" name="button" value="close">Сохранить и закрыть</button>
 		</div>
 	</div>
-</form>';
+</form>
+';
 
-	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a></p>';	
+	echo '
+<br /><br />
+<div class="text-center">
+	<a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a>
+</div>
+';	
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);

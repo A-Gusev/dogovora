@@ -1,11 +1,4 @@
 <?php
-	/* выключаем кэширование */	
-	Header("Cache-Control: no-store, no-cache, must-revalidate");
-	Header("Pragma: no-cache");
-	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
-	Header("Expires: " . date("r"));
-?>
-<?php
 	/* выключаем кэширование */
 	Header("Cache-Control: no-store, no-cache, must-revalidate");
 	Header("Pragma: no-cache");
@@ -37,7 +30,7 @@
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
 
-	$query = "SELECT * FROM `gl_settings` WHERE id=1";
+	$query = "SELECT * FROM `settings` WHERE s_id=1";
 	$result = mysqli_query($link, $query);
 
 	/* Получение ассоциативного массива */
@@ -49,60 +42,62 @@ echo '<form class="form-horizontal" role="form" action="update-setting.php" meth
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Название компании</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="company_name" value="'.$row['company_name'].'">
+			<input class="form-control" type="text" name="company_name" value="'.$row['s_company_name'].'">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Должность директора</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="job_title" value="'.$row['job_title'].'">
+			<input class="form-control" type="text" name="job_title" value="'.$row['s_job_title'].'">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Должность директора (родительный)</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="job_title_r" value="'.$row['job_title_r'].'">
+			<input class="form-control" type="text" name="job_title_r" value="'.$row['s_job_title_r'].'">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">ФИО директора</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="director" value="'.$row['director'].'">
+			<input class="form-control" type="text" name="director" value="'.$row['s_director'].'">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">ФИО директора (инициалы)</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="director_io" value="'.$row['director_io'].'">
+			<input class="form-control" type="text" name="director_io" value="'.$row['s_director_io'].'">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">ФИО директора (родительный)</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="director_r" value="'.$row['director_r'].'">
+			<input class="form-control" type="text" name="director_r" value="'.$row['s_director_r'].'">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Реквизиты №1</label>
 		<div class="col-sm-8">
-			<textarea class="form-control" rows="8" name="bank_account-1">'.$row['bank_account-1'].'</textarea>
+			<textarea class="form-control" rows="8" name="bank_account-1">'.$row['s_bank_account-1'].'</textarea>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Реквизиты №2</label>
 		<div class="col-sm-8">
-			<textarea class="form-control" rows="8" name="bank_account-2">'.$row['bank_account-2'].'</textarea>
+			<textarea class="form-control" rows="8" name="bank_account-2">'.$row['s_bank_account-2'].'</textarea>
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-9">
-			<input type="hidden" name="id" value="'.$row['id'].'">
+			<input type="hidden" name="id" value="'.$row['s_id'].'">
 			<button type="submit" class="btn btn-default">Редактировать настройки</button>
 		</div>
 	</div>
-</form>';
+</form>
+';
 
-	echo '<br /><p><a href="../index.php">Home</a></p>';	
+	echo '<br /><p><a href="../index.php">Home</a></p>
+';	
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);

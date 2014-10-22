@@ -30,21 +30,31 @@
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
 
+	/* Узнаем какое сегодня число */
+	$today = date("Y-m-d");
+	/* 3 месяца вперёд (93 дня) */
+	$m3 = date("Y-m-d" ,time()+60*60*24*31*3);
+
 	/* забираем данные из формы */
 	$idset=$_REQUEST['id'];
 
 	/* подготавливаем запрос к БД */
-	$query = "SELECT * FROM `company`
-	WHERE `company`.`id`='$idset'";
+	$query = "SELECT * FROM `firms`
+	WHERE `firms`.`f_id`='$idset'";
 	$result = mysqli_query($link, $query);
-
-	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+	
+	/* Запрос на получение типа контрагента */
+	$query_type = "SELECT `type_firm`.`tf_id` , `type_firm`.`tf_type`
+	FROM `type_firm`
+	WHERE `type_firm`.`tf_id`='$idset'";
+	$result_type = mysqli_query($link, $query_type);
+	$row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC);
 
 	/* Запрос на получение количества договоров */ 
-	$sql_kol = "SELECT COUNT(`nomer`)
-	FROM `contract` JOIN `company` ON `contract`.`company_id` = `company`.`id`
-	WHERE `company`.`id`='$idset'";
+	$sql_kol = "SELECT COUNT(`c_nomer`)
+	FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id`
+	WHERE `firms`.`f_id`='$idset'";
 	$kol = mysqli_query($link, $sql_kol);
 	$kol2 = mysqli_fetch_array($kol, MYSQLI_NUM);
  
@@ -52,43 +62,145 @@
 	echo '<form class="form-horizontal" role="form" action="yes-delete-firm.php" method="get">
 	<legend>Удаление контрагента</legend>
 	<div class="form-group">
-		<div class="col-sm-3 control-label">Название компании</div>
-		<div class="col-sm-8">'.$row['name'].'</div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-3 control-label">ФИО директора</div>
-		<div class="col-sm-8">'.$row['director'].'</div>
-	</div>	
-	<div class="form-group">
-		<div class="col-sm-3 control-label">реквизиты</div>
-		<div class="col-sm-8">'.$row['requisites'].'</div>
-	</div>	
-	<div class="form-group">
-		<div class="col-sm-3 control-label">количество договоров</div>
-		<div class="col-sm-8">'.$kol2['0'].'</div>
-	</div>	
-	<div class="form-group">';
-	if ($kol2['0']==0) { echo '
-		<div class="col-sm-3 control-label"><strong>Удалить контрагента?</strong><br />Это действие нельзя отменить</div>
-		<div class="col-sm-8">
-			<a href="firms.php"><button type="button" class="btn btn-success">НЕТ</button></a>
-			<input type="hidden" name="id" value="'.$row['id'].'">
-			<button type="submit" class="btn btn-danger">да</button>';
-	}
-	else {
-		echo '<div class="col-sm-5 control-label"><strong>Нельзя удалять контрагента, к которому привязаны договора</strong></div>';
-		}
-		
-		echo '
-		</div>	
-	</div>	
+					<div class="col-sm-3 text-right">ID</div>
+					<div class="col-sm-8">'.$row['f_id'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Тип</div>
+					<div class="col-sm-8">'.$row_type['tf_type'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Название компании</div>
+					<div class="col-sm-8"><strong>'.$row['f_name'].'</strong></div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">ИНН</div>
+					<div class="col-sm-8">'.$row['f_inn'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">КПП</div>
+					<div class="col-sm-8">'.$row['f_kpp'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">ОГРН</div>
+					<div class="col-sm-8">'.$row['f_ogrn'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Адрес регистрации</div>
+					<div class="col-sm-8">'.$row['f_address'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Дирктор</div>
+					<div class="col-sm-8">'.$row['f_director'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Директор (инициалы)</div>
+					<div class="col-sm-8">'.$row['f_director_io'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Директор (р.п.)</div>
+					<div class="col-sm-8">'.$row['f_director_r'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Паспорт директора</div>
+					<div class="col-sm-8">'.$row['f_passport'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Телефон</div>
+					<div class="col-sm-8">'.$row['f_tel'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">E-mail</div>
+					<div class="col-sm-8">'.$row['f_mail'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Факс О_о</div>
+					<div class="col-sm-8">'.$row['f_fax'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Реквизиты</div>
+					<div class="col-sm-8">'.$row['f_requisites'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Особые договорённости</div>
+					<div class="col-sm-8">'.$row['f_agreement'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Заметки</div>
+					<div class="col-sm-8">'.$row['f_notes'].'</div>
+				</div>
+					<div class="form-group">
+					<div class="col-sm-3 text-right">На личном контроле?</div>
+					<div class="col-sm-8">';if ($row['f_problem']==1) {echo '<span class="label label-danger">Да</span>';} else {echo 'нет';} echo '</div>
+				</div>
+				<br />
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Заключён договор на почту?</div>
+					<div class="col-sm-8">';if ($row['f_mail_s']==1) {echo '<span class="label label-success">Да</span>';} else {echo 'нет';} echo '</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Дата начала договора на почту</div>
+					<div class="col-sm-8">'.$row['f_mail_s_s'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Дата окончания договора на почту</div>
+					<div class="col-sm-8">'.$row['f_mail_s_e'];
+						if ($row['f_mail_s_e']<$today && $row['f_mail_s']==1) {echo ' <span class="label label-danger">ПРОСРОЧЕН!</span>';}
+						elseif ($row['f_mail_s_e']<$m3 && $row['f_mail_s']==1) {echo ' <span class="label label-warning">Заканчивается</span>';}
+					echo '</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Договор на почту проверен?</div>
+					<div class="col-sm-8">'; if ($row['f_mail_s_checked']==1) {echo '<span class="label label-success">Да</span>';} else {echo '<span class="label label-danger">НЕТ</span>';} echo '</div>
+				</div>
+				<br />
+				<div class="form-group">
+					<div class="col-sm-3 text-right">количество договоров</div>
+					<div class="col-sm-8"><span class="badge">'.$kol2['0'].'</span></div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Удалить контрагента?<br /><em>Это действие нельзя отменить</em></div>
+					<div class="col-sm-8">';
+						if ($kol2['0']>0 && $row['f_mail_s']==1 && $row['f_mail_s_e']>$today) { echo '
+							Нельзя удалять контрагента, к которому привязаны договора, а так же присутствует действующий договор на почту';
+						}
+						elseif ($kol2['0']>0) { echo '
+							Нельзя удалять контрагента, к которому привязаны договора.';
+						}
+						elseif ($kol2['0']>0 && $row['f_mail_s']==1 && $row['f_mail_s_e']>$today) { echo '
+							Нельзя удалять контрагента, у которого есть действующий договор на почту';
+						}
+						else {
+							echo '
+							<form class="form-horizontal" role="form" action="yes-delete-firm.php" method="get">
+								<a href="firms.php"><button type="button" class="btn btn-success">НЕТ</button></a>
+								<input type="hidden" name="id" value="'.$row['f_id'].'">
+								<button type="submit" class="btn btn-danger">да</button>
+							</form>';
+						}
+					echo '
+					</div>	
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">редактировать данные контрагента</div>
+					<div class="col-sm-8">
+						<form class="form-inline" role="form" action="firm.php" method="get">
+							<input type="hidden" name="id" value="'.$row['f_id'].'">
+							<button type="submits" class="btn btn-default">Редактировать</button>
+						</form>
+					</div>
+				</div>	
 </form>';
 
-	echo '<br /><br /><p><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-firm.php">Создать нового контрагента</a></p>';	
+	echo '<br /><br />
+	<div class="text-center">
+		<a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-firm.php">Создать нового контрагента</a>
+	</div>';	
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
-	mysqli_free_result($result2);
+	mysqli_free_result($kol);
+	mysqli_free_result($result_type);
 
 	/* закрываем подключение */
 	mysqli_close($link);

@@ -32,20 +32,38 @@
 	}
 
 	/* забираем данные из формы */
-	$type=$_REQUEST['company_type'];
-	$name=$_REQUEST['name'];
-	$director=$_REQUEST['director'];
-	$requisites=$_REQUEST['requisites'];
-	$button=$_REQUEST['button'];
+	$type=htmlentities(trim($_REQUEST['company_type']));
+	$inn=htmlentities(trim($_REQUEST['inn']));
+	$kpp=htmlentities(trim($_REQUEST['kpp']));
+	$ogrn=htmlentities(trim($_REQUEST['ogrn']));
+	$name=htmlentities(trim($_REQUEST['name']));
+	$address=htmlentities(trim($_REQUEST['address']));
+	$director=htmlentities(trim($_REQUEST['director']));
+	$director_io=htmlentities(trim($_REQUEST['director_io']));
+	$director_r=htmlentities(trim($_REQUEST['director_r']));
+	$passport=htmlentities(trim($_REQUEST['passport']));
+	$tel=htmlentities(trim($_REQUEST['tel']));
+	$mail=htmlentities(trim($_REQUEST['mail']));
+	$fax=htmlentities(trim($_REQUEST['fax']));
+	$requisites=htmlentities(trim($_REQUEST['requisites']));
+	$agreement=htmlentities(trim($_REQUEST['agreement']));
+	$notes=htmlentities(trim($_REQUEST['notes']));
+	$mail_s_s=htmlentities(trim($_REQUEST['mail_s_s']));
+	$mail_s_e=htmlentities(trim($_REQUEST['mail_s_e']));
+	$button=htmlentities(trim($_REQUEST['button']));
+	if (array_key_exists('problem', $_REQUEST)) {$problem=1;} else {$problem=0;}
+	if (array_key_exists('mail_s', $_REQUEST)) {$mail_s=1;} else {$mail_s=0;}
+	if (array_key_exists('mail_s_checked', $_REQUEST)) {$mail_s_checked=1;} else {$mail_s_checked=0;}
+
 
 	/* подготавливаем запрос к БД */
-	$update_sql = "INSERT INTO `admin_arenda`.`company` (`id`, `id_type`, `name`, `director`, `requisites`)
-	VALUES (NULL, '$type', '$name', '$director', '$requisites')";
+	$update_sql = "INSERT INTO `admin_arenda`.`firms` (`f_id`, `f_id_type`, `f_inn`, `f_kpp`, `f_ogrn`, `f_name`, `f_address`, `f_director`, `f_director_io`, `f_director_r`, `f_passport`, `f_tel`, `f_mail`, `f_fax`, `f_requisites`, `f_agreement`, `f_notes`, `f_problem`, `f_mail_s`, `f_mail_s_s`, `f_mail_s_e`, `f_mail_s_checked`)
+	VALUES (NULL, '$type', '$inn', '$kpp', '$ogrn', '$name', '$address', '$director', '$director_io', '$director_r', '$passport', '$tel', '$mail', '$fax', '$requisites', '$agreement', '$notes', '$problem', '$mail_s', '$mail_s_s', '$mail_s_e', '$mail_s_checked')";
 
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
 
-	$max_sql = "SELECT MAX(`id`) AS `id` FROM `company`";
+	$max_sql = "SELECT MAX(`f_id`) AS `f_id` FROM `firms`";
 	$max_mas = mysqli_query($link, $max_sql);
 	$id_max = mysqli_fetch_array($max_mas, MYSQLI_NUM);
 
