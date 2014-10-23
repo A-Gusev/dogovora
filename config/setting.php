@@ -10,7 +10,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="Cache-Control" content="no-cache">
-		<title>Редактирование глобальных настроек</title>
+		<title>Редактирование данных арендодателя</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
@@ -38,7 +38,7 @@
 
 	/* вывод в форму */	
 echo '<form class="form-horizontal" role="form" action="update-setting.php" method="post" name="setting">
-	<legend>Редактирование глобальных настроек</legend>
+	<legend>Редактирование данных арендодателя</legend>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Название компании</label>
 		<div class="col-sm-8">

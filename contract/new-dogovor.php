@@ -7,10 +7,10 @@
 ?>
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-	    <meta charset="utf-8">
+	<head>
+		<meta charset="utf-8">
 		<meta http-equiv="Cache-Control" content="no-cache">
-		<title>Редактирование договора</title>
+		<title>Создание нового договора</title>
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
@@ -30,14 +30,6 @@
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
 
-	/* забираем данные из формы */
-	$idset=$_REQUEST['id'];
-
-	/* подготавливаем запрос к БД */
-	$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id`
-	WHERE  `contract`.`c_id`='$idset'";
-	$result = mysqli_query($link, $query);
-
 	/* запрос на имя компании */
 	$query2 = "SELECT `firms`.`f_id` , `firms`.`f_name`
 	FROM `firms`";
@@ -48,28 +40,19 @@
 	FROM `type_contract`";
 	$result_type = mysqli_query($link, $query_type);
 
-	/* Получение ассоциативного массива */
-	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
 	/* вывод в форму */
-	echo '<form class="form-horizontal" role="form" action="update-dogovor.php" method="post">
-	<legend>Редактирование данных договора №<strong>'.$row['c_nomer'].' от '.$row['c_date'].'</strong></legend>	
-	<div class="form-group">
-		<label class="col-sm-3 control-label">ID</label>
-		<div class="col-sm-8">
-			<input readonly class="form-control" name="id" value="'.$row['c_id'].'">
-		</div>
-	</div>
+	echo '<form class="form-horizontal" role="form" action="update-new-dogovor.php" method="post">
+	<legend>Создание нового договора</legend>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Номер договора</label>
 		<div class="col-sm-8">
-			<input title="Введите номер договора" placeholder="Введите номер договора" class="form-control" name="nomer" value="'.$row['c_nomer'].'">
+			<input title="Введите номер договора" placeholder="Введите номер договора" class="form-control" name="nomer" value="б/н">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Дата заключения договора</label>
 		<div class="col-sm-8">
-			<input required type="date" class="form-control" title="Введите дату заключения договора" name="date" max="2020-01-01" min="2000-01-01" value="'.$row['c_date'].'">
+			<input required type="date" class="form-control" title="Введите дату заключения договора" name="date" max="2020-01-01" min="2000-01-01">
 		</div>
 	</div>
 	<div class="form-group">
@@ -78,7 +61,6 @@
 			<select class="form-control" name="id_type_dog">';
 				while ($row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC)) {
 					echo '<option value="'.$row_type['tc_id'].'"';
-					if ($row_type['tc_id']==$row['c_id_type_dog']) echo ' selected ';
 					echo '>' . $row_type['tc_type'] . '</option>';
 				}
 	echo '
@@ -91,7 +73,6 @@
 			<select class="form-control" name="name">';
 			while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
 		echo '<option value="'.$row2['f_id'].'"';
-		if ($row2['f_id']==$row['c_company_id']) echo ' selected ';
 		echo ' >' . $row2['f_name'] . '</option>';
 	}
 	echo '
@@ -101,42 +82,41 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Договор с...</label>
 		<div class="col-sm-8">
-			<input required type="date" class="form-control" title="Договор действителен с..." name="date-s" max="2020-01-01" min="2000-01-01" value="'.$row['c_date-s'].'">
+			<input required type="date" class="form-control" title="Договор действителен с..." name="date-s" max="2020-01-01" min="2000-01-01">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Договор по...</label>
 		<div class="col-sm-8">
-			<input required type="date" class="form-control" title="Договор действителен до..." name="date-po" max="2020-01-01" min="2000-01-01" value="'.$row['c_date-po'].'">
+			<input required type="date" class="form-control" title="Договор действителен до..." name="date-po" max="2020-01-01" min="2000-01-01">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Дата акта</label>
 		<div class="col-sm-8">
-			<input type="date" class="form-control" title="Дата акта" name="date-akt" max="2020-01-01" min="2000-01-01" value="'.$row['c_date-akt'].'">
+			<input type="date" class="form-control" title="Дата акта" name="date-akt" max="2020-01-01" min="2000-01-01">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Номер помещения</label>
 		<div class="col-sm-8">
-			<input class="form-control" title="Номер помещения" placeholder="Введите номер помещения" name="number" value="'.$row['c_number'].'">
+			<input class="form-control" title="Номер помещения" placeholder="Введите номер помещения" name="number">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Площадь помещения в м<sup>2</sup></label>
 		<div class="col-sm-8">
-			<input class="form-control" title="Номер помещения" placeholder="Введите номер помещения" name="m2" value="'.$row['c_m2'].'">
+			<input class="form-control" title="Номер помещения" placeholder="Введите номер помещения" name="m2">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Примечания</label>
 		<div class="col-sm-8">
-			<textarea class="form-control" title="Примечания" placeholder="Укажите примечания" name="prim" rows="4">'.$row['c_prim'].'</textarea>
+			<textarea class="form-control" title="Примечания" placeholder="Укажите примечания" name="prim" rows="4"></textarea>
 		</div>
 	</div>	
 	<div class="form-group">
 		<div class="col-sm-offset-5">
-			<input type="hidden" name="id" value="'.$row['c_id'].'">
 			<button type="submit" class="btn btn-default" name="button" value="save">Сохранить</button>
 			<button type="submit" class="btn btn-success" name="button" value="close">Сохранить и закрыть</button>
 		</div>
@@ -152,7 +132,7 @@
 ';	
 
 	/* очищаем результаты выборки */
-	mysqli_free_result($result);
+	mysqli_free_result($result_type);
 	mysqli_free_result($result2);
 
 	/* закрываем подключение */

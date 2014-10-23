@@ -38,11 +38,28 @@
 	if (!$link->set_charset("utf8")) {
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
-	
+
+	/* забираем данные из формы; Запрос на получение списка договоров */
+	if (array_key_exists('ref', $_REQUEST)) {
+		$ref=$_REQUEST['ref'];
+		if ($ref=='red') {
+			$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id` WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 31 AND TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) > 0 ORDER BY  `contract`.`c_id` ASC";
+		}
+		elseif ($ref=='yellow') {
+			$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id` WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 93 AND TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) > 0 ORDER BY  `contract`.`c_id` ASC";
+		}
+		elseif ($ref=='green') {
+			$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id` WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) >= 0 ORDER BY  `contract`.`c_id` ASC";
+		}
+		else {
+			$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id` ORDER BY  `contract`.`c_id` ASC";
+		}
+	}
+	else {
+		$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id` ORDER BY  `contract`.`c_id` ASC";
+	}
+
 	/* Запрос на получение списка договоров */
-	$query = "SELECT *
-	FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id`
-	ORDER BY  `contract`.`c_id` ASC";
 	$result = mysqli_query($link, $query);
 
 	/* Узнаем какое сегодня число */
@@ -53,7 +70,26 @@
 	$m3 = date("Y-m-d" ,time()+60*60*24*31*3);
 	
 	echo '<table id="myTable" class="tablesorter table table-hover">
-	<caption>Список договоров</caption>
+	<caption>';
+	if (array_key_exists('ref', $_REQUEST)) {
+		$ref=$_REQUEST['ref'];
+		if ($ref=='red') {
+			echo '<h3>Список договоров, заканчивающихся в ближайшие 30 дней</h3>';
+		}
+		elseif ($ref=='yellow') {
+			echo '<h3>Список договоров, заканчивающихся в ближайшие 3 месяца</h3>';
+		}
+		elseif ($ref=='green') {
+			echo 'Список действующих договоров';
+		}
+		else {
+			echo 'Список договоров';
+		}
+	}
+	else {
+		echo 'Список договоров';
+	}
+	echo '</caption>
 	<thead>
 		<tr>
 			<th>Номер и дата договора</th>
@@ -115,10 +151,10 @@
 	<br />';
 
 	echo '
-	<span class="label label-danger">Красным цветом выделены строки с договорами, истекающими в этом месяце;</span><br />
-	<span class="label label-warning">жёлтым цветов - истекающие в ближайшие 3 месяца;</span><br />
-	<span class="label label-success">зелёным цветом - действующие договора;</span><br />
-	<span>белым цветом - закончившиеся договора.</span><br />
+	<span class="label label-danger">Красным цветом выделены строки с договорами, истекающими в ближайшие 30 дней</span><br />
+	<span class="label label-warning">Жёлтым цветов - истекающие в ближайшие 3 месяца</span><br />
+	<span class="label label-success">Зелёным цветом - действующие договора</span><br />
+	<span>Белым цветом - закончившиеся договора</span><br />
 	<br /><div class="text-center"><a href="../index.php">Home</a> :: <a href="dogovora.php">Список договоров</a> :: <a href="new-dogovor.php">Создать новый договор</a>	</div>
 ';	
 

@@ -44,13 +44,30 @@
 	/* 3 месяца вперёд (93 дня) */
 	$m3 = date("Y-m-d" ,time()+60*60*24*31*3);
 
+	/* забираем данные из формы; Запрос на получение данных из таблицы firms */
+	if (array_key_exists('ref', $_REQUEST)) {
+		$ref=$_REQUEST['ref'];
+		if ($ref=='ok') {
+			$query = "SELECT * FROM `firms` WHERE `f_problem`='1' ORDER BY  `firms`.`f_id` ASC";
+		}
+		else {
+			$query = "SELECT * FROM `firms` ORDER BY  `firms`.`f_id` ASC";
+		}
+	}
+	else {
+		$query = "SELECT * FROM `firms` ORDER BY  `firms`.`f_id` ASC";
+	}
+
 	/* Запрос на получение данных из таблицы firms */
-	$query = "SELECT * FROM `firms`
-	ORDER BY  `firms`.`f_id` ASC";
 	$result = mysqli_query($link, $query);
 
 	echo '<table id="myTable" class="tablesorter table table-hover">
-	<caption>Список контрагентов</caption>
+	<caption>Список контрагентов';
+	if (array_key_exists('ref', $_REQUEST)) {
+		$ref=$_REQUEST['ref'];
+		if ($ref=='ok') {echo ' , находящихся на "личном контроле" руководителя';}
+	}
+	echo '</caption>
 	<thead>
 		<tr>
 			<th>id</th>
@@ -89,7 +106,17 @@
 	
 	
 	echo '
-		<tr'; if ($row['f_problem']==1) {echo ' class="info"';}
+		<tr';
+			if (array_key_exists('ref', $_REQUEST)) {
+				$ref=$_REQUEST['ref'];
+				if ($ref=='ok') {}
+				else {
+					if ($row['f_problem']==1) {echo ' class="info"';}
+				}
+			}
+			else {
+				if ($row['f_problem']==1) {echo ' class="info"';}
+			}
 	echo '>
 			<td>'.$row['f_id'].'</td></td>
 			<td>'.$row_type['tf_type'].'</td>
@@ -137,9 +164,17 @@
 	</tbody>
 </table>
 ';
-
+			if (array_key_exists('ref', $_REQUEST)) {
+				$ref=$_REQUEST['ref'];
+				if ($ref=='ok') {}
+				else {echo '
+	<br /><span class="label label-info">* - синим фонов выделены строки с контрагентами, находящимися на "личном контроле" директора</span><br />';
+				}
+			}
+			else {echo '
+	<br /><span class="label label-info">* - синим фонов выделены строки с контрагентами, находящимися на "личном контроле" директора</span><br />';
+			}
 	echo '
-	<br /><span class="label label-info">* - синим фонов выделены строки с договорами, находящимися на "личном контроле" директора</span><br />
 	<br /><br /><div class="text-center"><a href="../index.php">Home</a> :: <a href="firms.php">Список контрагентов</a> :: <a href="new-firm.php">Создать нового контрагента</a></div>
 ';
 
