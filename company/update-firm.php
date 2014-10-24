@@ -12,8 +12,8 @@
 		<meta http-equiv="Cache-Control" content="no-cache">
 		<meta http-equiv="Refresh" content="1; url=firms.php">
 		<title>Редактирование контрагента</title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+		<meta name="author" content="Alexey Gusev" />
+		<meta name="rights" content="Студия Design4net.ru" />
 	</head>
 <body>
 <?php

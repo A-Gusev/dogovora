@@ -12,8 +12,6 @@
 		<meta http-equiv="Cache-Control" content="no-cache">
 		<meta http-equiv="Refresh" content="1; url=dogovora.php">
 		<title>Редактирование договоров</title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
 <body>
 <?php
@@ -30,9 +28,6 @@
 	if (!$link->set_charset("utf8")) {
 	    printf("Ошибка при загрузке набора символов utf8: %s\n", $link->error);
 	}
-
-// id=1&nomer=19&date=2014-09-22&id_type_dog=1&name=1&date-s=2014-10-01&date-po=2014-10-10&date-akt=2014-10-01&number=12&m2=23&prim=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%87%D0%B0%D0%BD%D0%B8%D0%B5+1&id=1&button=save
-
 
 	/* забираем данные из формы */
 	$idset=htmlentities(trim($_REQUEST['id']));
@@ -74,6 +69,5 @@
 		header('Location:dogovora.php');
 	}
 ?>
-	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

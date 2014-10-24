@@ -10,9 +10,9 @@
     <head>
 	    <meta charset="utf-8">
 		<meta http-equiv="Cache-Control" content="no-cache">
+		<title>Система учёта договоров</title>
 		<meta name="author" content="Alexey Gusev" />
 		<meta name="rights" content="Студия Design4net.ru" />
-		<title>Система учёта договоров</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="css/my.css">
@@ -33,13 +33,10 @@
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
 
-	/* Узнаем какое сегодня число */
-	$today = date("Y-m-d");
-	/* 1 месяца вперёд (31 дня) */
-	$m1 = date("Y-m-d" ,time()+60*60*24*31);
-	/* 3 месяца вперёд (93 дня) */
-	$m3 = date("Y-m-d" ,time()+60*60*24*31*3);
-
+	//
+	/* Запросы для меню */
+	//
+	
 	/* Запрос на получение количества контрагентов на особом контроле */
 	$sql_menu_ok = "SELECT COUNT(`f_problem`)
 	FROM `firms`
@@ -52,7 +49,7 @@
 	FROM `firms`";
 	$menu_k = mysqli_query($link, $sql_menu_k);
 	$menu_kol_k = mysqli_fetch_array($menu_k, MYSQLI_NUM);
-	
+
 	/* Запрос на получение количества договоров */
 	$sql_menu_c = "SELECT COUNT(`c_id`)
 	FROM `contract`";
@@ -65,14 +62,14 @@
 	WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) >= 0";
 	$menu_c0 = mysqli_query($link, $sql_menu_c0);
 	$menu_kol_c0 = mysqli_fetch_array($menu_c0, MYSQLI_NUM);
-	
+
 	/* Запрос на получение количества договоров, которые закончатся больше чем через 3 месяца */
 	$sql_menu_c4 = "SELECT COUNT(`c_date-po`)
 	FROM `contract`
 	WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) >= 93";
 	$menu_c4 = mysqli_query($link, $sql_menu_c4);
 	$menu_kol_c4 = mysqli_fetch_array($menu_c4, MYSQLI_NUM);
-	
+
 	/* Запрос на получение количества договоров, которые закончатся в ближайшие 3 месяца */
 	$sql_menu_c3 = "SELECT COUNT(`c_date-po`)
 	FROM `contract`
@@ -104,18 +101,23 @@
 	/* Запрос на получение количества не проверенных договоров */
 	$sql_menu_mail_ch = "SELECT COUNT(`f_mail_s_e`)
 	FROM `firms`
-	WHERE `f_mail_s_checked` = 0";
+	WHERE `f_mail_s_checked` = 0 AND`f_mail_s` > 0";
 	$menu_mail_ch = mysqli_query($link, $sql_menu_mail_ch);
 	$menu_mail_ch = mysqli_fetch_array($menu_mail_ch, MYSQLI_NUM);
-	
+
 	/* Запрос на получение количества не заключённых договоров */
 	$sql_menu_mail_s = "SELECT COUNT(`f_mail_s_e`)
 	FROM `firms`
 	WHERE `f_mail_s` = 0";
 	$menu_mail_s = mysqli_query($link, $sql_menu_mail_s);
 	$menu_mail_s = mysqli_fetch_array($menu_mail_s, MYSQLI_NUM);
-	
+
 	$mail_red = $menu_mail_pr['0'] + $menu_mail_pr3['0'];
+
+	//
+	/* /Запросы для меню закончились :) */
+	//
+
 ?>
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
@@ -159,10 +161,10 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Договора на почту <span class="caret"></span><?php if ($mail_red > 0) {echo ' <span class="badge red">'.$mail_red.'</span> ';} if ($menu_mail_ch['0'] > 0) {echo ' <span class="badge yellow">'.$menu_mail_ch['0'].'</span>';} ?></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="company/firms.php">Договор просрочен <span class="badge pull-right red"><?=$menu_mail_pr['0']?></span></a></li>
-            <li><a href="company/firms.php">Договор заканчивается (3 месяца) <span class="badge orange"><?=$menu_mail_pr3['0']?></span></a></li>
-            <li><a href="company/firms.php">Договор не проверен <span class="badge pull-right yellow"><?=$menu_mail_ch['0']?></span></a></li>
-            <li><a href="company/firms.php">Договор не заключён <span class="badge pull-right"><?=$menu_mail_s['0']?></span></a></li>
+            <li><a href="company/firms.php?ref=mail-pr">Договор просрочен <span class="badge pull-right red"><?=$menu_mail_pr['0']?></span></a></li>
+            <li><a href="company/firms.php?ref=mail-pr3">Договор заканчивается (3 месяца) <span class="badge orange"><?=$menu_mail_pr3['0']?></span></a></li>
+            <li><a href="company/firms.php?ref=mail-ch">Договор не проверен <span class="badge pull-right yellow"><?=$menu_mail_ch['0']?></span></a></li>
+            <li><a href="company/firms.php?ref=mail-s">Договор не заключён <span class="badge pull-right"><?=$menu_mail_s['0']?></span></a></li>
           </ul>
         </li>
       </ul>
@@ -219,6 +221,10 @@
 	mysqli_free_result($menu_c1);
 	mysqli_free_result($menu_c3);
 	mysqli_free_result($menu_c4);
+//	mysqli_free_result($menu_mail_pr);
+//	mysqli_free_result($menu_mail_pr3);
+//	mysqli_free_result($menu_mail_ch);
+//	mysqli_free_result($menu_mail_s);
 
 	/* закрываем подключение */
 	mysqli_close($link);

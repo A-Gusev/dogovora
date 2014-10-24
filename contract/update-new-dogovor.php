@@ -12,8 +12,6 @@
 		<meta http-equiv="Cache-Control" content="no-cache">
 		<meta http-equiv="Refresh" content="1; url=dogovora.php">
 		<title>Редактирование договоров</title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 	</head>
 <body>
 <?php
@@ -65,6 +63,5 @@
 		header('Location:dogovora.php');
 	}
 ?>
-	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
