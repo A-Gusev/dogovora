@@ -188,7 +188,7 @@
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Договора <span class="caret"></span><?php if ($menu_kol_c3['0']>0) {echo ' <span class="badge red">'.$menu_kol_c3['0'].'</span>';}?></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Договора <span class="caret"></span><?php if ($menu_kol_c3['0']>0) {echo ' <span class="badge yellow">'.$menu_kol_c3['0'].'</span>';}?></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="../contract/dogovora.php?ref=all">Полный список договоров <span class="badge pull-right"><?=$menu_kol_c['0']?></span></a></li>
             <li><a href="../contract/dogovora.php?ref=red">Закончатся в ближайшие 30 дней <span class="badge pull-right red"><?=$menu_kol_c1['0']?></span></a></li>
@@ -251,7 +251,7 @@ if ($kol2['0']>0) {echo '	<div class="row">
 					<div class="col-sm-8">'.$row['f_address'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Дирктор</div>
+					<div class="col-sm-3 text-right">Директор</div>
 					<div class="col-sm-8">'.$row['f_director'].'</div>
 				</div>
 				<div class="form-group">

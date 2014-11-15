@@ -55,7 +55,6 @@
 	if (array_key_exists('mail_s', $_REQUEST)) {$mail_s=1;} else {$mail_s=0;}
 	if (array_key_exists('mail_s_checked', $_REQUEST)) {$mail_s_checked=1;} else {$mail_s_checked=0;}
 
-
 	/* подготавливаем запрос к БД */
 	$update_sql = "INSERT INTO `admin_arenda`.`firms` (`f_id`, `f_id_type`, `f_inn`, `f_kpp`, `f_ogrn`, `f_name`, `f_address`, `f_director`, `f_director_io`, `f_director_r`, `f_passport`, `f_tel`, `f_mail`, `f_fax`, `f_requisites`, `f_agreement`, `f_notes`, `f_problem`, `f_mail_s`, `f_mail_s_s`, `f_mail_s_e`, `f_mail_s_checked`)
 	VALUES (NULL, '$type', '$inn', '$kpp', '$ogrn', '$name', '$address', '$director', '$director_io', '$director_r', '$passport', '$tel', '$mail', '$fax', '$requisites', '$agreement', '$notes', '$problem', '$mail_s', '$mail_s_s', '$mail_s_e', '$mail_s_checked')";
