@@ -1,1 +1,3 @@
-<?php header('Location:dogovora.php'); ?>
+<?php
+	header('Location:dogovora.php');
+?>
