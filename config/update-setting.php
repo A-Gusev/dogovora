@@ -4,17 +4,7 @@
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
-?>
-<!DOCTYPE html>
-<html lang="ru">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="Cache-Control" content="no-cache">
-		<meta http-equiv="Refresh" content="1; url=setting.php">
-		<title>Редактирование глобальных настроек</title>
-	</head>
-<body>
-<?php
+
 	require_once '../login.php';
 	$link=mysqli_connect($host, $user, $password, $db);
 
@@ -45,15 +35,13 @@
 
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
-	echo '<p>Запись успешно обновлена!</p>';
+//	echo '<p>Запись успешно обновлена!</p>';
 
-	echo '<p><a href="setting.php">Назад</a><br /><br />';
-	echo '<a href="../index.php">Home</a> :: <a href="setting.php">Глобальные настройки</a></p>';
+//	echo '<p><a href="setting.php">Назад</a><br /><br />';
+//	echo '<a href="../index.php">Home</a> :: <a href="setting.php">Глобальные настройки</a></p>';
 
 	/* закрываем подключение */
 	mysqli_close($link);
 
-	header('Location:setting.php');
+	header('Location: setting.php');
 ?>
-</body>
-</html>

@@ -4,19 +4,7 @@
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
-?>
-<!DOCTYPE html>
-<html lang="ru">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="Cache-Control" content="no-cache">
-		<meta http-equiv="Refresh" content="1; url=firms.php">
-		<title>Создание нового контрагента</title>
-		<meta name="author" content="Alexey Gusev" />
-		<meta name="rights" content="Студия Design4net.ru" />
-	</head>
-<body>
-<?php
+
 	require_once '../login.php';
 	$link=mysqli_connect($host, $user, $password, $db);
 
@@ -38,6 +26,7 @@
 	$ogrn=htmlentities(trim($_REQUEST['ogrn']));
 	$name=htmlentities(trim($_REQUEST['name']));
 	$address=htmlentities(trim($_REQUEST['address']));
+	$doljnost=htmlentities(trim($_REQUEST['doljnost']));
 	$director=htmlentities(trim($_REQUEST['director']));
 	$director_io=htmlentities(trim($_REQUEST['director_io']));
 	$director_r=htmlentities(trim($_REQUEST['director_r']));
@@ -56,8 +45,8 @@
 	if (array_key_exists('mail_s_checked', $_REQUEST)) {$mail_s_checked=1;} else {$mail_s_checked=0;}
 
 	/* подготавливаем запрос к БД */
-	$update_sql = "INSERT INTO `admin_arenda`.`firms` (`f_id`, `f_id_type`, `f_inn`, `f_kpp`, `f_ogrn`, `f_name`, `f_address`, `f_director`, `f_director_io`, `f_director_r`, `f_passport`, `f_tel`, `f_mail`, `f_fax`, `f_requisites`, `f_agreement`, `f_notes`, `f_problem`, `f_mail_s`, `f_mail_s_s`, `f_mail_s_e`, `f_mail_s_checked`)
-	VALUES (NULL, '$type', '$inn', '$kpp', '$ogrn', '$name', '$address', '$director', '$director_io', '$director_r', '$passport', '$tel', '$mail', '$fax', '$requisites', '$agreement', '$notes', '$problem', '$mail_s', '$mail_s_s', '$mail_s_e', '$mail_s_checked')";
+	$update_sql = "INSERT INTO `admin_arenda`.`firms` (`f_id`, `f_id_type`, `f_inn`, `f_kpp`, `f_ogrn`, `f_name`, `f_address`, `f_doljnost`, `f_director`, `f_director_io`, `f_director_r`, `f_passport`, `f_tel`, `f_mail`, `f_fax`, `f_requisites`, `f_agreement`, `f_notes`, `f_problem`, `f_mail_s`, `f_mail_s_s`, `f_mail_s_e`, `f_mail_s_checked`)
+	VALUES (NULL, '$type', '$inn', '$kpp', '$ogrn', '$name', '$address', '$doljnost', '$director', '$director_io', '$director_r', '$passport', '$tel', '$mail', '$fax', '$requisites', '$agreement', '$notes', '$problem', '$mail_s', '$mail_s_s', '$mail_s_e', '$mail_s_checked')";
 
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
@@ -76,6 +65,3 @@
 		header('Location:firms.php');
 	}
 ?>
-	<script src="../js/bootstrap.min.js"></script>
-</body>
-</html>

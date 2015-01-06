@@ -55,7 +55,8 @@
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 	/* Вывод меню */
-	require_once ('nav.php');
+	$page='contract';
+	require_once ('../nav.php');
 
 	/* вывод в форму */
 	echo '<form class="form-horizontal" role="form" action="update-dogovor.php" method="post">
@@ -150,7 +151,6 @@
 </form>
 ';
 
-
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
 	mysqli_free_result($result2);
@@ -173,6 +173,5 @@
 		});
     </script>
 	<script src="../js/bootstrap.min.js"></script>
-
 </body>
 </html>

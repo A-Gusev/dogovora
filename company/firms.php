@@ -79,7 +79,8 @@
 	$result = mysqli_query($link, $query);
 
 	/* Вывод меню */
-	require_once ('nav.php');
+	$page='company';
+	require_once ('../nav.php');
 
 	echo '<table id="myTable" class="tablesorter table table-hover">
 	<caption><h3>Список контрагентов';
@@ -100,11 +101,11 @@
 			<th>ИНН</th>
 			<th>КПП</th>
 			<th>ОГРН</th>
-			<th>директор</th>
+			<th>руководитель</th>
 			<th>телефон</th>
 			<th>e-mail</th>
 			<th>количество договоров</th>
-			<th>Договор на почту</th>
+			<th>договор на почту</th>
 			<th>редактировать</th>
 			<th>удалить</th>
 		</tr>

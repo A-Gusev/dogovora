@@ -39,7 +39,8 @@
 	$result_type = mysqli_query($link, $query_type);
 
 	/* Вывод меню */
-	require_once ('nav.php');
+	$page='company';
+	require_once ('../nav.php');
 
 	/* Вывод формы */
 	echo '<form class="form-horizontal" role="form" action="update-new-firm.php" method="post">
@@ -86,27 +87,33 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Директор</label>
+		<label class="col-sm-3 control-label">Должность руководителя</label>
 		<div class="col-sm-8">
-			<input class="form-control" title="Введите фамилию, имя и отчество директора" placeholder="Введите фамилию, имя и отчество директора" name="director">
+			<input class="form-control" title="Введите должность руководителя" placeholder="Введите должность руководителя" name="doljnost">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Директор (инициалы)</label>
+		<label class="col-sm-3 control-label">Руководитель</label>
 		<div class="col-sm-8">
-			<input class="form-control" title="Введите фамилию и инициалы директора" placeholder="Введите фамилию и инициалы директора" name="director_io">
+			<input class="form-control" title="Введите фамилию, имя и отчество руководителя" placeholder="Введите фамилию, имя и отчество руководителя" name="director">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Директор (р.п.)</label>
+		<label class="col-sm-3 control-label">Руководитель (инициалы)</label>
 		<div class="col-sm-8">
-			<input class="form-control" title="Введите фамилию, имя и отчество директора в родительном падеже" placeholder="Введите фамилию, имя и отчество директора в родительном падеже" name="director_r">
+			<input class="form-control" title="Введите фамилию и инициалы руководителя" placeholder="Введите фамилию и инициалы руководителя" name="director_io">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Паспорт директора</label>
+		<label class="col-sm-3 control-label">Руководитель (р.п.)</label>
 		<div class="col-sm-8">
-			<textarea class="form-control" title="Укажите данные паспорта директора" placeholder="Укажите данные паспорта директора" name="passport" rows="4"></textarea>
+			<input class="form-control" title="Введите фамилию, имя и отчество руководителя в родительном падеже" placeholder="Введите фамилию, имя и отчество руководителя в родительном падеже" name="director_r">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Паспорт руководителя</label>
+		<div class="col-sm-8">
+			<textarea class="form-control" title="Укажите данные паспорта руководителя" placeholder="Укажите данные паспорта руководителя" name="passport" rows="4"></textarea>
 		</div>
 	</div>
 	<div class="form-group">

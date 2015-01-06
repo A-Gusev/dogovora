@@ -4,17 +4,7 @@
 	Header("Pragma: no-cache");
 	Header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 	Header("Expires: " . date("r"));
-?>
-<!DOCTYPE html>
-<html lang="ru">
-    <head>
-	    <meta charset="utf-8">
-		<meta http-equiv="Cache-Control" content="no-cache">
-		<meta http-equiv="Refresh" content="1; url=firms.php">
-		<title>Удаление договоров</title>
-	</head>
-<body>
-<?php
+
 	require_once '../login.php';
 	$link=mysqli_connect($host, $user, $password, $db);
 
@@ -52,5 +42,3 @@
 
 	header('Location:firms.php');
 ?>
-</body>
-</html>

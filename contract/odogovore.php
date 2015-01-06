@@ -60,7 +60,8 @@
 	$row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC);
 
 	/* Вывод меню */
-	require_once ('nav.php');
+	$page='contract';
+	require_once ('../nav.php');
 
 	echo '
 			<form class="form-horizontal" role="form" action="yes-delete-dogovor.php" method="get">

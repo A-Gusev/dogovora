@@ -44,7 +44,8 @@
 	$result_type = mysqli_query($link, $query_type);
 
 	/* Вывод меню */
-	require_once ('nav.php');
+	$page='contract';
+	require_once ('../nav.php');
 
 	/* вывод в форму */
 	echo '<form class="form-horizontal" role="form" action="update-new-dogovor.php" method="post">

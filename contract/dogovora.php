@@ -14,7 +14,7 @@
 		<meta name="author" content="Alexey Gusev" />
 		<meta name="rights" content="Студия Design4net.ru" />
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">		
 		<link rel="stylesheet" href="../css/my.css">
 		<link rel="stylesheet" href="../css/table.css">
 		<script type="text/javascript" src="../js/jquery-latest.js"></script> 
@@ -73,7 +73,8 @@
 	$m3 = date("Y-m-d" ,time()+60*60*24*31*3);
 
 	/* Вывод меню */
-	require_once ('nav.php');
+	$page='contract';
+	require_once ('../nav.php');
 
 	echo '<table id="myTable" class="tablesorter table table-hover">
 	<caption>';

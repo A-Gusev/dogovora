@@ -25,7 +25,6 @@
 	/* проверка подключения */
 	if (mysqli_connect_errno()) {
 	    echo 'Не удалось подключиться: '. mysqli_connect_error();
-	    exit();
 	}
 
 	/* установка кодировки utf8 */	
@@ -57,7 +56,8 @@
 	$result_type = mysqli_query($link, $query_type);
 
 	/* Вывод меню */
-	require_once ('nav.php');
+	$page='company';
+	require_once ('../nav.php');
 
 	/* вывод в форму */
 	echo '<form class="form-horizontal" role="form" action="update-firm.php" method="post">
@@ -112,25 +112,31 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Директор</label>
+		<label class="col-sm-3 control-label">Должность руководителя</label>
+		<div class="col-sm-8">
+			<input class="form-control" title="Введите должность руководителя" placeholder="Введите должность руководителя" name="doljnost" value="'.$row['f_doljnost'].'">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Руководитель</label>
 		<div class="col-sm-8">
 			<input class="form-control" title="Введите фамилию, имя и отчество директора" placeholder="Введите фамилию, имя и отчество директора" name="director" value="'.$row['f_director'].'">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Директор (инициалы)</label>
+		<label class="col-sm-3 control-label">Руководитель (инициалы)</label>
 		<div class="col-sm-8">
 			<input class="form-control" title="Введите фамилию и инициалы директора" placeholder="Введите фамилию и инициалы директора" name="director_io" value="'.$row['f_director_io'].'">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Директор (р.п.)</label>
+		<label class="col-sm-3 control-label">Руководитель (р.п.)</label>
 		<div class="col-sm-8">
 			<input class="form-control" title="Введите фамилию, имя и отчество директора в родительном падеже" placeholder="Введите фамилию, имя и отчество директора в родительном падеже" name="director_r" value="'.$row['f_director_r'].'">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Паспорт директора</label>
+		<label class="col-sm-3 control-label">Паспорт руководителя</label>
 		<div class="col-sm-8">
 			<textarea class="form-control" title="Укажите данные паспорта директора" placeholder="Укажите данные паспорта директора" name="passport" rows="4">'.$row['f_passport'].'</textarea>
 		</div>
@@ -158,14 +164,16 @@
 		<div class="col-sm-8">
 			<textarea class="form-control" title="Укажите реквизиты организации" placeholder="Укажите реквизиты организации" name="requisites" rows="4">'.$row['f_requisites'].'</textarea>
 		</div>
-	</div>
-	<div class="form-group">
+	</div>';
+	if ($rights == 2) {
+	echo '<div class="form-group">
 		<label class="col-sm-3 control-label">Особые договорённости</label>
 		<div class="col-sm-8">
 			<textarea class="form-control" title="Особые сверхсекретные договорённости" placeholder="Особые договорённости" name="agreement" rows="4">'.$row['f_agreement'].'</textarea>
 		</div>
-	</div>
-	<div class="form-group">
+	</div>';
+	}
+	echo '<div class="form-group">
 		<label class="col-sm-3 control-label">Заметки</label>
 		<div class="col-sm-8">
 			<textarea class="form-control" title="Заметки" placeholder="Укажите заметки" name="notes" rows="4">'.$row['f_notes'].'</textarea>

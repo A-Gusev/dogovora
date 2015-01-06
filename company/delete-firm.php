@@ -62,7 +62,8 @@
 	$kol2 = mysqli_fetch_array($kol, MYSQLI_NUM);
 
  	/* Вывод меню */
-	require_once ('nav.php'); 
+	$page='company';
+	require_once ('../nav.php');
 
  	/* вывод в форму */
 	echo '<form class="form-horizontal" role="form" action="yes-delete-firm.php" method="get">
@@ -96,19 +97,23 @@
 					<div class="col-sm-8">'.$row['f_address'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Директор</div>
+					<div class="col-sm-3 text-right">Должность руководителя</div>
+					<div class="col-sm-8">'.$row['f_doljnost'].'</div>
+				</div>				
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Руководитель</div>
 					<div class="col-sm-8">'.$row['f_director'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Директор (инициалы)</div>
+					<div class="col-sm-3 text-right">Руководитель (инициалы)</div>
 					<div class="col-sm-8">'.$row['f_director_io'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Директор (р.п.)</div>
+					<div class="col-sm-3 text-right">Руководитель (р.п.)</div>
 					<div class="col-sm-8">'.$row['f_director_r'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Паспорт директора</div>
+					<div class="col-sm-3 text-right">Паспорт руководителя</div>
 					<div class="col-sm-8">'.$row['f_passport'].'</div>
 				</div>
 				<div class="form-group">

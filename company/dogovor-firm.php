@@ -75,7 +75,8 @@
 	$row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC);
 
 	/* Вывод меню */
-	require_once ('nav.php');
+	$page='company';
+	require_once ('../nav.php');
 
 	/* вывод в 2 колонки если есть договора */
 	if ($kol2['0']>0) {echo '	<div class="row">
@@ -111,19 +112,23 @@
 					<div class="col-sm-8">'.$row['f_address'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Директор</div>
+					<div class="col-sm-3 text-right">Должность руководителя</div>
+					<div class="col-sm-8">'.$row['f_doljnost'].'</div>
+				</div>		
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Руководитель</div>
 					<div class="col-sm-8">'.$row['f_director'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Директор (инициалы)</div>
+					<div class="col-sm-3 text-right">Руководитель (инициалы)</div>
 					<div class="col-sm-8">'.$row['f_director_io'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Директор (р.п.)</div>
+					<div class="col-sm-3 text-right">Руководитель (р.п.)</div>
 					<div class="col-sm-8">'.$row['f_director_r'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Паспорт директора</div>
+					<div class="col-sm-3 text-right">Паспорт руководителя</div>
 					<div class="col-sm-8">'.$row['f_passport'].'</div>
 				</div>
 				<div class="form-group">
