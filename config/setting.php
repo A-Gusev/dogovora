@@ -53,31 +53,31 @@ echo '<form class="form-horizontal" role="form" action="update-setting.php" meth
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Должность директора</label>
+		<label class="col-sm-3 control-label">Должность руководителя</label>
 		<div class="col-sm-8">
 			<input class="form-control" type="text" name="job_title" value="'.$row['s_job_title'].'">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">Должность директора (родительный)</label>
+		<label class="col-sm-3 control-label">Должность руководителя (родительный)</label>
 		<div class="col-sm-8">
 			<input class="form-control" type="text" name="job_title_r" value="'.$row['s_job_title_r'].'">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">ФИО директора</label>
+		<label class="col-sm-3 control-label">ФИО руководителя</label>
 		<div class="col-sm-8">
 			<input class="form-control" type="text" name="director" value="'.$row['s_director'].'">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">ФИО директора (инициалы)</label>
+		<label class="col-sm-3 control-label">ФИО руководителя (инициалы)</label>
 		<div class="col-sm-8">
 			<input class="form-control" type="text" name="director_io" value="'.$row['s_director_io'].'">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">ФИО директора (родительный)</label>
+		<label class="col-sm-3 control-label">ФИО руководителя (родительный)</label>
 		<div class="col-sm-8">
 			<input class="form-control" type="text" name="director_r" value="'.$row['s_director_r'].'">
 		</div>

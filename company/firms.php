@@ -202,8 +202,6 @@
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
-	mysqli_free_result($kol);
-	mysqli_free_result($result_type);
 
 	/* закрываем подключение */
 	mysqli_close($link);
