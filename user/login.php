@@ -30,7 +30,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Пароль</label>
 				<div class="col-sm-8">
-					<input placeholder="Введите пароль" class="form-control" name="password">
+					<input type="password" placeholder="Введите пароль" class="form-control" name="password">
 				</div>
 			</div>
 			<div class="form-group">

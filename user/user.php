@@ -61,19 +61,19 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Текущий пароль</label>
 		<div class="col-sm-8">
-			<input title="Введите текущий пароль" placeholder="Введите текущий пароль" class="form-control" name="psw-old">
+			<input type="password" title="Введите текущий пароль" placeholder="Введите текущий пароль" class="form-control" name="psw-old">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Новый пароль</label>
 		<div class="col-sm-8">
-			<input title="Введите новый пароль" placeholder="Введите новый пароль" class="form-control" name="psw-new">
+			<input type="password" title="Введите новый пароль" placeholder="Введите новый пароль" class="form-control" name="psw-new">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Повторите ввод нового пароля</label>
 		<div class="col-sm-8">
-			<input title="Введите новый пароль ещё раз" placeholder="Введите новый пароль ещё раз" class="form-control" name="psw-new2">
+			<input type="password" title="Введите новый пароль ещё раз" placeholder="Введите новый пароль ещё раз" class="form-control" name="psw-new2">
 		</div>
 	</div>
 	<div class="form-group">
