@@ -37,6 +37,22 @@
 	$page='config';
 	require_once ('../nav.php');
 
+	/* Обработка ошибки */
+	if (isset($_GET['error'])) {
+		if ($_GET['error']==='old') {
+			echo 'Ошибка! Введён не верный текущий пароль';
+		}
+		if ($_GET['error']==='new') {
+			echo 'Ошибка! Введённые новые пароли не совпадают';
+		}
+		if ($_GET['error']==='n_ok') {
+			echo 'Имя пользователя успешно изменено';
+		}
+		if ($_GET['error']==='p_ok') {
+			echo 'Пароль успешно изменён';
+		}
+	}
+	
 	/* вывод в форму */
 	echo '<form class="form-horizontal" role="form" method="post" action="update-user.php">
 	<legend>Редактирование пароля</legend>	

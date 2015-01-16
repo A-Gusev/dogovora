@@ -13,7 +13,6 @@
 	    printf("Не удалось подключиться: %s\n", mysqli_connect_error());
 	    exit();
 	}
-
 	/* установка кодировки utf8 */
 	if (!$link->set_charset("utf8")) {
 	    printf("Ошибка при загрузке набора символов utf8: %s\n", $link->error);
@@ -38,20 +37,21 @@
 					/* отправляем запрос к БД */
 					mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
 					
-					header('Location: user.php');
+					header('Location: user.php?error=n_ok');
 				}
 				else {
 					$u_name=htmlentities(trim($_POST['u-name']));
 					if($row_chek['u_psw'] == sha1(md5('bro'.$_POST['psw-old'].'ha'))) {
 						if($_POST['psw-new'] == $_POST['psw-new2']) {
 							$u_psw=sha1(md5('bro'.$_POST['psw-new'].'ha'));
+							$u_name=htmlentities(trim($_POST['u-name']));
 							$update_sql = "UPDATE `admin_arenda`.`users` SET
 							`u_name` = '$u_name',
 							`u_psw` = '$u_psw'
 							WHERE `users`.`u_id` = '$cook_id'";
 							/* отправляем запрос к БД */
 							mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());
-							header('Location: user.php');
+							header('Location: user.php?error=p_ok');
 						}
 						else {
 							header('Location: user.php?error=new');

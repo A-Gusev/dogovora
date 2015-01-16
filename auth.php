@@ -16,7 +16,7 @@ function generateCode($length=6) {
 	$nologin=0;
 
 	if(isset($_POST['submit'])) {
-	    # Вытаскиваем из БД запись, у которой логин равняеться введенному
+	    # Вытаскиваем из БД запись, у которой логин равняется введенному
 		$l=$_POST['login']; 
 		$sql_l = "SELECT `u_id`, `u_psw` FROM `users` WHERE `u_login`='$l'";
 		$result = mysqli_query($link, $sql_l);
@@ -34,7 +34,7 @@ function generateCode($length=6) {
 	        setcookie('u-id', $i, time()+60*60*24*30);
 	        setcookie('hash', $hash, time()+60*60*24*30);
 	        # Переадресовываем браузер на страницу проверки нашего скрипта
-	        header("Location: ../index.php");
+	        header("Location: index.php");
 	    }
 	    else {
 	    	header("Location: user/login.php");
