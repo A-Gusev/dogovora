@@ -134,15 +134,8 @@
 	
 	echo '
 		<tr';
-			if (array_key_exists('ref', $_REQUEST)) {
-				$ref=$_REQUEST['ref'];
-				if ($ref=='ok') {}
-				else {
-					if ($row['f_problem']==1) {echo ' class="info"';}
-				}
-			}
-			else {
-				if ($row['f_problem']==1) {echo ' class="info"';}
+			if ($row['f_problem']==1) {
+				echo ' class="danger"';
 			}
 	echo '>
 			<td>'.$row['f_id'].'</td></td>
@@ -191,15 +184,9 @@
 	</tbody>
 </table>
 ';
-			if (array_key_exists('ref', $_REQUEST)) {
-				$ref=$_REQUEST['ref'];
-				if ($ref=='ok') {}
-				else {echo '
-	<br /><span class="label label-info">* - синим фонов выделены строки с контрагентами, находящимися на "личном контроле" директора</span><br />';
-				}
-			}
-			else {echo '
-	<br /><span class="label label-info">* - синим фонов выделены строки с контрагентами, находящимися на "личном контроле" директора</span><br />';
+			if ($menu_kol_ok['0'] > 0 ) {
+				echo '
+	<br /><span class="label label-danger">Красным фонов выделены строки с контрагентами, находящимися на "личном контроле" директора</span>';
 			}
 
 	/* очищаем результаты выборки */

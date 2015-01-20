@@ -46,7 +46,7 @@
 	if (array_key_exists('ref', $_REQUEST)) {
 		$ref=$_REQUEST['ref'];
 		if ($ref=='red') {
-			$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id` WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 31 AND TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) > 0 ORDER BY  `contract`.`c_id` ASC";
+			$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id` WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 31 AND TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) >= 0 ORDER BY  `contract`.`c_id` ASC";
 		}
 		elseif ($ref=='yellow') {
 			$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id` WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 93 AND TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) > 0 ORDER BY  `contract`.`c_id` ASC";
@@ -124,12 +124,19 @@
 
 	echo '
 		<tr';
-			if ($row['c_date-po']>=$today && $row['c_date-po']<$m1)
-				{echo ' class="danger"';}
-			elseif ($row['c_date-po']<$m3 && $row['c_date-po']>=$m1)
-				{echo ' class="warning"';}
-			elseif ($row['c_date-po']>=$m3)
-				{echo ' class="success"';}
+			if ($row['c_date-po']>=$today && $row['c_date-po']<$m1) {
+				echo ' class="danger"';
+			}
+			elseif ($row['c_date-po']<$m3 && $row['c_date-po']>=$m1) {
+				echo ' class="warning"';
+			}
+			elseif ($row['c_date-po']>=$m3) {
+				echo ' class="success"';
+			}
+			else {
+				echo ' class="s"';
+			}
+				
 	echo '> 
 			<td><a href="odogovore.php?id='.$row['c_id'].'">Договор №'.$row['c_nomer'].' от '.$row['c_date'].'</a></td>
 			<td>'.$row_type['tc_type'].'</td>
@@ -157,11 +164,18 @@
 </table>
 	<br />';
 
-	echo '
-	<span class="label label-danger">Красным цветом выделены строки с договорами, истекающими в ближайшие 30 дней</span><br />
-	<span class="label label-warning">Жёлтым цветов - истекающие в ближайшие 3 месяца</span><br />
-	<span class="label label-success">Зелёным цветом - действующие договора</span><br />
-	<span>Белым цветом - закончившиеся договора</span><br />';	
+	if ($menu_kol_c1['0'] > 0) {
+		echo '<span class="label label-danger">Красным цветом выделены строки с договорами, истекающими в ближайшие 30 дней</span><br />';
+	}
+	if ($menu_kol_c3['0'] > 0) {
+		echo '<span class="label label-warning">Жёлтым цветов - истекающие в ближайшие 3 месяца</span><br />';
+	}
+	if ($menu_kol_c4['0'] > 0) {
+		echo '<span class="label label-success">Зелёным цветом - Действующие договора (закончатся больше чем через 3 месяца)</span><br />';
+	}
+	if ($menu_kol_c6['0'] > 0) {
+		echo '<span><s>Зачёркнутые</s> - закончившиеся договора</span><br />';
+	}
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);

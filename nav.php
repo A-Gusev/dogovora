@@ -74,11 +74,25 @@
 	WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 93 AND TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) > 0";
 	$menu_c3 = mysqli_query($link, $sql_menu_c3);
 	$menu_kol_c3 = mysqli_fetch_array($menu_c3, MYSQLI_NUM);
+	
+	/* Запрос на получение количества договоров, которые закончатся в ближайшие 3 месяца (без учёта договоров, заканчивающихся в ближайший месяц) */
+	$sql_menu_c5 = "SELECT COUNT(`c_date-po`)
+	FROM `contract`
+	WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 93 AND TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) > 31";
+	$menu_c5 = mysqli_query($link, $sql_menu_c5);
+	$menu_kol_c5 = mysqli_fetch_array($menu_c5, MYSQLI_NUM);
+	
+	/* Запрос на получение количества договоров, которые закончились */
+	$sql_menu_c6 = "SELECT COUNT(`c_date-po`)
+	FROM `contract`
+	WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 0";
+	$menu_c6 = mysqli_query($link, $sql_menu_c6);
+	$menu_kol_c6 = mysqli_fetch_array($menu_c6, MYSQLI_NUM);
 
 	/* Запрос на получение количества договоров, которые закончатся в ближайшие 30 дней */
 	$sql_menu_c1 = "SELECT COUNT(`c_date-po`)
 	FROM `contract`
-	WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 31 AND TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) > 0";
+	WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) < 31 AND TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) >= 0";
 	$menu_c1 = mysqli_query($link, $sql_menu_c1);
 	$menu_kol_c1 = mysqli_fetch_array($menu_c1, MYSQLI_NUM);
 
@@ -155,10 +169,10 @@
         <li class="dropdown<?php echo $active; ?>">
           <a href="" class="dropdown-toggle" data-toggle="dropdown">Контрагенты <span class="caret"></span><?php if ($menu_kol_ok['0']>0) {echo ' <span class="badge red">'.$menu_kol_ok['0'].'</span>';}?></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="<?php echo $page_link; ?>firms.php?ref=all">Полный список контрагентов <span class="badge pull-right"><?=$menu_kol_k['0']?></span></a></li>
-            <li><a href="<?php echo $page_link; ?>firms.php?ref=ok">Контрагенты на особом контроле <span class="badge red"><?=$menu_kol_ok['0']?></span></a></li>
+            <li><a href="<?=$page_link; ?>firms.php?ref=all">Полный список контрагентов <span class="badge pull-right"><?=$menu_kol_k['0']?></span></a></li>
+            <li><a href="<?=$page_link; ?>firms.php?ref=ok">Контрагенты на особом контроле <span class="badge red"><?=$menu_kol_ok['0']?></span></a></li>
             <li class="divider"></li>
-            <li><a href="<?php echo $page_link; ?>new-firm.php">Создать нового контрагента</a></li>
+            <li><a href="<?=$page_link; ?>new-firm.php">Создать нового контрагента</a></li>
           </ul>
         </li>
         <?php
@@ -180,10 +194,10 @@
         <li class="dropdown<?php echo $active; ?>">
           <a href="" class="dropdown-toggle" data-toggle="dropdown">Договора <span class="caret"></span><?php if ($menu_kol_c3['0']>0) {echo ' <span class="badge yellow">'.$menu_kol_c3['0'].'</span>';}?></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="<?php echo $page_link; ?>dogovora.php?ref=all">Полный список договоров <span class="badge pull-right"><?=$menu_kol_c['0']?></span></a></li>
-            <li><a href="<?php echo $page_link; ?>dogovora.php?ref=red">Закончатся в ближайшие 30 дней <span class="badge pull-right red"><?=$menu_kol_c1['0']?></span></a></li>
-            <li><a href="<?php echo $page_link; ?>dogovora.php?ref=yellow">Закончатся в ближайшие 3 месяца <span class="badge pull-right yellow"><?=$menu_kol_c3['0']?></span></a></li>
-            <li><a href="<?php echo $page_link; ?>dogovora.php?ref=green">Действующие договора <span class="badge pull-right"><?=$menu_kol_c0['0']?></span><br />(закончатся больше чем через 3 месяца) <span class="badge pull-right green"><?=$menu_kol_c4['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>dogovora.php?ref=all">Полный список договоров <span class="badge pull-right"><?=$menu_kol_c['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>dogovora.php?ref=red">Закончатся в ближайшие 30 дней <span class="badge pull-right red"><?=$menu_kol_c1['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>dogovora.php?ref=yellow">Закончатся в ближайшие 3 месяца <span class="badge pull-right yellow"><?=$menu_kol_c3['0']?></span></a></li>
+            <li><a href="<?=$page_link; ?>dogovora.php?ref=green">Действующие договора <span class="badge pull-right"><?=$menu_kol_c0['0']?></span><br />(закончатся больше чем через 3 месяца) <span class="badge pull-right green"><?=$menu_kol_c4['0']?></span></a></li>
         <!--    <li><a href="#">Поиск договоров, действующих в определённый период</a></li>  -->
             <li class="divider"></li>
             <li><a href="<?php echo $page_link; ?>new-dogovor.php">Создать новый договор</a></li>
@@ -244,10 +258,10 @@
       	?>
           <a href="" class="dropdown-toggle" data-toggle="dropdown">Договора на почту <span class="caret"></span><?php if ($mail_red > 0) {echo ' <span class="badge red">'.$mail_red.'</span> ';} if ($menu_mail_ch['0'] > 0) {echo ' <span class="badge yellow">'.$menu_mail_ch['0'].'</span>';} ?></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="<?php echo $page_link; ?>firms.php?ref=mail-pr">Договор просрочен <span class="badge pull-right red"><?=$menu_mail_pr['0']?></span></a></li>
-            <li><a href="<?php echo $page_link; ?>firms.php?ref=mail-pr3">Договор заканчивается (3 месяца) <span class="badge orange"><?=$menu_mail_pr3['0']?></span></a></li>
-            <li><a href="<?php echo $page_link; ?>firms.php?ref=mail-ch">Договор не проверен <span class="badge pull-right yellow"><?=$menu_mail_ch['0']?></span></a></li>
-            <li><a href="<?php echo $page_link; ?>firms.php?ref=mail-s">Договор не заключён <span class="badge pull-right"><?=$menu_mail_s['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>firms.php?ref=mail-pr">Договор просрочен <span class="badge pull-right red"><?=$menu_mail_pr['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>firms.php?ref=mail-pr3">Договор заканчивается (3 месяца) <span class="badge orange"><?=$menu_mail_pr3['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>firms.php?ref=mail-ch">Договор не проверен <span class="badge pull-right yellow"><?=$menu_mail_ch['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>firms.php?ref=mail-s">Договор не заключён <span class="badge pull-right"><?=$menu_mail_s['0']?></span></a></li>
           </ul>
         </li>
       </ul>
@@ -299,7 +313,7 @@
 	        <button type="submit" class="btn btn-default">Найти</button>
 	      </form> -->
 	      <ul class="nav navbar-nav navbar-right pad">
-			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="https://github.com/A-Gusev/dogovora/">v.1.0.1</a></li>
+			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="https://github.com/A-Gusev/dogovora/">v.1.0.2</a></li>
 			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="http://design4net.ru/">2014 - 2015 <span class="glyphicon glyphicon-copyright-mark"></span> Создание сайта - Студия Design4net</a></li>
 	      </ul>
 	    </div>
