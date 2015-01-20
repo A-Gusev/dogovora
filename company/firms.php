@@ -124,8 +124,10 @@
 	
 	/* Запрос на получение типа контрагента */
 	$query_type = "SELECT `type_firm`.`tf_id` , `type_firm`.`tf_type`
-	FROM `type_firm`
-	WHERE `type_firm`.`tf_id`=".$row['f_id'];
+	FROM `firms`
+	JOIN `type_firm`
+	ON `firms`.`f_id_type` = `type_firm`.`tf_id`
+	WHERE `firms`.`f_id`=".$row['f_id'];
 	$result_type = mysqli_query($link, $query_type);
 	$row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC);
 	

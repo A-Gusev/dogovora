@@ -284,9 +284,9 @@
 	      		$page_link2='contract/';
       		}
       	?>
-	      <ul class="nav navbar-nav">
+	  <!--    <ul class="nav navbar-nav">
 	      </ul>
-	<!--      <form class="navbar-form navbar-left" role="search" action="<?php echo $page_link; ?>firms.php" method="get">
+	      <form class="navbar-form navbar-left" role="search" action="<?php echo $page_link; ?>firms.php" method="get">
 	        <div class="form-group">
 	          <input type="text" class="form-control" placeholder="Поиск по контрагентам" name="search">
 	        </div>
@@ -298,8 +298,9 @@
 	        </div>
 	        <button type="submit" class="btn btn-default">Найти</button>
 	      </form> -->
-	      <ul class="nav navbar-nav navbar-right">
-			  <li><a title="Создание сайта - Студия Design4net" target="_blank" href="http://design4net.ru/">2014 <span class="glyphicon glyphicon-copyright-mark"></span> Создание сайта - Студия Design4net</a></li>
+	      <ul class="nav navbar-nav navbar-right pad">
+			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="https://github.com/A-Gusev/dogovora/">v.1.0.1</a></li>
+			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="http://design4net.ru/">2014 - 2015 <span class="glyphicon glyphicon-copyright-mark"></span> Создание сайта - Студия Design4net</a></li>
 	      </ul>
 	    </div>
 	  </div>
