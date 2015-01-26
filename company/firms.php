@@ -14,7 +14,6 @@
 		<meta name="author" content="Alexey Gusev" />
 		<meta name="rights" content="Студия Design4net.ru" />
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="../css/my.css">
 		<link rel="stylesheet" href="../css/table.css">
 		<script type="text/javascript" src="../js/jquery-latest.js"></script> 
@@ -23,7 +22,8 @@
 			$(document).ready(function() { 
 			$("#myTable") 
 			.tablesorter({widthFixed: true, widgets: ['zebra']}); 
-			});
+			}
+			);
 		</script>
 	</head>
 <body>
@@ -179,15 +179,15 @@
 			echo '</td>
 		</tr>';
 	}
-
 	echo '
 	</tbody>
 </table>
 ';
 			if ($menu_kol_ok['0'] > 0 ) {
 				echo '
-	<br /><span class="label label-danger">Красным фонов выделены строки с контрагентами, находящимися на "личном контроле" директора</span>';
+	<br /><span class="label label-danger">Красным фонов выделены строки с контрагентами, находящимися на "личном контроле" директора</span><br />';
 			}
+			echo '<br /><br />';
 
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
@@ -196,18 +196,6 @@
 	mysqli_close($link);
 ?>
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script>
-		$(document).ready(function(){
-		  $('a[href*=#]').bind("click", function(e){
-		      var anchor = $(this);
-		      $('html, body').stop().animate({
-		        scrollTop: $(anchor.attr('href')).offset().top
-		      }, 1000);
-		      e.preventDefault();
-		  });
-		  return false;
-		});
-    </script>
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

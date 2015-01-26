@@ -19,5 +19,26 @@
 	padding-bottom: 1px;
 }
 .s {
-text-decoration: line-through;
+	text-decoration: line-through;
+}
+.form-control {
+	color: #1f1f1f;
+	font-weight: 700;
+}
+/* all */
+::-webkit-input-placeholder {
+	color:#4d4d4d;
+	font-weight: 300;
+}
+::-moz-placeholder {
+	color:#4d4d4d;
+	font-weight: 300;
+} /* firefox 19+ */
+:-ms-input-placeholder {
+	color:#4d4d4d;
+	font-weight: 300;
+} /* ie */
+input:-moz-placeholder {
+	color:#4d4d4d;
+	font-weight: 300;
 }

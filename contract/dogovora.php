@@ -21,8 +21,7 @@
 		<script type="text/javascript" src="../js/jquery.tablesorter.js"></script> 
 		<script type="text/javascript">
 			$(document).ready(function() { 
-			$("#myTable") 
-			.tablesorter({widthFixed: true, widgets: ['zebra']}); 
+			$("#myTable").tablesorter({widthFixed: true, widgets: ['zebra']}); 
 			});
 		</script>
 	</head>
@@ -118,7 +117,7 @@
 	/* Запрос на получение типа договора */
 	$query_type = "SELECT `type_contract`.`tc_id` , `type_contract`.`tc_type`
 	FROM `type_contract`
-	WHERE `type_contract`.`tc_id`=".$row['c_id'];
+	WHERE `type_contract`.`tc_id`=".$row['c_id_type_dog'];
 	$result_type = mysqli_query($link, $query_type);
 	$row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC);
 
@@ -168,13 +167,13 @@
 		echo '<span class="label label-danger">Красным цветом выделены строки с договорами, истекающими в ближайшие 30 дней</span><br />';
 	}
 	if ($menu_kol_c3['0'] > 0) {
-		echo '<span class="label label-warning">Жёлтым цветов - истекающие в ближайшие 3 месяца</span><br />';
+		echo '<span class="label label-warning">Жёлтым цветом выделены строки с договорами, истекающие в ближайшие 3 месяца</span><br />';
 	}
 	if ($menu_kol_c4['0'] > 0) {
-		echo '<span class="label label-success">Зелёным цветом - Действующие договора (закончатся больше чем через 3 месяца)</span><br />';
+		echo '<span class="label label-success">Зелёным цветом выделены строки с действующими договорами (закончатся больше чем через 3 месяца)</span><br />';
 	}
 	if ($menu_kol_c6['0'] > 0) {
-		echo '<span><s>Зачёркнутые</s> - закончившиеся договора</span><br />';
+		echo '<span><s>Зачёркнутые</s> строки - закончившиеся договора</span><br />';
 	}
 
 	/* очищаем результаты выборки */

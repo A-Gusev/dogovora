@@ -35,7 +35,8 @@
 
 	/* запрос на определение имени компании */
 	$query2 = "SELECT `firms`.`f_id` , `firms`.`f_name`
-	FROM `firms`";
+	FROM `firms`
+	ORDER BY `firms`.`f_name` ASC";
 	$result2 = mysqli_query($link, $query2);
 
 	/* Запрос на получение типа контракта */
@@ -77,7 +78,8 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Название компании</label>
 		<div class="col-sm-8">
-			<select class="form-control" name="name">';
+			<select class="form-control" name="name" required>
+			<option disabled>Выберите компанию</option>';
 			while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
 		echo '<option value="'.$row2['f_id'].'"';
 		echo ' >' . $row2['f_name'] . '</option>';

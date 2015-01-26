@@ -43,7 +43,8 @@
 
 	/* запрос на имя компании */
 	$query2 = "SELECT `firms`.`f_id` , `firms`.`f_name`
-	FROM `firms`";
+	FROM `firms`
+	ORDER BY `firms`.`f_name` ASC";
 	$result2 = mysqli_query($link, $query2);
 
 	/* Запрос на получение типа контракта */

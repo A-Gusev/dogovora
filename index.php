@@ -49,18 +49,6 @@
 	mysqli_close($link);
 ?>
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script>
-		$(document).ready(function(){
-		  $('a[href*=#]').bind("click", function(e){
-		      var anchor = $(this);
-		      $('html, body').stop().animate({
-		        scrollTop: $(anchor.attr('href')).offset().top
-		      }, 1000);
-		      e.preventDefault();
-		  });
-		  return false;
-		});
-    </script>
 	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

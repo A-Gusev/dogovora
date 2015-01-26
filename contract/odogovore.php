@@ -55,7 +55,7 @@
 	/* Запрос на получение типа договора */
 	$query_type = "SELECT `type_contract`.`tc_id` , `type_contract`.`tc_type`
 	FROM `type_contract`
-	WHERE `type_contract`.`tc_id`=".$row['c_id'];
+	WHERE `type_contract`.`tc_id`=".$row['c_id_type_dog'];
 	$result_type = mysqli_query($link, $query_type);
 	$row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC);
 
