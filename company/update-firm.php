@@ -40,7 +40,6 @@
 	    $rights=-1;
 	}
 
-
 	/* забираем данные из формы */
 	$idset=htmlentities(trim($_REQUEST['id']));
 	$type=htmlentities(trim($_REQUEST['company_type']));

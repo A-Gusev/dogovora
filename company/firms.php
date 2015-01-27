@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/my.css">
 		<link rel="stylesheet" href="../css/table.css">
-		<script type="text/javascript" src="../js/jquery-latest.js"></script> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script type="text/javascript" src="../js/jquery.tablesorter.js"></script> 
 		<script type="text/javascript">
 			$(document).ready(function() { 
@@ -193,9 +193,8 @@
 	mysqli_free_result($result);
 
 	/* закрываем подключение */
-	mysqli_close($link);
+	mysqli_close($link);	
 ?>
-	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

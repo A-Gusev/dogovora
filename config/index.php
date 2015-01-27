@@ -1,1 +1,3 @@
-<?php header('Location:setting.php'); ?>
+<?php
+	header('Location:setting.php');
+?>

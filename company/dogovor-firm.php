@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="../css/my.css">
 		<link rel="stylesheet" href="../css/table.css">
-		<script type="text/javascript" src="../js/jquery-latest.js"></script> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script type="text/javascript" src="../js/jquery.tablesorter.js"></script> 
 		<script type="text/javascript">
 			$(document).ready(function() { 
@@ -287,19 +287,6 @@ echo '
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
-	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script>
-		$(document).ready(function(){
-		  $('a[href*=#]').bind("click", function(e){
-		      var anchor = $(this);
-		      $('html, body').stop().animate({
-		        scrollTop: $(anchor.attr('href')).offset().top
-		      }, 1000);
-		      e.preventDefault();
-		  });
-		  return false;
-		});
-    </script>
 	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
