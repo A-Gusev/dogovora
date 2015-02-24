@@ -59,6 +59,13 @@
 	$result_type = mysqli_query($link, $query_type);
 	$row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC);
 
+	/* Запрос на получение name bank account */
+	$query_bank = "SELECT `settings`.`s_name_bank_account-1`, `settings`.`s_name_bank_account-2`
+	FROM `settings`
+	WHERE `settings`.`s_id`=1";
+	$result_bank = mysqli_query($link, $query_bank);
+	$row_bank = mysqli_fetch_array($result_bank, MYSQLI_ASSOC);
+
 	/* Вывод меню */
 	$page='contract';
 	require_once ('../nav.php');
@@ -66,10 +73,6 @@
 	echo '
 			<form class="form-horizontal" role="form" action="yes-delete-dogovor.php" method="get">
 				<legend>Информация о договоре</legend>
-				<div class="form-group">
-					<div class="col-sm-3 text-right">ID</div>
-					<div class="col-sm-8">'.$row['c_id'].'</div>
-				</div>
 				<div class="form-group">
 					<div class="col-sm-3 text-right">Номер и дата договора</div>
 					<div class="col-sm-8">Договор №'.$row['c_nomer'].' от '.$row['c_date'].'</div>
@@ -104,6 +107,17 @@
 					<div class="col-sm-8">'.$row['c_date-akt'].'</div>
 				</div>
 				<div class="form-group">
+					<div class="col-sm-3 text-right">Название счёта</div>
+					<div class="col-sm-8">';
+						if ($row['c_bank']==2) {echo $row_bank['s_name_bank_account-2'];}
+						else {echo $row_bank['s_name_bank_account-1'];}
+				echo '</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Цена договора в месяц</div>
+					<div class="col-sm-8">'.$row['c_price'].'</div>
+				</div>
+				<div class="form-group">
 					<div class="col-sm-3 text-right">Номер помещения</div>
 					<div class="col-sm-8">'.$row['c_number'].'</div>
 				</div>
@@ -134,6 +148,7 @@
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
 	mysqli_free_result($result_type);
+	mysqli_free_result($result_bank);
 
 	/* закрываем подключение */
 	mysqli_close($link);

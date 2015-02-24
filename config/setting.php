@@ -83,9 +83,21 @@ echo '<form class="form-horizontal" role="form" action="update-setting.php" meth
 		</div>
 	</div>
 	<div class="form-group">
+		<label class="col-sm-3 control-label">Имя банковского аккаунта №1</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="name_bank_account-1" value="'.$row['s_name_bank_account-1'].'">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">Реквизиты №1</label>
 		<div class="col-sm-8">
 			<textarea class="form-control" rows="8" name="bank_account-1">'.$row['s_bank_account-1'].'</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Имя банковского аккаунта №2</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="name_bank_account-2" value="'.$row['s_name_bank_account-2'].'">
 		</div>
 	</div>
 	<div class="form-group">

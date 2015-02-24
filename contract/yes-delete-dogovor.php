@@ -27,7 +27,6 @@
 
 	/* отправляем запрос к БД */
 	mysqli_query($link, $delete_sql) or die("Ошибка: " . mysql_error());
-//	echo '<p>Запись успешно удалена!</p>';
 
 	/* закрываем подключение */
 	mysqli_close($link);

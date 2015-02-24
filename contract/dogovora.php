@@ -63,6 +63,13 @@
 
 	/* Запрос на получение списка договоров */
 	$result = mysqli_query($link, $query);
+	
+	/* Запрос на получение name bank account */
+	$query_bank = "SELECT `settings`.`s_name_bank_account-1`, `settings`.`s_name_bank_account-2`
+	FROM `settings`
+	WHERE `settings`.`s_id`=1";
+	$result_bank = mysqli_query($link, $query_bank);
+	$row_bank = mysqli_fetch_array($result_bank, MYSQLI_ASSOC);
 
 	/* Узнаем какое сегодня число */
 	$today = date("Y-m-d");
@@ -104,6 +111,8 @@
 			<th>Договор с...</th>
 			<th>Договор по...</th>
 			<th>Дата акта</th>
+			<th>Счёт</th>
+			<th>Цена в месяц</th>
 			<th>Номер помещения</th>
 			<th>редактировать</th>
 			<th>удалить</th>
@@ -143,6 +152,11 @@
 			<td>'.$row['c_date-s'].'</td>
 			<td>'.$row['c_date-po'].'</td>
 			<td>'.$row['c_date-akt'].'</td>
+			<td>';
+			if ($row['c_bank']==2) {echo $row_bank['s_name_bank_account-2'];}
+						else {echo $row_bank['s_name_bank_account-1'];}
+			echo '</td>
+			<td>'.$row['c_price'].'</td>
 			<td>'.$row['c_number'].'</td>
 			<td>
 				<form class="form-inline" role="form" action="dogovor.php" method="get">
@@ -175,9 +189,11 @@
 	if ($menu_kol_c6['0'] > 0) {
 		echo '<span><s>Зачёркнутые</s> строки - закончившиеся договора</span><br />';
 	}
-
+echo '<br /><br /><br /><br />';
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
+	mysqli_free_result($result_bank);
+	mysqli_free_result($result_type);
 
 	/* закрываем подключение */
 	mysqli_close($link);

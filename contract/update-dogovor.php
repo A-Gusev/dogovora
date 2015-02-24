@@ -20,14 +20,16 @@
 	}
 
 	/* забираем данные из формы */
-	$idset=htmlentities(trim($_REQUEST['id']));
+	$idset=$_REQUEST['id'];
 	$nomer=htmlentities(trim($_REQUEST['nomer']));
 	$date=htmlentities(trim($_REQUEST['date']));
-	$dogovor_type=htmlentities(trim($_REQUEST['id_type_dog']));
+	$dogovor_type=$_REQUEST['id_type_dog'];
 	$name=htmlentities(trim($_REQUEST['name']));
 	$date_s=htmlentities(trim($_REQUEST['date-s']));
 	$date_po=htmlentities(trim($_REQUEST['date-po']));
 	$date_akt=htmlentities(trim($_REQUEST['date-akt']));
+	$bank=$_REQUEST['bank'];
+	$price=htmlentities(trim($_REQUEST['price']));
 	$number=htmlentities(trim($_REQUEST['number']));
 	$m2=htmlentities(trim($_REQUEST['m2']));
 	$prim=htmlentities(trim($_REQUEST['prim']));
@@ -39,6 +41,8 @@
 	`c_date-s` = '$date_s',
 	`c_date-po` = '$date_po',
 	`c_date-akt` = '$date_akt',
+	`c_bank` = '$bank',
+	`c_price` = '$price',
 	`c_number` = '$number',
 	`c_m2` = '$m2',
 	`c_id_type_dog` = '$dogovor_type',

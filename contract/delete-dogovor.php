@@ -59,6 +59,13 @@
 	$result_type = mysqli_query($link, $query_type);
 	$row_type = mysqli_fetch_array($result_type, MYSQLI_ASSOC);
 
+	/* Запрос на получение name bank account */
+	$query_bank = "SELECT `settings`.`s_name_bank_account-1`, `settings`.`s_name_bank_account-2`
+	FROM `settings`
+	WHERE `settings`.`s_id`=1";
+	$result_bank = mysqli_query($link, $query_bank);
+	$row_bank = mysqli_fetch_array($result_bank, MYSQLI_ASSOC);
+
 	/* Вывод меню */
 	$page='contract';
 	require_once ('../nav.php');
@@ -104,6 +111,20 @@
 					<div class="col-sm-8">'.$row['c_date-akt'].'</div>
 				</div>
 				<div class="form-group">
+					<div class="col-sm-3 text-right">Название счёта</label>
+					<div class="col-sm-8">
+						<input type="radio" name="bank" value="1"';
+						if ($row['c_bank']!==2) {echo ' checked';}
+						echo '> '.$row_bank['s_name_bank_account-1'].'<br />
+						<input type="radio" name="bank" value="2"';
+						if ($row['c_bank']==2) {echo ' checked';}
+						echo '> '.$row_bank['s_name_bank_account-2'].'</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3 text-right">Цена договора в месяц</div>
+					<div class="col-sm-8">'.$row['c_price'].'</div>
+				</div>
+				<div class="form-group">
 					<div class="col-sm-3 text-right">Номер помещения</div>
 					<div class="col-sm-8">'.$row['c_number'].'</div>
 				</div>
@@ -128,6 +149,7 @@
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
 	mysqli_free_result($result_type);
+	mysqli_free_result($result_bank);
 
 	/* закрываем подключение */
 	mysqli_close($link);

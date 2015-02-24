@@ -27,11 +27,13 @@
 	$director=$_REQUEST['director'];
 	$director_io=$_REQUEST['director_io'];
 	$director_r=$_REQUEST['director_r'];
+	$name_bank_account_1=$_REQUEST['name_bank_account-1'];
 	$bank_account_1=$_REQUEST['bank_account-1'];
+	$name_bank_account_2=$_REQUEST['name_bank_account-2'];
 	$bank_account_2=$_REQUEST['bank_account-2'];
 
 	/* подготавливаем запрос к БД */
-	$update_sql = "UPDATE `admin_arenda`.`settings` SET `s_company_name` = '$company_name', `s_job_title` = '$job_title', `s_job_title_r` = '$job_title_r', `s_director` = '$director', `s_director_io` = '$director_io', `s_director_r` = '$director_r', `s_bank_account-1` = '$bank_account_1', `s_bank_account-2` = '$bank_account_2' WHERE `settings`.`s_id` = '$idset';";
+	$update_sql = "UPDATE `admin_arenda`.`settings` SET `s_company_name` = '$company_name', `s_job_title` = '$job_title', `s_job_title_r` = '$job_title_r', `s_director` = '$director', `s_director_io` = '$director_io', `s_director_r` = '$director_r', `s_name_bank_account-1` = '$name_bank_account_1', `s_bank_account-1` = '$bank_account_1', `s_name_bank_account-2` = '$name_bank_account_2',  `s_bank_account-2` = '$bank_account_2' WHERE `settings`.`s_id` = '$idset';";
 
 	/* отправляем запрос к БД */
 	mysqli_query($link, $update_sql) or die("Ошибка: " . mysql_error());

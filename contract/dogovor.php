@@ -51,6 +51,13 @@
 	$query_type = "SELECT `type_contract`.`tc_id` , `type_contract`.`tc_type`
 	FROM `type_contract`";
 	$result_type = mysqli_query($link, $query_type);
+	
+	/* Запрос на получение name bank account */
+	$query_bank = "SELECT `settings`.`s_name_bank_account-1`, `settings`.`s_name_bank_account-2`
+	FROM `settings`
+	WHERE `settings`.`s_id`=1";
+	$result_bank = mysqli_query($link, $query_bank);
+	$row_bank = mysqli_fetch_array($result_bank, MYSQLI_ASSOC);
 
 	/* Получение ассоциативного массива */
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -125,6 +132,22 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label class="col-sm-3 control-label">Название счёта</label>
+		<div class="col-sm-8">
+			<input type="radio" name="bank" value="1"';
+			if ($row['c_bank']!==2) {echo ' checked';}
+			echo '> '.$row_bank['s_name_bank_account-1'].'<br />
+			<input type="radio" name="bank" value="2"';
+			if ($row['c_bank']==2) {echo ' checked';}
+			echo '> '.$row_bank['s_name_bank_account-2'].'</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Цена договора в месяц</label>
+		<div class="col-sm-8">
+			<input class="form-control" title="Цена договора в месяц" placeholder="Введите цену договора в месяц" name="price" value="'.$row['c_price'].'">
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 control-label">Номер помещения</label>
 		<div class="col-sm-8">
 			<input class="form-control" title="Номер помещения" placeholder="Введите номер помещения" name="number" value="'.$row['c_number'].'">
@@ -155,6 +178,8 @@
 	/* очищаем результаты выборки */
 	mysqli_free_result($result);
 	mysqli_free_result($result2);
+	mysqli_free_result($result_type);
+	mysqli_free_result($result_bank);
 
 	/* закрываем подключение */
 	mysqli_close($link);
