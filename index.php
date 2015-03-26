@@ -43,11 +43,6 @@
 <h1>Система учёта договоров аренды</h1>
 
 <?php
-	// require_once 'check.php';
-	if ($rights == 2) {
-		echo '<br /><p><a href="config/setting.php">Редактирование данных арендодателя</a></p>';
-	}
-
 	$query = "SELECT * FROM `contract` JOIN `firms` ON `contract`.`c_company_id` = `firms`.`f_id` ORDER BY  `contract`.`c_id` ASC";
 
 	/* Запрос на получение name bank account */
@@ -98,6 +93,7 @@ echo '
 		<th>'.$g.'</th>
 		<th>'.$row_bank['s_name_bank_account-1'].'</th>
 		<th>'.$row_bank['s_name_bank_account-2'].'</th>
+		<th>Сумма</th>
 	</tr>';
 
 	
@@ -157,19 +153,26 @@ for ($m = 1; $m <= 12; $m++) {
 	//echo '<br />';
 	setlocale(LC_TIME, "ru_RU");
 	$mes = $m.'/1/2015';
+//	$mes2= $mes;
+//	echo $mes2.' '.$today.' ';
+	
 	$mes = strftime("%b",strtotime($mes));
-	
+	$todaynow = getdate();
+	if (($m==$todaynow['mon']) && $g==$todaynow['year']) {
+		echo '<tr class="info"><td>'.$mes.' '.'</td>';
+	}
+	else {
+		echo '<tr><td>'.$mes.' '.'</td>';
+	}
+	$sum_price=$sum_price1+$sum_price2;
+	setlocale(LC_MONETARY, 'ru_RU');
 	echo '
-	<tr>
-		<td>'.$mes.'</td>
-		<td>'.round($sum_price1, 0).'</td>
-		<td>'.round($sum_price2, 0).'</td>
+		<td>'.money_format("%i", $sum_price1).'</td>
+		<td>'.money_format("%i", $sum_price2).'</td>
+		<td>'.money_format("%i", $sum_price).'</td>
 	</tr>';	
-}	
-
-	
-echo '</table><br /><br /><br /><br />';
-	
+}		
+echo '</table><br /><br /><br />';
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>

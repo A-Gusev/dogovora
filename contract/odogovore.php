@@ -98,7 +98,7 @@
 							{echo ' <span class="label label-warning">договор закончится в ближайшие 3 месяца</span>';}
 						elseif ($row['c_date-po']>=$m3)
 							{echo ' <span class="label label-success">действующий договор</span>';}
-						else {echo ' договор закончился';}
+						else {echo ' <span class="label label-danger">договор закончился</span>';}
 				echo '
 					</div>
 				</div>
@@ -115,7 +115,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-3 text-right">Цена договора в месяц</div>
-					<div class="col-sm-8">'.$row['c_price'].'</div>
+					<div class="col-sm-8">'.number_format($row['c_price'], 0, ',', ' ').' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span></div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-3 text-right">Номер помещения</div>
@@ -130,7 +130,7 @@
 					<div class="col-sm-8">'.$row['c_prim'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 control-label"><strong>Удалить догвоор?</strong><br /><em>Это действие нельзя отменить</em></div>
+					<div class="col-sm-3 control-label"><strong>Удалить договор?</strong><br /><em>Это действие нельзя отменить</em></div>
 					<div class="col-sm-8">
 						<a href="dogovora.php"><button type="button" class="btn btn-success">НЕТ</button></a>
 						<input type="hidden" name="id" value="'.$row['c_id'].'">

@@ -114,14 +114,11 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-3 text-right">Название счёта</label>
+		<label class="col-sm-3 control-label">Название счёта</label>
 		<div class="col-sm-8">
-			<input type="radio" name="bank" value="1"';
-			if ($row['c_bank']!==2) {echo ' checked';}
-			echo '> '.$row_bank['s_name_bank_account-1'].'<br />
-			<input type="radio" name="bank" value="2"';
-			if ($row['c_bank']==2) {echo ' checked';}
-			echo '> '.$row_bank['s_name_bank_account-2'].'</div>
+			<input type="radio" name="bank" value="1"> '.$row_bank['s_name_bank_account-1'].'<br />
+			<input type="radio" name="bank" value="2"> '.$row_bank['s_name_bank_account-2'].'
+		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Цена договора в месяц</label>
@@ -138,7 +135,7 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label">Площадь помещения в м<sup>2</sup></label>
 		<div class="col-sm-8">
-			<input class="form-control" title="Номер помещения" placeholder="Введите номер помещения" name="m2">
+			<input class="form-control" title="Площадь помещения" placeholder="Введите номер помещения" name="m2">
 		</div>
 	</div>
 	<div class="form-group">

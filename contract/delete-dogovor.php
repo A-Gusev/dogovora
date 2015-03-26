@@ -102,7 +102,7 @@
 							{echo ' <span class="label label-warning">договор закончится в ближайшие 3 месяца</span>';}
 						elseif ($row['c_date-po']>=$m3)
 							{echo ' <span class="label label-success">действующий договор</span>';}
-						else {echo ' договор закончился';}
+						else {echo ' <span class="label label-danger">договор закончился</span>';}
 				echo '
 					</div>
 				</div>
@@ -111,18 +111,18 @@
 					<div class="col-sm-8">'.$row['c_date-akt'].'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 text-right">Название счёта</label>
+					<div class="col-sm-3 text-right">Название счёта</div>
 					<div class="col-sm-8">
 						<input type="radio" name="bank" value="1"';
-						if ($row['c_bank']!==2) {echo ' checked';}
+						if ($row['c_bank']!=='2') {echo ' checked';}
 						echo '> '.$row_bank['s_name_bank_account-1'].'<br />
 						<input type="radio" name="bank" value="2"';
-						if ($row['c_bank']==2) {echo ' checked';}
+						if ($row['c_bank']=='2') {echo ' checked';}
 						echo '> '.$row_bank['s_name_bank_account-2'].'</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-3 text-right">Цена договора в месяц</div>
-					<div class="col-sm-8">'.$row['c_price'].'</div>
+					<div class="col-sm-8">'.number_format($row['c_price'], 0, ',', ' ').' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span></div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-3 text-right">Номер помещения</div>

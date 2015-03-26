@@ -215,7 +215,8 @@
 							<button type="submits" class="btn btn-default">Редактировать</button>
 						</form>
 					</div>
-				</div>';
+				</div>
+				<br /><br />';
 				
 	if ($kol2['0']>0) {echo '</div></div>';}
 	
@@ -230,11 +231,11 @@
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Номер и дата договора</th>
-					<th>Действует с</th>
-					<th>Действует по</th>
-					<th>редактировать</th>
-					<th>удалить</th>
+					<th>№ договора</th>
+					<th>С</th>
+					<th>По</th>
+					<th>Ред.</th>
+					<th>Trash</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -254,12 +255,12 @@
 					<td>'.$row_dog['c_date-po'].'</td>
 					<td>
 						<form class="form-inline" role="form" action="../contract/dogovor.php" method="get">
-							<input type="hidden" name="id" value="'.$row_dog['c_id'].'"><button type="submits" class="btn btn-default">Редактировать</button>
+							<input type="hidden" name="id" value="'.$row_dog['c_id'].'"><button type="submits" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
 						</form>
 					</td>
 					<td>
 						<form class="form-inline" role="form" action="../contract/delete-dogovor.php" method="get">
-							<input type="hidden" name="id" value="'.$row_dog['c_id'].'"><button type="submits" class="btn btn-danger">Удалить</button>
+							<input type="hidden" name="id" value="'.$row_dog['c_id'].'"><button type="submits" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
 						</form>
 					</td>
 				</tr>';
@@ -269,10 +270,10 @@
 			</table>
 		</div>
 	<br />
-	<span class="label label-danger">Красным цветом выделены строки с договорами, истекающими в этом месяце;</span><br />
-	<span class="label label-warning">жёлтым цветов - истекающие в ближайшие 3 месяца;</span><br />
-	<span class="label label-success">зелёным цветом - действующие договора;</span><br />
-	<span>белым цветом - закончившиеся договора.</span><br />';
+	<span class="label label-danger">Красным цветом выделены строки с договорами, истекающими в этом месяце</span><br />
+	<span class="label label-warning">жёлтым цветов - истекающие в ближайшие 3 месяца</span><br />
+	<span class="label label-success">зелёным цветом - действующие договора</span><br />
+	<span>белым цветом - закончившиеся договора</span><br />';
 	}
 
 echo '

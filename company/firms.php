@@ -97,17 +97,17 @@
 		<tr>
 			<th>id</th>
 			<th>тип</th>
-			<th>yазвание компании</th>
+			<th>Название</th>
 			<th>ИНН</th>
 			<th>КПП</th>
 			<th>ОГРН</th>
 			<th>руководитель</th>
 			<th>телефон</th>
 			<th>e-mail</th>
-			<th>количество договоров</th>
+			<th>кол-во договоров</th>
 			<th>договор на почту</th>
-			<th>редактировать</th>
-			<th>удалить</th>
+			<th>ред.</th>
+			<th>trash</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -165,14 +165,14 @@
 			<td>
 				<form class="form-inline" role="form" action="firm.php" method="get">
 					<input type="hidden" name="id" value="'.$row['f_id'].'">
-					<button type="submits" class="btn btn-default">Редактировать</button>
+					<button type="submits" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
 				</form>
 			</td>
 			<td>';
 				if ($kol2['0']==0 && $row['f_mail_s']==0) { echo '
 				<form class="form-inline" role="form" action="delete-firm.php" method="get">
 					<input type="hidden" name="id" value="'.$row['f_id'].'">
-					<button type="submits" class="btn btn-danger">Удалить</button>
+					<button type="submits" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
 				</form>
 			';
 			}

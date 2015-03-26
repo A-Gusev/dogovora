@@ -105,17 +105,17 @@
 	echo '</caption>
 	<thead>
 		<tr>
-			<th>Номер и дата договора</th>
-			<th>Тип договора</th>
-			<th>Название компании</th>
-			<th>Договор с...</th>
-			<th>Договор по...</th>
-			<th>Дата акта</th>
+			<th>№ договора</th>
+			<th>Тип</th>
+			<th>Название</th>
+			<th>С</th>
+			<th>По</th>
+			<th>Д. акта</th>
 			<th>Счёт</th>
 			<th>Цена в месяц</th>
-			<th>Номер помещения</th>
-			<th>редактировать</th>
-			<th>удалить</th>
+			<th>№ помещения</th>
+			<th>Ред.</th>
+			<th>Trash</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -156,16 +156,16 @@
 			if ($row['c_bank']==2) {echo $row_bank['s_name_bank_account-2'];}
 						else {echo $row_bank['s_name_bank_account-1'];}
 			echo '</td>
-			<td>'.$row['c_price'].'</td>
+			<td>'.number_format($row['c_price'], 0, ',', ' ').' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span></td>
 			<td>'.$row['c_number'].'</td>
 			<td>
 				<form class="form-inline" role="form" action="dogovor.php" method="get">
-					<input type="hidden" name="id" value="'.$row['c_id'].'"><button type="submits" class="btn btn-default">Редактировать</button>
+					<input type="hidden" name="id" value="'.$row['c_id'].'"><button type="submits" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
 				</form>
 			</td>
 			<td>
 				<form class="form-inline" role="form" action="delete-dogovor.php" method="get">
-					<input type="hidden" name="id" value="'.$row['c_id'].'"><button type="submits" class="btn btn-danger">Удалить</button>
+					<input type="hidden" name="id" value="'.$row['c_id'].'"><button type="submits" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
 				</form>
 			</td>
 		</tr>';

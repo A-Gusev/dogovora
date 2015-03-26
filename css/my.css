@@ -43,5 +43,15 @@ input:-moz-placeholder {
 	font-weight: 300;
 }
 .money {
-width: 20%;
+	width: 50%;
+	text-align: center;
+}
+.money th {
+	text-align: center;
+}
+.dropdown-menu {
+	min-width: 300px;
+}
+.mybtn {
+	padding: 0px 2px;
 }

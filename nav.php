@@ -34,7 +34,7 @@
 
 	//
 	/* Запросы для меню */
-	
+
 	/* Запрос на получение количества контрагентов на особом контроле */
 	$sql_menu_ok = "SELECT COUNT(`f_problem`)
 	FROM `firms`
@@ -129,6 +129,7 @@
 	/* /Запросы для меню закончились :) */
 	//	
 
+
 	//
 	/* пути для ссылок меню */	
 	$page_up='../';
@@ -167,10 +168,10 @@
       		}
       	?>
         <li class="dropdown<?php echo $active; ?>">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">Контрагенты <span class="caret"></span><?php if ($menu_kol_ok['0']>0) {echo ' <span class="badge red">'.$menu_kol_ok['0'].'</span>';}?></a>
+          <a href="" class="dropdown-toggle" data-toggle="dropdown">Контрагенты&nbsp;<span class="caret"></span><?php if ($menu_kol_ok['0']>0) {echo ' <span class="badge red">'.$menu_kol_ok['0'].'</span>';}?></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="<?=$page_link; ?>firms.php?ref=all">Полный список контрагентов <span class="badge pull-right"><?=$menu_kol_k['0']?></span></a></li>
-            <li><a href="<?=$page_link; ?>firms.php?ref=ok">Контрагенты на особом контроле <span class="badge red"><?=$menu_kol_ok['0']?></span></a></li>
+            <li><a href="<?=$page_link; ?>firms.php?ref=all">Полный список контрагентов&nbsp;<span class="badge pull-right"><?=$menu_kol_k['0']?></span></a></li>
+            <li><a href="<?=$page_link; ?>firms.php?ref=ok">Контрагенты на особом контроле&nbsp;<span class="badge red pull-right"><?=$menu_kol_ok['0']?></span></a></li>
             <li class="divider"></li>
             <li><a href="<?=$page_link; ?>new-firm.php">Создать нового контрагента</a></li>
           </ul>
@@ -192,12 +193,13 @@
       		}
       	?>
         <li class="dropdown<?php echo $active; ?>">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">Договора <span class="caret"></span><?php if ($menu_kol_c3['0']>0) {echo ' <span class="badge yellow">'.$menu_kol_c3['0'].'</span>';}?></a>
+          <a href="" class="dropdown-toggle" data-toggle="dropdown">Договора&nbsp;<span class="caret"></span><?php if ($menu_kol_c3['0']>0) {echo ' <span class="badge yellow">'.$menu_kol_c3['0'].'</span>';}?></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="<?=$page_link;?>dogovora.php?ref=all">Полный список договоров <span class="badge pull-right"><?=$menu_kol_c['0']?></span></a></li>
-            <li><a href="<?=$page_link;?>dogovora.php?ref=red">Закончатся в ближайшие 30 дней <span class="badge pull-right red"><?=$menu_kol_c1['0']?></span></a></li>
-            <li><a href="<?=$page_link;?>dogovora.php?ref=yellow">Закончатся в ближайшие 3 месяца <span class="badge pull-right yellow"><?=$menu_kol_c3['0']?></span></a></li>
-            <li><a href="<?=$page_link; ?>dogovora.php?ref=green">Действующие договора <span class="badge pull-right"><?=$menu_kol_c0['0']?></span><br />(закончатся больше чем через 3 месяца) <span class="badge pull-right green"><?=$menu_kol_c4['0']?></span></a></li>
+          	<li><a href="<?=$page_link; ?>dogovora.php?ref=green">Действующие договора&nbsp;<span class="badge pull-right green"><?=$menu_kol_c0['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>dogovora.php?ref=red">Закончатся в ближайшие 30 дней&nbsp;<span class="badge pull-right red"><?=$menu_kol_c1['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>dogovora.php?ref=yellow">Закончатся в ближайшие 3 месяца&nbsp;<span class="badge pull-right yellow"><?=$menu_kol_c3['0']?></span></a></li>
+	        <li><a href="<?=$page_link;?>dogovora.php?ref=all">Полный список договоров&nbsp;<span class="badge pull-right"><?=$menu_kol_c['0']?></span></a></li>
+
         <!--    <li><a href="#">Поиск договоров, действующих в определённый период</a></li>  -->
             <li class="divider"></li>
             <li><a href="<?php echo $page_link; ?>new-dogovor.php">Создать новый договор</a></li>
@@ -213,7 +215,7 @@
       		}
       echo '<ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="'.$page_link.'exit.php">Выход</a>
+          <a href="'.$page_link.'exit.php" title="Выход"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
         </li>
       </ul>';
 		  if ($page=='home') {
@@ -224,14 +226,7 @@
       		}
      echo '<ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="'.$page_link.'user.php">';
-          if ($row_chek['u_name'] == '') {
-	          echo $row_chek['u_login'];
-          }
-          else {
-	          echo $row_chek['u_name'];
-          }
-          echo '</a>
+          <a href="'.$page_link.'user.php" title="Редактировать профиль"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
         </li>
       </ul>';
 	?>
@@ -254,7 +249,7 @@
           <a href="" class="dropdown-toggle" data-toggle="dropdown">Договора на почту <span class="caret"></span><?php if ($mail_red > 0) {echo ' <span class="badge red">'.$mail_red.'</span> ';} if ($menu_mail_ch['0'] > 0) {echo ' <span class="badge yellow">'.$menu_mail_ch['0'].'</span>';} ?></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="<?=$page_link;?>firms.php?ref=mail-pr">Договор просрочен <span class="badge pull-right red"><?=$menu_mail_pr['0']?></span></a></li>
-            <li><a href="<?=$page_link;?>firms.php?ref=mail-pr3">Договор заканчивается (3 месяца) <span class="badge orange"><?=$menu_mail_pr3['0']?></span></a></li>
+            <li><a href="<?=$page_link;?>firms.php?ref=mail-pr3">Договор заканчивается (3 месяца) <span class="badge pull-right orange"><?=$menu_mail_pr3['0']?></span></a></li>
             <li><a href="<?=$page_link;?>firms.php?ref=mail-ch">Договор не проверен <span class="badge pull-right yellow"><?=$menu_mail_ch['0']?></span></a></li>
             <li><a href="<?=$page_link;?>firms.php?ref=mail-s">Договор не заключён <span class="badge pull-right"><?=$menu_mail_s['0']?></span></a></li>
           </ul>
@@ -308,7 +303,12 @@
 	        <button type="submit" class="btn btn-default">Найти</button>
 	      </form> -->
 	      <ul class="nav navbar-nav navbar-right pad">
-			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="https://github.com/A-Gusev/dogovora/">v.1.0.5</a></li>
+	      <?php
+	      if ($rights == 2) {
+		echo '<li><a class="pad" title="Основные настройки" href="/config/setting.php"><span class="glyphicon glyphicon-cog btn btn-info mybtn" aria-hidden="true"></span></a></li>';
+			}
+	      ?>
+			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="https://github.com/A-Gusev/dogovora/">v.1.0.6</a></li>
 			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="http://design4net.ru/">2014 - 2015 <span class="glyphicon glyphicon-copyright-mark"></span> Создание сайта - Студия Design4net</a></li>
 	      </ul>
 	    </div>
