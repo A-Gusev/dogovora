@@ -28,13 +28,18 @@
 	    exit();
 	}
 
-	/* установка кодировки utf8 */	
+	/* установка кодировки utf8 */
 	if (!$link->set_charset("utf8")) {
 	    echo 'Ошибка при загрузке набора символов utf8: '.$link->error;
 	}
 
 	/* Узнаем какое сегодня число */
 	$today = date("Y-m-d");
+
+	/* Используемая площадь */
+	$ploshad = "select sum(`contract`.`c_m2`) FROM  `contract` WHERE TO_DAYS(`c_date-po`) - TO_DAYS(NOW()) >= 0";
+	$result_ploshad = mysqli_query($link, $ploshad);
+	$row_ploshad = mysqli_fetch_array($result_ploshad, MYSQLI_NUM);
 
 	$page='home';
 	require_once 'nav.php';
@@ -51,16 +56,16 @@
 	WHERE `settings`.`s_id`=1";
 	$result_bank = mysqli_query($link, $query_bank);
 	$row_bank = mysqli_fetch_array($result_bank, MYSQLI_ASSOC);
-	
+
 # Кержаков?
 function kerzhakov($date_s, $date_po, $month) {
 		$n = $month.'-01';
 		$k = $month.'-'.date("t", strtotime($month));
 /*		// Определение количества дней в месяце
-		$kol_d = date_diff(date_create($n),date_create($k)); 			
+		$kol_d = date_diff(date_create($n),date_create($k));
 		$kol_d=$kol_d->format("%a");
 		$kol_d++;
-*/		
+*/
 		$n = date_create($n)->format('Y-m-d');
 		$k = date_create($k)->format('Y-m-d');
 		$date_s = date_create($date_s)->format('Y-m-d');
@@ -70,23 +75,27 @@ function kerzhakov($date_s, $date_po, $month) {
 		$k = strtotime ($k);
 		$date_po = strtotime ($date_po);
 		$date_s = strtotime ($date_s);
-				
-		if ( (($date_s <= $n) && ($date_po >= $k)) || 
+
+		if ( (($date_s <= $n) && ($date_po >= $k)) ||
 		(($date_s >= $n) && ($date_po <= $k)) ||
 		(($date_s <= $n) && ($date_po <= $k) && ($date_po >= $n)) ||
 		(($date_s >= $n) && ($date_po >= $k) && ($date_s <= $k)) ) {
-			$popal = 'TRUE';		
+			$popal = 'TRUE';
 		}
 		else {
 			$popal = 'FALSE';
 		}
 return $popal;
-}		
+}
 
 	$g = 2015; // номер года
 	$sum_price1 = 0;
 	$sum_price2 = 0;
-	
+	$sum_price = 0;
+	$itog_price1 = 0;
+	$itog_price2 = 0;
+	$itog_price = 0;
+
 echo '
 <table class="table table-striped money">
 	<tr>
@@ -96,8 +105,8 @@ echo '
 		<th>Сумма</th>
 	</tr>';
 
-	
-	
+
+
 
 for ($m = 1; $m <= 12; $m++) {
 	$result = mysqli_query($link, $query);
@@ -121,27 +130,27 @@ for ($m = 1; $m <= 12; $m++) {
 			$k = strtotime ($k);
 			$date_po = strtotime ($date_po);
 			$date_s = strtotime ($date_s);
-			
+
 			if ($date_s > $n) {$mount_min = $date_s;}
 			else {$mount_min = $n;}
 		//echo $mount_min.' ';
-			
+
 			if ($date_po > $k) {$mount_max = $k;}
 			else {$mount_max = $date_po;}
 		//echo $mount_max.' ';
-			
+
 			$money_dat = 1 + ($mount_max - $mount_min)/(60*60*24);
 		//echo $money_dat.' ';;
-						
+
 			// Определение количества дней в месяце
-			$kol_d = date_diff(date_create($na),date_create($ko)); 			
+			$kol_d = date_diff(date_create($na),date_create($ko));
 			$kol_d=$kol_d->format("%a");
 			$kol_d++;
 		//echo $kol_d.' ';
-			
+
 			$summ = ($row['c_price']*$money_dat)/$kol_d;
 		//echo round($summ, 2).' ';
-			
+
 			if ($row['c_bank'] == 2) {
 				$sum_price2 = $sum_price2 + $summ;
 			}
@@ -149,13 +158,13 @@ for ($m = 1; $m <= 12; $m++) {
 				$sum_price1 = $sum_price1 + $summ;
 			}
 		}
-	}	
+	}
 	//echo '<br />';
 	setlocale(LC_TIME, "ru_RU");
 	$mes = $m.'/1/2015';
 //	$mes2= $mes;
 //	echo $mes2.' '.$today.' ';
-	
+
 	$mes = strftime("%b",strtotime($mes));
 	$todaynow = getdate();
 	if (($m==$todaynow['mon']) && $g==$todaynow['year']) {
@@ -165,14 +174,22 @@ for ($m = 1; $m <= 12; $m++) {
 		echo '<tr><td>'.$mes.' '.'</td>';
 	}
 	$sum_price=$sum_price1+$sum_price2;
-	setlocale(LC_MONETARY, 'ru_RU');
+	$itog_price1=$itog_price1+$sum_price1;
+	$itog_price2=$itog_price2+$sum_price2;
+	$itog_price=$itog_price+$sum_price;
+
 	echo '
-		<td>'.money_format("%i", $sum_price1).'</td>
-		<td>'.money_format("%i", $sum_price2).'</td>
-		<td>'.money_format("%i", $sum_price).'</td>
-	</tr>';	
-}		
-echo '</table><br /><br /><br />';
+		<td>'.number_format($sum_price1, 0, ',', ' ').' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span></td>
+		<td>'.number_format($sum_price2, 0, ',', ' ').' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span></td>
+		<td>'.number_format($sum_price, 2, ',', ' ').' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span></td>
+	</tr>';
+}
+echo '<tr class="success"><td><strong>'.$g.'</strong></td>
+		<td><strong>'.number_format($itog_price1, 0, ',', ' ').' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span></strong></td>
+		<td><strong>'.number_format($itog_price2, 0, ',', ' ').' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span></strong></td>
+		<td><strong>'.number_format($itog_price, 2, ',', ' ').' <span class="glyphicon glyphicon-rub" aria-hidden="true"></span></strong></td>
+	</tr>';
+echo '</table><br /><p>Суммарная задействованная площадь со всех действующих договоров = <strong>'.round($row_ploshad['0'],2).'</strong> м<sup>2</sup></p><br /><br /><br />';
 	/* закрываем подключение */
 	mysqli_close($link);
 ?>
