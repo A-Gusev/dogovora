@@ -54,11 +54,21 @@
 				?>
 				<li class="dropdown<?php echo $active; ?>">
 				  <a href="" class="dropdown-toggle" data-toggle="dropdown">Контрагенты&nbsp;<span class="caret"></span>
-                      <?php // if ($menu_kol_ok['0']>0) {echo ' <span class="badge red">'.$menu_kol_ok['0'].'</span>';}?>
+                      <?php
+                        if (application\models\Model_statistic::company_special_control() > 0) {
+                            echo ' <span class="badge red">'.application\models\Model_statistic::company_special_control().'</span>';
+                        }
+                      ?>
                   </a>
 				  <ul class="dropdown-menu" role="menu">
-					<li><a href="<?=$page_link; ?>firms.php?ref=all">Полный список контрагентов&nbsp;<span class="badge pull-right"><?=$menu_kol_k['0']?></span></a></li>
-					<li><a href="<?=$page_link; ?>firms.php?ref=ok">Контрагенты на особом контроле&nbsp;<span class="badge red pull-right"><?=$menu_kol_ok['0']?></span></a></li>
+					<li><a href="<?=$page_link; ?>firms.php?ref=all">Полный список контрагентов&nbsp;
+                            <span class="badge pull-right">
+                                <?=application\models\Model_statistic::company_count()?>
+                            </span></a></li>
+					<li><a href="<?=$page_link; ?>firms.php?ref=ok">Контрагенты на особом контроле&nbsp;
+                            <span class="badge red pull-right">
+                                <?=application\models\Model_statistic::company_special_control()?>
+                            </span></a></li>
 					<li class="divider"></li>
 					<li><a href="<?=$page_link; ?>new-firm.php">Создать нового контрагента</a></li>
 				  </ul>
@@ -66,32 +76,48 @@
 				<?php
 					$active='';
 					if ($page=='home') {
-						$page_link='dogovor/';
+						$page_link='contract/';
 					}
-					elseif ($page=='dogovor') {
+					elseif ($page=='contract') {
 						$page_link='';
 						$active=' active';
 					}
 					elseif ($page=='company') {
-						$page_link='../dogovor/';
+						$page_link='../contract/';
 					}
 					elseif ($page=='config') {
-						$page_link='../dogovor/';
+						$page_link='../contract/';
 					}
 				?>
 				<li class="dropdown<?php echo $active; ?>">
 				  <a href="" class="dropdown-toggle" data-toggle="dropdown">Договора&nbsp;<span class="caret"></span>
-                      <?php // if ($menu_kol_c3['0']>0) {echo ' <span class="badge yellow">'.$menu_kol_c3['0'].'</span>';}?>
+                      <?php
+                          if (application\models\Model_statistic::contract_expiry_date_3_months()>0) {
+                              echo ' <span class="badge yellow">'.application\models\Model_statistic::contract_expiry_date_3_months().'</span>';
+                          }
+                      ?>
                   </a>
 				  <ul class="dropdown-menu" role="menu">
-					<li><a href="/dogovor/actual">Действующие договора&nbsp;<span class="badge pull-right green"><?=$menu_kol_c0['0']?></span></a></li>
-					<li><a href="/dogovor/expiry_date_30_days">Закончатся в ближайшие 30 дней&nbsp;<span class="badge pull-right red"><?=$menu_kol_c1['0']?></span></a></li>
-					<li><a href="/dogovor/expiry_date_3_months">Закончатся в ближайшие 3 месяца&nbsp;<span class="badge pull-right yellow"><?=$menu_kol_c3['0']?></span></a></li>
-					<li><a href="/dogovor/all">Полный список договоров&nbsp;<span class="badge pull-right"><?=$menu_kol_c['0']?></span></a></li>
+					<li><a href="/contract/actual">Действующие договора&nbsp;
+                            <span class="badge pull-right green">
+                                <?=application\models\Model_statistic::contract_actual()?>
+                            </span></a></li>
+					<li><a href="/contract/expiry_date_30_days">Закончатся в ближайшие 30 дней&nbsp;
+                            <span class="badge pull-right red">
+                                <?=application\models\Model_statistic::contract_expiry_date_30_days()?>
+                            </span></a></li>
+					<li><a href="/contract/expiry_date_3_months">Закончатся в ближайшие 3 месяца&nbsp;
+                            <span class="badge pull-right yellow">
+                                <?=application\models\Model_statistic::contract_expiry_date_3_months()?>
+                            </span></a></li>
+					<li><a href="/contract/all">Полный список договоров&nbsp;
+                            <span class="badge pull-right">
+                                <?=application\models\Model_statistic::contract_all()?>
+                            </span></a></li>
 
 				<!--    <li><a href="#">Поиск договоров, действующих в определённый период</a></li>  -->
 					<li class="divider"></li>
-					<li><a href="<?php echo $page_link; ?>new-dogovor.php">Создать новый договор</a></li>
+					<li><a href="<?php echo $page_link; ?>new-contract.php">Создать новый договор</a></li>
 				  </ul>
 				</li>
 			  </ul>
@@ -187,7 +213,7 @@
 					</div>
 					<button type="submit" class="btn btn-default">Найти</button>
 				  </form>
-				  <form class="navbar-form navbar-left" role="search" action="<?php echo $page_link2; ?>dogovora.php" method="get">
+				  <form class="navbar-form navbar-left" role="search" action="<?php echo $page_link2; ?>contracta.php" method="get">
 					<div class="form-group">
 					  <input type="text" class="form-control" placeholder="Поиск по договорам" name="search">
 					</div>
@@ -199,7 +225,7 @@
 				    echo '<li><a class="pad" title="Основные настройки" href="/config/setting.php"><span class="glyphicon glyphicon-cog btn btn-info mybtn" aria-hidden="true"></span></a></li>';
 					// }
 				  ?>
-					  <li><a class="pad" target="_blank" href="https://github.com/A-Gusev/dogovora/">v.2.0.0</a></li>
+					  <li><a class="pad" target="_blank" href="https://github.com/A-Gusev/contracta/">v.2.0.0</a></li>
 					  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="http://design4net.ru/">2014 - 2015 <span class="glyphicon glyphicon-copyright-mark"></span> Создание сайта - Студия Design4net</a></li>
 				  </ul>
 				</div>

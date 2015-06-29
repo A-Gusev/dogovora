@@ -24,6 +24,13 @@ class Model
 	    }
     }
 
+    public function menu_count($query)
+    {
+        $result = mysqli_query($this->link, $query);
+        $result_mas = mysqli_fetch_array($result, MYSQL_NUM);
+        return $result_mas[0];
+    }
+
     public function find_all($select)
     {
         $query = $select;

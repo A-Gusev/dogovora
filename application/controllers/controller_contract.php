@@ -4,11 +4,11 @@ namespace application\controllers;
 
 use application\core\Controller;
 
-class Controller_dogovor extends Controller
+class Controller_contract extends Controller
 {
 	function __construct()
 	{
-		$this->model = new \application\models\Model_dogovor();
+		$this->model = new \application\models\Model_contract();
 		$this->view = new \application\core\View();
 	}
 
@@ -16,32 +16,31 @@ class Controller_dogovor extends Controller
     {
         $routes = explode('/', $_SERVER['REQUEST_URI']);
         $id = $routes[3];
-        $data = $this->model->get_contract($id);
-        $this->view->generate('dogovor_view.php', 'template_view.php', $data);
+        if ($data = $this->model->get_contract($id)) {
+            $this->view->generate('contract_view.php', 'template_view.php', $data);
+        }
+        else {
+            $this->view->redirect('/contract/all');
+        }
     }
 
     public function action_edit()
     {
+        $routes = explode('/', $_SERVER['REQUEST_URI']);
+        $id = $routes[3];
         if (isset ($_REQUEST['button'])) {      // Если кнопка Сохранить нажата
-
-            $data = $this->model->contract_update();
-
-
+            $data = $this->model->contract_update($_REQUEST);
+            if ($_REQUEST['button'] == 'save') {
+                $this->view->redirect('/contract/edit/'.$id);
+            }
         }
         else {
-            $routes = explode('/', $_SERVER['REQUEST_URI']);
-            $id = $routes[3];
             $data = $this->model->get_contract($id);
             if (isset ($this->model->id)) {
-                $this->view->generate('dogovor_edit.php', 'template_view.php', $data);
-            }
-            else {
-                echo '<h2>Нет такого договора!</h2>
-                <h3>Как Вы вообще сюда попали?</h3>
-                <h4>Идите <a href="/dogovor/all">сюда</a> и больше не возвращайтесь!!!1</h4>';
-                $this->action_all();
+                $this->view->generate('contract_edit.php', 'template_view.php', $data);
             }
         }
+        $this->view->redirect('/contract/all');
     }
 
     public function action_all()  // все договора, привязанные к фирмам
@@ -51,7 +50,7 @@ class Controller_dogovor extends Controller
           ORDER BY  `contract`.`c_id` ASC';
         $data = $this->model->find_all($query);
         $this->view->title = 'Список договоров';
-        $this->view->generate('dogovor_all.php', 'template_view.php', $data);
+        $this->view->generate('contract_all.php', 'template_view.php', $data);
     }
 
     public function action_actual()   // действующие договора
@@ -62,7 +61,7 @@ class Controller_dogovor extends Controller
           ORDER BY  `contract`.`c_id` ASC';
         $data = $this->model->find_all($query);
         $this->view->title = 'Действующие договора';
-        $this->view->generate('dogovor_all.php', 'template_view.php', $data);
+        $this->view->generate('contract_all.php', 'template_view.php', $data);
     }
 
     public function action_expiry_date_30_days() // закончатся в ближайшие 30 дней
@@ -73,7 +72,7 @@ class Controller_dogovor extends Controller
             ORDER BY  `contract`.`c_id` ASC';
         $data = $this->model->find_all($query);
         $this->view->title = 'Список договоров, заканчивающихся в ближайшие 30 дней';
-        $this->view->generate('dogovor_all.php', 'template_view.php', $data);
+        $this->view->generate('contract_all.php', 'template_view.php', $data);
     }
 
     public function action_expiry_date_3_months() // закончатся в ближайшие 3 месяца
@@ -84,6 +83,6 @@ class Controller_dogovor extends Controller
           ORDER BY  `contract`.`c_id` ASC';
         $data = $this->model->find_all($query);
         $this->view->title = 'Список договоров, заканчивающихся в ближайшие 3 месяца';
-        $this->view->generate('dogovor_all.php', 'template_view.php', $data);
+        $this->view->generate('contract_all.php', 'template_view.php', $data);
     }
 }

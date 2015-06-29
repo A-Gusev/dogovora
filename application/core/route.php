@@ -2,7 +2,7 @@
 
 namespace application\core;
 
-use application\controllers\Controller_dogovor;
+use application\controllers\Controller_contract;
 
 /*
 Класс-маршрутизатор для определения запрашиваемой страницы.
@@ -13,6 +13,15 @@ class Route
 {
 	static function start()
 	{
+
+
+        include "application/models/model_statistic.php";
+
+
+
+
+
+
 		// контроллер и действие по умолчанию
 		$controller_name = 'Main';
 		$action_name = 'index';

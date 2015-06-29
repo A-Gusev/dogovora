@@ -1,9 +1,8 @@
 <?php
 namespace application\models;
-
 use application\core\Model;
 
-class Model_dogovor extends Model
+class Model_contract extends Model
 {
     public $id = '';
     public $nomer = '';
@@ -57,6 +56,10 @@ class Model_dogovor extends Model
       WHERE  `contract`.`c_id`=".$id;
         $db = new Model();
         $mas=$db->find_one($query);
+
+        if (!$mas) {
+            return false;
+        }
 
         $this->id = $mas['c_id'];
         $this->nomer = $mas['c_nomer'];
@@ -147,24 +150,22 @@ class Model_dogovor extends Model
         return $array_res;
     }
 
-    public static function contract_update() // Вытаскивает массив со списком всех типов у договоров
+    public function contract_update(array $data) // Вытаскивает массив со списком всех типов у договоров
     {
         //забираем данные из формы
-
-        $idset=$_REQUEST['id'];
-        $nomer=htmlentities(trim($_REQUEST['nomer']));
-        $date=htmlentities(trim($_REQUEST['date']));
-        $dogovor_type=$_REQUEST['id_type_dog'];
-        $name=htmlentities(trim($_REQUEST['name']));
-        $date_s=htmlentities(trim($_REQUEST['date-s']));
-        $date_po=htmlentities(trim($_REQUEST['date-po']));
-        $date_akt=htmlentities(trim($_REQUEST['date-akt']));
-        $bank=$_REQUEST['bank'];
-        $price=htmlentities(trim($_REQUEST['price']));
-        $number=htmlentities(trim($_REQUEST['number']));
-        $m2=htmlentities(trim($_REQUEST['m2']));
-        $prim=htmlentities(trim($_REQUEST['prim']));
-        $button=htmlentities(trim($_REQUEST['button']));
+        $id=$data['id'];
+        $nomer=htmlentities(trim($data['nomer']));
+        $date=htmlentities(trim($data['date']));
+        $contract_type=$data['id_type_dog'];
+        $name=htmlentities(trim($data['name']));
+        $date_s=htmlentities(trim($data['date-s']));
+        $date_po=htmlentities(trim($data['date-po']));
+        $date_akt=htmlentities(trim($data['date-akt']));
+        $bank=$data['bank'];
+        $price=htmlentities(trim($data['price']));
+        $number=htmlentities(trim($data['number']));
+        $m2=htmlentities(trim($data['m2']));
+        $prim=htmlentities(trim($data['prim']));
 
         /* подготавливаем запрос к БД */
         $update_sql = "UPDATE `admin_arenda`.`contract` SET `c_nomer` = '$nomer',
@@ -176,19 +177,13 @@ class Model_dogovor extends Model
         `c_number` = '$number',
         `c_bank` = '$bank',
         `c_m2` = '$m2',
-        `c_id_type_dog` = '$dogovor_type',
+        `c_id_type_dog` = '$contract_type',
         `c_company_id` = '$name',
         `c_prim` = '$prim'
-        WHERE `contract`.`c_id` = '$idset'";
+        WHERE `contract`.`c_id` = '$id'";
 
-        $model = new Model();
-        $model->update($update_sql);
-        if ($button == 'save') {
-            echo 'Всё получилось <br /> переадресовать сюда: <a href="/dogovor/edit/'.$idset.'">/dogovor/edit/'.$idset.'</a>';
-        }
-        else {
-            echo 'Всё получилось <br /> переадресовать сюда: <a href="/dogovor/all">/dogovor/edit/all</a>';
-        }
+        //$model = new Model();
+        return $this->update($update_sql);
+
     }
-
 }

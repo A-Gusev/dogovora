@@ -9,7 +9,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-3 text-right">Тип договора</div>
-					<div class="col-sm-8">'.$data->type_contract()[$data->id_type_dog].'</div>
+					<div class="col-sm-8">'.$data::type_contract()[$data->id_type_dog].'</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-3 text-right">Название компании</div>

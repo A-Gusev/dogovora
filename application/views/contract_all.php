@@ -1,5 +1,5 @@
 <?php
-use \application\models\Model_dogovor as dogovor;
+use \application\models\Model_contract as contract;
 
 echo '<table id="myTable" class="tablesorter table table-hover">
 	<caption><h1>'.$this->title.'</h1></caption>
@@ -22,8 +22,8 @@ echo '<table id="myTable" class="tablesorter table table-hover">
 foreach ($data as $mas) {
     echo '
 			<td><a href="review/'.$mas['c_id'].'">Договор №'.$mas['c_nomer'].' от '.$mas['c_date'].'</a></td>
-			<td>'.dogovor::type_contract()[$mas["c_id_type_dog"]].'</td>
-			<td><a href="../company/dogovor-firm.php?id='.$mas['f_id'].'">'.$mas['f_name'].'</a></td>
+			<td>'.contract::type_contract()[$mas["c_id_type_dog"]].'</td>
+			<td><a href="../company/contract-firm.php?id='.$mas['f_id'].'">'.$mas['f_name'].'</a></td>
 			<td>'.$mas['c_date-s'].'</td>
 			<td>'.$mas['c_date-po'].'</td>
 			<td>';
@@ -35,7 +35,7 @@ foreach ($data as $mas) {
                 }
     echo '
             </td>
-			<td>'.dogovor::bank_name()[$mas["c_bank"]].'</td>
+			<td>'.contract::bank_name()[$mas["c_bank"]].'</td>
 			<td>';
                 if ($mas['c_price'] == '' || $mas['c_price'] == 0) {
                     echo '-';}
