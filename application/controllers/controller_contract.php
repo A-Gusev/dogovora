@@ -28,11 +28,12 @@ class Controller_contract extends Controller
     {
         $routes = explode('/', $_SERVER['REQUEST_URI']);
         $id = $routes[3];
-        if (isset ($_REQUEST['button'])) {      // Если кнопка Сохранить нажата
+        if (isset ($_REQUEST['button'])) {
             $data = $this->model->contract_update($_REQUEST);
             if ($_REQUEST['button'] == 'save') {
                 $this->view->redirect('/contract/edit/'.$id);
             }
+            $this->view->redirect('/contract/all');
         }
         else {
             $data = $this->model->get_contract($id);
@@ -40,7 +41,26 @@ class Controller_contract extends Controller
                 $this->view->generate('contract_edit.php', 'template_view.php', $data);
             }
         }
-        $this->view->redirect('/contract/all');
+
+    }
+
+    public function action_new()
+    {
+        if (isset ($_REQUEST['button'])) {
+            $data = $this->model->contract_new($_REQUEST);
+            if ($_REQUEST['button'] == 'save') {
+                $id=\application\models\Model_contract::maxID_sqlContract();
+                $this->view->redirect('/contract/review/'.$id);
+            }
+            $this->view->redirect('/contract/all');
+        }
+        else {
+
+            $data = $this->model->type_contract();
+            if (isset ($this->model)) {
+                $this->view->generate('contract_new.php', 'template_view.php', $data);
+            }
+        }
     }
 
     public function action_all()  // все договора, привязанные к фирмам

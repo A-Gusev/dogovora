@@ -42,7 +42,6 @@ class Model_contract extends Model
     public $mail_s_e = '';
     public $mail_s_checked = '';
 
-
     public function get_contract($id=null)
     {
         if ($id === null) {
@@ -56,11 +55,9 @@ class Model_contract extends Model
       WHERE  `contract`.`c_id`=".$id;
         $db = new Model();
         $mas=$db->find_one($query);
-
         if (!$mas) {
             return false;
         }
-
         $this->id = $mas['c_id'];
         $this->nomer = $mas['c_nomer'];
         $this->date = $mas['c_date'];
@@ -97,11 +94,9 @@ class Model_contract extends Model
         $this->mail_s_s = $mas['f_mail_s_s'];
         $this->mail_s_e = $mas['f_mail_s_e'];
         $this->mail_s_checked = $mas['f_mail_s_checked'];
-
         //$this->type_dog = self::type_contract()[$this->id_type_dog];
-      //  $this->massiv = self::company_name();
-     //  print_r($this);
-
+        //$this->massiv = self::company_name();
+        //print_r($this);
         return $this;
     }
 
@@ -150,7 +145,7 @@ class Model_contract extends Model
         return $array_res;
     }
 
-    public function contract_update(array $data) // Вытаскивает массив со списком всех типов у договоров
+    public function contract_update(array $data)
     {
         //забираем данные из формы
         $id=$data['id'];
@@ -186,4 +181,39 @@ class Model_contract extends Model
         return $this->update($update_sql);
 
     }
+    public function contract_new(array $data)
+    {
+        //забираем данные из формы
+        $nomer=htmlentities(trim($data['nomer']));
+        $date=htmlentities(trim($data['date']));
+        $contract_type=$data['id_type_dog'];
+        $name=htmlentities(trim($data['name']));
+        $date_s=htmlentities(trim($data['date-s']));
+        $date_po=htmlentities(trim($data['date-po']));
+        $date_akt=htmlentities(trim($data['date-akt']));
+        $bank=$data['bank'];
+        $price=htmlentities(trim($data['price']));
+        $number=htmlentities(trim($data['number']));
+        $m2=htmlentities(trim($data['m2']));
+        $prim=htmlentities(trim($data['prim']));
+
+        /* подготавливаем запрос к БД */
+        $update_sql = "INSERT INTO `admin_arenda`.`contract`
+          (`c_id`, `c_nomer`, `c_date`, `c_date-s`, `c_date-po`, `c_date-akt`, `c_bank`, `c_price`, `c_number`, `c_m2`,
+          `c_id_type_dog`, `c_company_id`, `c_prim`)
+          VALUES (NULL, '$nomer', '$date', '$date_s', '$date_po', '$date_akt', '$bank', '$price', '$number', '$m2',
+          '$contract_type', '$name', '$prim')";
+
+        //$model = new Model();
+        return $this->update($update_sql);
+
+    }
+
+    public static function maxID_sqlContract()
+    {
+        $max_query = "SELECT MAX(`c_id`) AS `c_id` FROM `contract`";
+        $model = new Model();
+        return $model->menu_count($max_query); //
+    }
+
 }

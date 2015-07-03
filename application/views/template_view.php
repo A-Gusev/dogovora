@@ -36,23 +36,12 @@
 				<?php
 					$routes = explode('/', $_SERVER['REQUEST_URI']);
 					$page = $routes[1];
-		
 					$active='';
-					if ($page=='home') {
-						$page_link='company/';
-					}
-					elseif ($page=='contract') {
-						$page_link='../company/';
-					}
-					elseif ($page=='company') {
-						$page_link='';
+					if ($page=='company') {
 						$active=' active';
 					}
-					elseif ($page=='config') {
-						$page_link='../company/';
-					}
 				?>
-				<li class="dropdown<?php echo $active; ?>">
+				<li class="dropdown<?=$active;?>">
 				  <a href="" class="dropdown-toggle" data-toggle="dropdown">Контрагенты&nbsp;<span class="caret"></span>
                       <?php
                         if (application\models\Model_statistic::company_special_control() > 0) {
@@ -75,21 +64,11 @@
 				</li>
 				<?php
 					$active='';
-					if ($page=='home') {
-						$page_link='contract/';
-					}
-					elseif ($page=='contract') {
-						$page_link='';
+					if ($page=='contract') {
 						$active=' active';
 					}
-					elseif ($page=='company') {
-						$page_link='../contract/';
-					}
-					elseif ($page=='config') {
-						$page_link='../contract/';
-					}
 				?>
-				<li class="dropdown<?php echo $active; ?>">
+				<li class="dropdown<?=$active;?>">
 				  <a href="" class="dropdown-toggle" data-toggle="dropdown">Договора&nbsp;<span class="caret"></span>
                       <?php
                           if (application\models\Model_statistic::contract_expiry_date_3_months()>0) {
@@ -117,7 +96,7 @@
 
 				<!--    <li><a href="#">Поиск договоров, действующих в определённый период</a></li>  -->
 					<li class="divider"></li>
-					<li><a href="<?php echo $page_link; ?>new-contract.php">Создать новый договор</a></li>
+					<li><a href="/contract/new">Создать новый договор</a></li>
 				  </ul>
 				</li>
 			  </ul>
@@ -225,7 +204,7 @@
 				    echo '<li><a class="pad" title="Основные настройки" href="/config/setting.php"><span class="glyphicon glyphicon-cog btn btn-info mybtn" aria-hidden="true"></span></a></li>';
 					// }
 				  ?>
-					  <li><a class="pad" target="_blank" href="https://github.com/A-Gusev/contracta/">v.2.0.0</a></li>
+					  <li><a class="pad" target="_blank" href="https://github.com/A-Gusev/dogovora/">v.2.0.0</a></li>
 					  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="http://design4net.ru/">2014 - 2015 <span class="glyphicon glyphicon-copyright-mark"></span> Создание сайта - Студия Design4net</a></li>
 				  </ul>
 				</div>
