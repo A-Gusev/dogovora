@@ -49,7 +49,7 @@ foreach ($data as $mas) {
 				<a href="edit/'.$mas['c_id'].'"><button type="submits" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
 			</td>
 			<td>
-				<a href="trash/'.$mas['c_id'].'"><button type="submits" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+				<a href="delete/'.$mas['c_id'].'"><button type="submits" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
 			</td>
 		</tr>';
 }

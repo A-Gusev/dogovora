@@ -181,6 +181,7 @@ class Model_contract extends Model
         return $this->update($update_sql);
 
     }
+
     public function contract_new(array $data)
     {
         //забираем данные из формы
@@ -206,6 +207,13 @@ class Model_contract extends Model
 
         //$model = new Model();
         return $this->update($update_sql);
+
+    }
+
+    public function contract_delete($id)
+    {
+        $delete_sql = "DELETE FROM `admin_arenda`.`contract` WHERE `contract`.`c_id` = '$id'";
+        return $this->update($delete_sql);
 
     }
 

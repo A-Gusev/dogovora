@@ -1,7 +1,6 @@
 <?php
 
 namespace application\controllers;
-
 use application\core\Controller;
 
 class Controller_contract extends Controller
@@ -28,20 +27,41 @@ class Controller_contract extends Controller
     {
         $routes = explode('/', $_SERVER['REQUEST_URI']);
         $id = $routes[3];
-        if (isset ($_REQUEST['button'])) {
-            $data = $this->model->contract_update($_REQUEST);
-            if ($_REQUEST['button'] == 'save') {
-                $this->view->redirect('/contract/edit/'.$id);
+        if ($data = $this->model->get_contract($id)) {      // Защищаемся от запроса несуществующего договора
+            if (isset ($_REQUEST['button'])) {              // Если кнопка нажата
+                $this->model->contract_update($_REQUEST);
+                if ($_REQUEST['button'] == 'save') {        // Если кнопка Сохранить нажата
+                    $this->view->redirect('/contract/edit/'.$id);
+                }
+                $this->view->redirect('/contract/all');     // Если кнопка Сохранить и Закрыть нажата
             }
+            else {
+                $data = $this->model->get_contract($id);
+                if (isset ($this->model->id)) {
+                    $this->view->generate('contract_edit.php', 'template_view.php', $data);
+                }
+            }
+        }
+        else {
+            $this->view->redirect('/contract/all');
+        }
+
+    }
+
+    public function action_delete()
+    {
+        if (isset ($_REQUEST['button'])) {
+            $id=$_REQUEST['id'];
+            $this->model->contract_delete($id);
             $this->view->redirect('/contract/all');
         }
         else {
-            $data = $this->model->get_contract($id);
-            if (isset ($this->model->id)) {
-                $this->view->generate('contract_edit.php', 'template_view.php', $data);
+            $routes = explode('/', $_SERVER['REQUEST_URI']);
+            $id = $routes[3];
+            if ($data = $this->model->get_contract($id)) {
+                $this->view->generate('contract_delete.php', 'template_view.php', $data);
             }
         }
-
     }
 
     public function action_new()

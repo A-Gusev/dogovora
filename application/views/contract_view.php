@@ -1,5 +1,4 @@
 <?php
-
 	echo '
 			<div class="form-horizontal">
 				<legend>Информация о договоре</legend>
@@ -72,7 +71,7 @@
 					<div class="col-sm-8">'.$data->prim.'</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-3 control-label">
+					<div class="col-sm-3 text-right">
 					    <a href="../delete/'.$data->id.'"><button type="submit" class="btn btn-danger">Удалить договор</button></a>
 					</div>
 					<div class="col-sm-8">

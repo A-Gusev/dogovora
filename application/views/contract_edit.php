@@ -104,8 +104,9 @@ echo '
 	<div class="form-group">
 		<div class="col-sm-offset-5">
 			<input type="hidden" name="id" value="'.$data->id.'">
-			<button type="submit" class="btn btn-default" name="button" value="save">Сохранить</button>
+			<button type="submit" class="btn btn-success" name="button" value="save">Сохранить</button>
 			<button type="submit" class="btn btn-success" name="button" value="close">Сохранить и закрыть</button>
+			<a href="/contract/all"><button type="button" class="btn btn-default">Закрыть</button></a>
 		</div>
 	</div>
 </form>
