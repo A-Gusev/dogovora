@@ -308,7 +308,7 @@
 		echo '<li><a class="pad" title="Основные настройки" href="/config/setting.php"><span class="glyphicon glyphicon-cog btn btn-info mybtn" aria-hidden="true"></span></a></li>';
 			}
 	      ?>
-			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="https://github.com/A-Gusev/dogovora/">v.1.0.6</a></li>
+			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="https://github.com/A-Gusev/dogovora/">v.1.0.7</a></li>
 			  <li><a class="pad" title="Создание сайта - Студия Design4net" target="_blank" href="http://design4net.ru/">2014 - 2015 <span class="glyphicon glyphicon-copyright-mark"></span> Создание сайта - Студия Design4net</a></li>
 	      </ul>
 	    </div>
